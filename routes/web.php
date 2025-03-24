@@ -25,6 +25,30 @@ Route::get('/register', function () {
 Route::get('/detailrecette', function () {
     return view('detailrecette');
 });
+Route::get('/boutique', function () {
+    return view('boutique');
+});
+Route::get('/panier', function () {
+    return view('panier');
+});
+Route::get('/competition', function () {
+    return view('competition');
+});
+Route::get('/detailcompetition', function () {
+    return view('detailcompetition');
+});
+Route::get('/adminrecette', function () {
+    return view('adminrecette');
+});
+Route::get('/adminusers', function () {
+    return view('adminusers');
+});
+Route::get('/admincompetition', function () {
+    return view('admincompetition');
+});
+Route::get('/profile', function () {
+    return view('profile');
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
