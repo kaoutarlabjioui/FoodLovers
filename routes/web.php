@@ -37,18 +37,28 @@ Route::get('/competition', function () {
 Route::get('/detailcompetition', function () {
     return view('detailcompetition');
 });
-Route::get('/adminrecette', function () {
-    return view('adminrecette');
+
+Route::prefix('admin')->group(function(){
+
+    Route::get('/adminrecette', function () {
+        return view('admin.adminrecette');
+    });
+    Route::get('/adminusers', function () {
+        return view('admin.adminusers');
+    });
+    Route::get('/admincompetition', function () {
+        return view('admincompetition');
+    });
+    Route::get('/adminshop', function () {
+        return view('adminshop');
+    });
+
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    });
 });
-Route::get('/adminusers', function () {
-    return view('adminusers');
-});
-Route::get('/admincompetition', function () {
-    return view('admincompetition');
-});
+
 Route::get('/profile', function () {
     return view('profile');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+

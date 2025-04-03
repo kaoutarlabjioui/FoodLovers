@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.layout')
 @section('title','Tableau de bord - Administration FoodLovers')
 
 

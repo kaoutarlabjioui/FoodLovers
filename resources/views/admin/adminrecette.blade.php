@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('admin.layout')
 @section('title','Gestion des recettes')
 @section('css')
 <style>
@@ -472,6 +472,6 @@
     });
 
     // Charts
-   
+
   </script>
 @endsection
