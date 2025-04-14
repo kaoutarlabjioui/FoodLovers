@@ -59,6 +59,22 @@ public function getJWTCustomClaims()
 public function role(){
     return $this->belongsTo(Role::class,'role_id');
 }
+public function address(){
+    return $this->belongsTo(Address::class);
+}
+public function commandes()
+{
+    return $this->hasMany(Commande::class);
+}
 
+public function recettes()
+{
+    return $this->hasMany(Recette::class, 'chef');
+}
+
+public function competitions()
+{
+    return $this->belongsToMany(Competition::class);
+}
 
 }
