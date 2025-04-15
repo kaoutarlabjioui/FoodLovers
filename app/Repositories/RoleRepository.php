@@ -6,7 +6,7 @@ use App\Models\Role;
 use App\Repositories\interfaces\RoleRepositoryInterface as InterfacesRoleRepositoryInterface;
 use App\Repositories\RoleRepositoryInterface;
 
-class RoleRepository implements InterfacesRoleRepositoryInterface{
+class RoleRepository implements RoleRepositoryInterface{
 
     public function getAll(){
 

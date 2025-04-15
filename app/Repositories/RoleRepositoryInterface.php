@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\interfaces;
+namespace App\Repositories;
 
 
 

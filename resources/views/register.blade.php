@@ -64,7 +64,15 @@
       </div>
     </div>
   </nav>
-
+  @if($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
   <!-- Register Section -->
   <section class="pt-24 pb-12 md:pt-32 md:pb-16 min-h-screen flex items-center">
     <div class="container mx-auto px-4">
@@ -81,7 +89,8 @@
               <p class="text-gray-600">Rejoignez la communauté FoodLovers</p>
             </div>
 
-            <form id="register-form" class="space-y-6">
+            <form id="register-form" action= "/registers" method="POST" class="space-y-6">
+                @csrf
               <div>
                 <label for="name" class="block text-gray-700 font-medium mb-2">
                   Nom complet
