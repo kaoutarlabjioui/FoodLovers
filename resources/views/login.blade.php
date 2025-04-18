@@ -81,7 +81,8 @@
               <p class="text-gray-600">Heureux de vous revoir sur FoodLovers</p>
             </div>
 
-            <form id="login-form" class="space-y-6">
+            <form id="login-form" class="space-y-6" method='post' action="/logins">
+                @csrf
               <div>
                 <label for="email" class="block text-gray-700 font-medium mb-2">
                   Email
@@ -93,6 +94,7 @@
                   <input
                     id="email"
                     type="email"
+                    name="email"
                     class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="votre@email.com"
                   >
@@ -116,6 +118,7 @@
                   <input
                     id="password"
                     type="password"
+                    name="password"
                     class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="••••••••"
                   >
@@ -155,12 +158,12 @@
             <div class="mt-6 text-center">
               <p class="text-sm text-gray-600">
                 Pas encore de compte?
-                <a href="register.html" class="font-medium text-primary hover:text-primary/80">
+                <a href="/register" class="font-medium text-primary hover:text-primary/80">
                   S'inscrire
                 </a>
               </p>
             </div>
-
+<!--
             <div class="mt-8">
               <div class="relative">
                 <div class="absolute inset-0 flex items-center">
@@ -185,7 +188,7 @@
                   <i class="fab fa-facebook-f mr-2"></i> Facebook
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -239,47 +242,12 @@
     });
 
     // Form validation
-    const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('email-error');
-    const passwordError = document.getElementById('password-error');
+    // const loginForm = document.getElementById('login-form');
+    // const emailInput = document.getElementById('email');
+    // const emailError = document.getElementById('email-error');
+    // const passwordError = document.getElementById('password-error');
 
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let isValid = true;
 
-      // Reset errors
-      emailError.classList.add('hidden');
-      passwordError.classList.add('hidden');
-
-      // Validate email
-      if (!emailInput.value) {
-        emailError.textContent = "L'email est requis";
-        emailError.classList.remove('hidden');
-        isValid = false;
-      } else if (!validateEmail(emailInput.value)) {
-        emailError.textContent = "Veuillez entrer un email valide";
-        emailError.classList.remove('hidden');
-        isValid = false;
-      }
-
-      // Validate password
-      if (!passwordInput.value) {
-        passwordError.textContent = "Le mot de passe est requis";
-        passwordError.classList.remove('hidden');
-        isValid = false;
-      }
-
-      if (isValid) {
-        // Submit form - in a real app, this would call an API
-        console.log('Form submitted:', {
-          email: emailInput.value,
-          password: passwordInput.value
-        });
-        // Redirect or show success message
-        alert('Connexion réussie!');
-      }
-    });
 
     function validateEmail(email) {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
