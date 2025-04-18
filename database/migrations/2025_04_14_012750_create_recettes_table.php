@@ -15,7 +15,14 @@ return new class extends Migration
     {
         Schema::create('recettes', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->text('description');
+            $table->text('instruction');
+            $table->string('photo')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->nullOnDelete();
+            $table->foreignId('categorie_id')->nullable()->constrained('categories')->onUpdate('cascade')->nullOnDelete();
             $table->timestamps();
+
         });
     }
 

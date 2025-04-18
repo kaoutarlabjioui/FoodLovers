@@ -82,35 +82,36 @@
               <thead>
                 <tr>
                   <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recette</th>
-                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Auteur</th>
+                  <!-- <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Auteur</th> -->
                   <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <!-- <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th> -->
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
+                @foreach($recettes as $recette)
                 <tr>
                   <td class="px-4 py-3 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="h-10 w-10 flex-shrink-0">
-                        <img class="h-10 w-10 rounded-md object-cover" src="https://images.unsplash.com/photo-1488477304112-4944851de03d" alt="Tarte aux pommes">
+                        <img class="h-10 w-10 rounded-md object-cover" src="{{url('/storage/' . $recette->photo)}}" >
                       </div>
                       <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">Tarte aux pommes traditionnelle</div>
+                        <div class="text-sm font-medium text-gray-900">{{$recette->titre}}</div>
                       </div>
                     </div>
                   </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
+                  <!-- <td class="px-4 py-3 whitespace-nowrap">
                     <div class="text-sm text-gray-900">Emma Wilson</div>
-                  </td>
+                  </td> -->
                   <td class="px-4 py-3 whitespace-nowrap">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary/10 text-primary">
-                      Dessert
+                      {{$recette->category->title}}
                     </span>
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    14 mars 2025
+                    {{$recette->created_at}}
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -131,170 +132,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="h-10 w-10 flex-shrink-0">
-                        <img class="h-10 w-10 rounded-md object-cover" src="https://images.unsplash.com/photo-1605522561233-768ad7a8fabf" alt="Risotto">
-                      </div>
-                      <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">Risotto aux champignons</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Thomas Dubois</div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-secondary/10 text-secondary">
-                      Plat principal
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    13 mars 2025
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      Publiée
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="h-10 w-10 flex-shrink-0">
-                        <img class="h-10 w-10 rounded-md object-cover" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Salade">
-                      </div>
-                      <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">Salade César au poulet grillé</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Léa Petit</div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-accent/10 text-accent">
-                      Entrée
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    12 mars 2025
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                      En attente
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="h-10 w-10 flex-shrink-0">
-                        <img class="h-10 w-10 rounded-md object-cover" src="https://images.unsplash.com/photo-1551024506-0bccd828d307" alt="Chausson">
-                      </div>
-                      <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">Chausson aux pommes</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Paul Durand</div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary/10 text-primary">
-                      Dessert
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    11 mars 2025
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                      Rejetée
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="h-10 w-10 flex-shrink-0">
-                        <img class="h-10 w-10 rounded-md object-cover" src="https://images.unsplash.com/photo-1607478900766-efe13248b125" alt="Smoothie">
-                      </div>
-                      <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">Smoothie aux fruits rouges</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Marie Lambert</div>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-secondary/10 text-secondary">
-                      Boisson
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    10 mars 2025
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      Publiée
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -348,29 +186,6 @@
                     <input type="text" id="recipe-title" name="recipe-title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
                   </div>
 
-                  <div>
-                    <label for="recipe-author" class="block text-sm font-medium text-gray-700">Auteur</label>
-                    <select id="recipe-author" name="recipe-author" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                      <option value="">Sélectionner un auteur</option>
-                      <option value="1">Emma Wilson</option>
-                      <option value="2">Thomas Dubois</option>
-                      <option value="3">Léa Petit</option>
-                      <option value="4">Paul Durand</option>
-                      <option value="5">Marie Lambert</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label for="recipe-category" class="block text-sm font-medium text-gray-700">Catégorie</label>
-                    <select id="recipe-category" name="recipe-category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                      <option value="">Sélectionner une catégorie</option>
-                      <option value="dessert">Dessert</option>
-                      <option value="plat-principal">Plat principal</option>
-                      <option value="entree">Entrée</option>
-                      <option value="boisson">Boisson</option>
-                      <option value="petit-dejeuner">Petit-déjeuner</option>
-                    </select>
-                  </div>
 
                   <div>
                     <label for="recipe-description" class="block text-sm font-medium text-gray-700">Description</label>

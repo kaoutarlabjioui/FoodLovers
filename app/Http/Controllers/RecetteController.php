@@ -2,84 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRecetteRequest;
+use App\Http\Requests\UpdateRecetteRequest;
 use App\Models\Recette;
+use App\Services\ICategoryService;
+use App\Services\IRecetteService;
 use Illuminate\Http\Request;
 
 class RecetteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   protected IRecetteService $recetteService;
+   protected ICategoryService $catService;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+public function __construct(IRecetteService $recetteService,ICategoryService $catService){
+    $this->recetteService = $recetteService;
+    $this->catService = $catService;
+}
+   public function index(){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    $recettes = $this->recetteService->getAll();
+    $categories =$this->catService->getAll();
+    return view('admin.adminrecette',compact('recettes','categories'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Recette  $recette
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Recette $recette)
-    {
-        //
-    }
+   }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Recette  $recette
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recette $recette)
-    {
-        //
-    }
+   public function store(StoreRecetteRequest $request){
+    $recette = $request->validated();
+    $this->recetteService->create($recette);
+    return redirect()->back()->with('success','Recette créée avec succés');
+   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recette  $recette
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Recette $recette)
-    {
-        //
-    }
+   public function edit($id){
+    $recette = $this->recetteService->getById($id);
+    $categorie = $this->recetteService->getCategory();
+    return view('admin.editrecette',compact('recette','categorie'));
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Recette  $recette
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Recette $recette)
-    {
-        //
-    }
+   public function update(UpdateRecetteRequest $request,$id){
+    $recette = $request->validated();
+    $this->recetteService->update($id,$recette);
+
+    return redirect('admin/adminrecette');
+   }
+
+   public function destroy($id){
+    $this->recetteService->delete($id);
+    return redirect()->back();
+   }
+
+
+
+
 }
