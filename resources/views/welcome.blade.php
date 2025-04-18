@@ -38,14 +38,14 @@
           <a href="index.html" class="text-2xl font-display font-bold text-primary">FoodLovers</a>
         </div>
         <div class="hidden md:flex items-center space-x-8">
-          <a href="index.html" class="font-medium hover:text-primary transition-colors">Home</a>
-          <a href="recipes.html" class="font-medium hover:text-primary transition-colors">Recipes</a>
-          <a href="competition.html" class="font-medium hover:text-primary transition-colors">Competitions</a>
-          <a href="shop.html" class="font-medium hover:text-primary transition-colors">Shop</a>
+          <a href="/" class="font-medium hover:text-primary transition-colors">Home</a>
+          <!-- <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a> -->
+          <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
+          <a href="#" class="font-medium hover:text-primary transition-colors">Shop</a>
         </div>
         <div class="flex items-center space-x-4">
-          <a href="login.html" class="hidden md:block font-medium hover:text-primary transition-colors">Login</a>
-          <a href="signup.html" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Sign Up</a>
+          <a href="/login" class="hidden md:block font-medium hover:text-primary transition-colors">Login</a>
+          <a href="/register" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Sign Up</a>
           <button class="md:hidden text-dark" id="mobile-menu-button">
             <i class="fas fa-bars text-xl"></i>
           </button>

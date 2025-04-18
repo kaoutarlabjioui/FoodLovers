@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['nom'];
+
+
+    public function recettes(){
+        return $this->belongsToMany(Recette::class);
+    }
 }

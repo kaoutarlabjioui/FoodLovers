@@ -2,47 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\ICategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    protected ICategoryService $categoryService;
+
+
+    public function __construct( ICategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function index()
     {
-        return Category::all();
+        $categories =$this->categoryService->getAll();
+        return view('admin.admincategory',compact('categories'));
     }
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|unique:categories,name',
-        ]);
+           $category = $request->validated();
 
-        $category = Category::create([
-            'name' => $request->name,
-        ]);
+            $this->categoryService->create($category);
 
-        return response()->json($category, 201);
-    }
+            return redirect()->back()->with('success' , 'Categorie ajoutee');
 
-    public function update(Request $request, Category $category)
-    {
-        $request->validate([
-            'name' => 'required|string|unique:categories,name,' . $category->id,
-        ]);
 
-        $category->update([
-            'name' => $request->name,
-        ]);
-
-        return response()->json($category);
     }
 
+    public function edit($id){
+      $category=  $this->categoryService->getById($id);
+      return view("admin.editcategory",compact('category'));
 
-    public function destroy(Category $category)
+    }
+
+    public function update(UpdateCategoryRequest $request)
     {
-        $category->delete();
 
-        return response()->json(['message' => 'Catégorie supprimée']);
+
+        $data = $request->validated();
+        
+        $category = $this->categoryService->getById($data['id']);
+       $this->categoryService->update($category,$data);
+       return redirect('/admin/admincategory')->with("success",'Categorie modifier');
+    }
+
+
+    public function destroy(Request $category)
+    {
+
+        $this->categoryService->delete($category);
+
+        return redirect()->back()->with('success', 'Categorie supprimee');
     }
 
 

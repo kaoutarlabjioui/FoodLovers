@@ -54,14 +54,15 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        dd($request);
         $credentials = $request->only('email', 'password');
-
         $result = $this->iAuthService->login($credentials);
         if(!$result){
             return redirect()->back()->withErrors(['error' => 'Email ou mot de passe invalide']);
         }
+
         session(['jwt_token' => $result['token']]);
-        return redirect()->route('profile')->with('success', 'Connexion reussie');
+        return view('profile')->with('success', 'Connexion reussie');
     }
 
     public function logout(Request $request)
@@ -71,6 +72,8 @@ class AuthController extends Controller
         session()->forget('jwt_token');
         return redirect()->route('login')->with('success', $success ? 'Deconnexion reussie' : 'Erreur lors de la deconnexion');
     }
+
+
 
 
 
