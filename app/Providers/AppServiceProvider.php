@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Tag;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\IngredientRepository;
+use App\Repositories\IngredientRepositoryInterface;
 use App\Repositories\RecetteRepository;
 use App\Repositories\RecetteRepositoryInterface;
 use App\Repositories\RoleRepositoryInterface;
@@ -18,11 +20,16 @@ use App\Services\IAuthService;
 use App\Services\IRoleService;
 use App\Services\CategoryService;
 use App\Services\ICategoryService;
+use App\Services\IIngredientService;
+use App\Services\IngredientService;
+use App\Services\IProduitService;
 use App\Services\IRecetteService;
 use App\Services\RecetteService;
 use App\Services\TagService;
 use App\Services\ITagService;
+use App\Services\ProduitService;
 use Illuminate\Support\ServiceProvider;
+
 use RoleService;
 
 
@@ -45,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
        $this->app->bind(RecetteRepositoryInterface::class,RecetteRepository::class);
        $this->app->bind(TagRepositoryInterface::class,TagRepository::class);
        $this->app->bind(ITagService::class,TagService::class);
+       $this->app->bind(IIngredientService::class,IngredientService::class);
+       $this->app->bind(IngredientRepositoryInterface::class,IngredientRepository::class);
+       $this->app->bind(ProduitRepositoryInterface::class,ProduitRepository::class);
+       $this->app->bind(IProduitService::class,ProduitService::class);
+
 
     }
 
