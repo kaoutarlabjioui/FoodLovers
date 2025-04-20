@@ -16,12 +16,9 @@ class RecetteRepository implements RecetteRepositoryInterface
     }
 
 
-    public function create($data,$category){
+    public function create($recette){
 
-        
-        $recette = new recette();
-        $recette->name=$data["name"];
-        $recette->category()->associate($category);
+
 
         // $recette->user()->associate(auth()->user());
 
@@ -40,7 +37,9 @@ class RecetteRepository implements RecetteRepositoryInterface
 
 
     public function delete($id){
-        $recette = recette::findOrFail($id);
+        // dd($id);
+        $recette = recette::whereIn('id',$id)->first();
+        // dd($recette);
         return $recette->delete();
     }
 

@@ -9,7 +9,7 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom'];
+    protected $fillable = ['ingredient','etat'];
 
 
     public function recettes(){

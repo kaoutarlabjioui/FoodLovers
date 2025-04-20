@@ -28,6 +28,11 @@ public function update($tag, $data){
     return $this->tagRepo->update($tag,$data);
 }
 
+public function findByName($tag)
+{
+    return $this->tagRepo->findByName($tag);
+}
+
 public function delete($tag){
 
     return $this->tagRepo->delete($tag);
