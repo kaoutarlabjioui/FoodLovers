@@ -71,7 +71,7 @@
                 >
                 <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
               </div>
-              <button id="add-recipe-btn" class="bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary/90 transition-colors">
+              <button id="openRecipeModal" class="bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary/90 transition-colors">
                 <i class="fas fa-plus mr-1"></i> Ajouter
               </button>
             </div>
@@ -118,19 +118,25 @@
                       Publiée
                     </span>
                   </td>
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex space-x-2 justify-end">
+                           <a href="/admin/editrecette/{{$recette->id}}">
+                                <button class="text-yellow-600 hover:text-yellow-800 edit-ingredient" >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+
+                            <form action="{{ route('adminrecette.destroy') }}" method="POST" class="text-red-600 hover:text-red-800 delete-category">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{ $recette->id }}">
+                                <button type="submit" class="flex items-center gap-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
               </tbody>
@@ -163,130 +169,174 @@
   <!-- Modales -->
 
   <!-- Modale Ajouter une recette -->
-  <div id="add-recipe-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
+  <div id="addRecipeModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    @if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+        <strong>Succès !</strong> {{ session('success') }}
+    </div>
+@endif
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+              Ajouter une nouvelle recette
+            </h3>
 
-      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-              <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-                Ajouter une nouvelle recette
-              </h3>
+            @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+        <strong>Oups !</strong> Problèmes lors de la soumission :
+        <ul class="mt-2 list-disc pl-5">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 
-              <div class="mt-2">
-                <form id="add-recipe-form" class="space-y-4">
-                  <div>
-                    <label for="recipe-title" class="block text-sm font-medium text-gray-700">Titre de la recette</label>
-                    <input type="text" id="recipe-title" name="recipe-title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                  </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById('addRecipeModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    </script>
+@endif
 
 
-                  <div>
-                    <label for="recipe-description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea id="recipe-description" name="recipe-description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"></textarea>
-                  </div>
 
-                  <div>
-                    <label for="recipe-image" class="block text-sm font-medium text-gray-700">Image</label>
-                    <div class="mt-1 flex items-center">
-                      <span class="inline-block h-12 w-12 rounded-md overflow-hidden bg-gray-100">
-                        <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </span>
-                      <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                        Changer
-                      </button>
+
+            <div class="mt-2">
+              <form action="/admin/recette/store" method="POST" enctype="multipart/form-data" class="w-full space-y-4">
+                @csrf
+
+                <div class="form-element">
+                  <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+                  <input type="text" name="titre" required placeholder="Titre de la recette"
+                    class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                </div>
+
+                <div class="form-element">
+                  <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <textarea name="description" rows="3" required placeholder="Description"
+                    class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+                </div>
+
+                <!-- Multiselect pour les ingrédients -->
+                <div class="form-element">
+                    <label for="recipe-ingredients" class="block text-sm font-medium text-gray-700 mb-1">Ingrédients</label>
+                    <div class="relative">
+                      <select id="recipe-ingredients" name="ingredients[]" multiple class="select2-ingredients w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                        @foreach($ingredients as $ingredient)
+                          <option value="{{$ingredient->ingredient}}">{{$ingredient->ingredient}}</option>
+                        @endforeach
+                      </select>
+                      <p class="text-xs text-gray-500 mt-1">Vous pouvez sélectionner plusieurs ingrédients</p>
                     </div>
                   </div>
 
-                  <div>
-                    <label for="recipe-status" class="block text-sm font-medium text-gray-700">Statut</label>
-                    <select id="recipe-status" name="recipe-status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                      <option value="draft">Brouillon</option>
-                      <option value="pending">En attente</option>
-                      <option value="published">Publiée</option>
+                <div class="form-element">
+                  <label for="instruction" class="block text-sm font-medium text-gray-700 mb-1">Instruction</label>
+                  <textarea name="instruction" rows="6" required placeholder="Instructions"
+                    class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+                </div>
+
+                <div class="form-element">
+                  <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image</label>
+                  <input type="file" name="photo"
+                    class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                </div>
+
+                <div>
+                    <label for="recipe-status" class="block text-sm font-medium text-gray-700">Categorie</label>
+                    <select id="recipe-status" name="category_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    <option value="" disabled selected>Sélectionner une catégorie</option>
+                    @foreach($categories as $category)
+                      <option value="{{$category->title}}">{{$category->title}}</option>
+                    @endforeach
                     </select>
                   </div>
-                </form>
-              </div>
+
+                  <!-- Multiselect pour les tags -->
+                  <div class="form-element">
+                    <label for="recipe-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                    <div class="relative">
+                      <select id="recipe-tags" name="tags[]" multiple class="select2-tags w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                        @foreach($tags as $tag)
+                          <option value="{{$tag->nom}}">{{$tag->nom}}</option>
+                        @endforeach
+                      </select>
+                      <p class="text-xs text-gray-500 mt-1">Vous pouvez sélectionner plusieurs tags</p>
+                    </div>
+                  </div>
+
+                <div class="flex justify-end space-x-2 pt-4 border-t border-gray-100 mt-6">
+                  <button type="button" id="closeRecipeModal"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600">
+                    Annuler
+                  </button>
+                  <input type="submit" value="Ajouter"
+                    class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90 cursor-pointer" />
+                </div>
+              </form>
             </div>
           </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm">
-            Ajouter
-          </button>
-          <button type="button" class="close-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-            Annuler
-          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 @endsection
 
 @section('js')
   <!-- JavaScript -->
   <script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-      document.getElementById('mobile-sidebar').classList.remove('-translate-x-full');
-      document.getElementById('mobile-overlay').classList.remove('hidden');
-    });
 
-    document.getElementById('close-sidebar').addEventListener('click', function() {
-      document.getElementById('mobile-sidebar').classList.add('-translate-x-full');
-      document.getElementById('mobile-overlay').classList.add('hidden');
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    const openBtn = document.getElementById('openRecipeModal');
+    const modal = document.getElementById('addRecipeModal');
+    const closeBtn = document.getElementById('closeRecipeModal');
 
-    document.getElementById('mobile-overlay').addEventListener('click', function() {
-      document.getElementById('mobile-sidebar').classList.add('-translate-x-full');
-      document.getElementById('mobile-overlay').classList.add('hidden');
-    });
+    if (openBtn && modal && closeBtn) {
+      openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+      closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+  });
 
-    // Modal handling
-    const modals = {
-      'add-recipe-modal': document.getElementById('add-recipe-modal'),
-      'add-user-modal': document.getElementById('add-user-modal'),
-      'add-task-modal': document.getElementById('add-task-modal')
-    };
+  // Initialiser Select2 pour les tags et ingrédients
+  $(document).ready(function() {
+      $('.select2-tags').select2({
+        placeholder: 'Sélectionnez des tags',
+        allowClear: true,
+        tags: true,
+        tokenSeparators: [',', ' '],
+        dropdownParent: $('#addRecipeModal')
+      });
 
-    // Open modals
-    document.getElementById('add-recipe-btn').addEventListener('click', function() {
-      modals['add-recipe-modal'].classList.remove('hidden');
-    });
-
-    document.getElementById('add-task-btn').addEventListener('click', function() {
-      modals['add-task-modal'].classList.remove('hidden');
-    });
-
-    // Close modals
-    const closeButtons = document.querySelectorAll('.close-modal');
-    closeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        for (const key in modals) {
-          modals[key].classList.add('hidden');
-        }
+      $('.select2-ingredients').select2({
+        placeholder: 'Sélectionnez des ingrédients',
+        allowClear: true,
+        tags: true,
+        tokenSeparators: [',', ' '],
+        dropdownParent: $('#addRecipeModal')
       });
     });
 
-    // Close modals when clicking outside
-    window.addEventListener('click', function(event) {
-      for (const key in modals) {
-        if (event.target === modals[key]) {
-          modals[key].classList.add('hidden');
-        }
-      }
-    });
 
-    // Charts
+
 
   </script>
 @endsection
+
+
+
+
+
+

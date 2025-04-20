@@ -8,6 +8,7 @@ interface ITagService{
     public function getById($id);
     public function create($data);
     public function update($tag,$data);
+    public function findByName($tag);
     public function delete($tag);
 }
 

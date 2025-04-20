@@ -20,6 +20,14 @@ class TagRepository implements TagRepositoryInterface{
         return $Ttag->update($data);
     }
 
+
+    public function findByName($tag)
+    {
+       $tags = Tag::where('nom','=',$tag)->first();
+
+       return $tags;
+    }
+
     public function delete( $tag){
 //  dd($Ttag);
 

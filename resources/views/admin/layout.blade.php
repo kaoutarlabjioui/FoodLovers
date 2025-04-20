@@ -54,15 +54,15 @@
                 </a>
 
                 <div class="px-4 py-2 mt-4 text-xs text-gray-400 uppercase">Gestion</div>
-                <a href="/adminusers" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/adminusers" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-users w-5"></i>
                     <span class="ml-2">Utilisateurs</span>
                 </a>
-                <a href="/adminrecette" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/adminrecette" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-utensils w-5"></i>
                     <span class="ml-2">Recettes</span>
                 </a>
-                <a href="/admincompetition" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/admincompetition" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-trophy w-5"></i>
                     <span class="ml-2">Compétitions</span>
                 </a>
@@ -70,7 +70,7 @@
                     <i class="fas fa-comment w-5"></i>
                     <span class="ml-2">Commentaires</span>
                 </a>
-                <a href="/adminboutique" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/adminboutique" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-shopping-bag w-5"></i>
                     <span class="ml-2">Boutique</span>
                 </a>
@@ -87,7 +87,7 @@
             </nav>
 
             <div class="absolute bottom-0 w-64 p-4 border-t border-gray-700">
-                <a href="#" class="flex items-center text-gray-300 hover:text-white transition-colors">
+                <a href="/logout" class="flex items-center text-gray-300 hover:text-white transition-colors">
                     <i class="fas fa-sign-out-alt w-5"></i>
                     <span class="ml-2">Déconnexion</span>
                 </a>
