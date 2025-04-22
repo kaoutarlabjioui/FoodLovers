@@ -63,56 +63,7 @@
       </div>
     </div>
 
-    <!-- Stats Cards -->
-    <!-- <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white rounded-lg shadow-sm p-4">
-        <div class="flex items-center">
-          <div class="p-3 rounded-full bg-primary/10 text-primary">
-            <i class="fas fa-users text-xl"></i>
-          </div>
-          <div class="ml-4">
-            <p class="text-gray-500 text-sm">Total Utilisateurs</p>
-            <h3 class="font-bold text-xl">1,248</h3>
-          </div>
-        </div>
-      </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-4">
-        <div class="flex items-center">
-          <div class="p-3 rounded-full bg-green-100 text-green-600">
-            <i class="fas fa-user-check text-xl"></i>
-          </div>
-          <div class="ml-4">
-            <p class="text-gray-500 text-sm">Actifs</p>
-            <h3 class="font-bold text-xl">1,156</h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-sm p-4">
-        <div class="flex items-center">
-          <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-            <i class="fas fa-user-plus text-xl"></i>
-          </div>
-          <div class="ml-4">
-            <p class="text-gray-500 text-sm">Nouveaux ce mois</p>
-            <h3 class="font-bold text-xl">48</h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-sm p-4">
-        <div class="flex items-center">
-          <div class="p-3 rounded-full bg-red-100 text-red-600">
-            <i class="fas fa-user-slash text-xl"></i>
-          </div>
-          <div class="ml-4">
-            <p class="text-gray-500 text-sm">Suspendus</p>
-            <h3 class="font-bold text-xl">12</h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- Filters -->
     <div class="bg-white rounded-lg shadow-sm p-4 mb-6">

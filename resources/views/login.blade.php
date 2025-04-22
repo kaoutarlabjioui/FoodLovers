@@ -1,70 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion - FoodLovers</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#FF6B6B',
-            secondary: '#4ECDC4',
-            accent: '#FFE66D',
-            dark: '#292F36',
-            light: '#F7F9F9'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Playfair Display', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-  </style>
-</head>
-<body class="font-sans bg-light text-dark">
-  <!-- Navigation -->
-  <nav class="bg-white shadow-md fixed w-full z-10">
-    <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
-        <div class="flex items-center">
-          <a href="index.html" class="text-2xl font-display font-bold text-primary">FoodLovers</a>
-        </div>
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="index.html" class="font-medium hover:text-primary transition-colors">Accueil</a>
-          <a href="recipes.html" class="font-medium hover:text-primary transition-colors">Recettes</a>
-          <a href="competition.html" class="font-medium hover:text-primary transition-colors">Compétitions</a>
-          <a href="shop.html" class="font-medium hover:text-primary transition-colors">Boutique</a>
-        </div>
-        <div class="flex items-center space-x-4">
-          <a href="login.html" class="hidden md:block font-medium text-primary transition-colors">Connexion</a>
-          <a href="register.html" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Inscription</a>
-          <button class="md:hidden text-dark" id="mobile-menu-button">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
-      </div>
-      <!-- Mobile Menu -->
-      <div class="md:hidden hidden" id="mobile-menu">
-        <div class="flex flex-col space-y-4 py-4">
-          <a href="index.html" class="font-medium hover:text-primary transition-colors">Accueil</a>
-          <a href="recipes.html" class="font-medium hover:text-primary transition-colors">Recettes</a>
-          <a href="competition.html" class="font-medium hover:text-primary transition-colors">Compétitions</a>
-          <a href="shop.html" class="font-medium hover:text-primary transition-colors">Boutique</a>
-          <a href="login.html" class="font-medium text-primary transition-colors">Connexion</a>
-          <a href="register.html" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors text-center">Inscription</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+@extends('layouts')
 
+@section('content')
   <!-- Login Section -->
   <section class="pt-24 pb-12 md:pt-32 md:pb-16 min-h-screen flex items-center">
     <div class="container mx-auto px-4">
@@ -163,53 +99,15 @@
                 </a>
               </p>
             </div>
-<!--
-            <div class="mt-8">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                  <div class="w-full border-t border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                  <span class="px-2 bg-white text-gray-500">Ou continuer avec</span>
-                </div>
-              </div>
 
-              <div class="mt-6 grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  <i class="fab fa-google mr-2"></i> Google
-                </button>
-                <button
-                  type="button"
-                  class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  <i class="fab fa-facebook-f mr-2"></i> Facebook
-                </button>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
     </div>
   </section>
+@endsection
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-8">
-    <div class="container mx-auto px-4">
-      <div class="text-center">
-        <p>&copy; <span id="current-year"></span> FoodLovers. Tous droits réservés.</p>
-        <div class="flex justify-center space-x-4 mt-4">
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-pinterest"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
+@section('js')
   <!-- JavaScript -->
   <script>
     // Mobile menu toggle
@@ -257,5 +155,6 @@
     // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
   </script>
+  @section('js')
 </body>
 </html>

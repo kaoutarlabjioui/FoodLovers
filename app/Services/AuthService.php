@@ -18,14 +18,16 @@ class AuthService implements IAuthService
     }
 
     public function register($data){
+
         $roleName = $data['role_name']??'client';
         $role =Role::firstORCreate(['role_name'=>$roleName]);
-
         $userData = [
-            'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'first_name' => $data['first_name'],
             'email' => $data ['email'],
             'password'=>Hash::make($data['password']),
         ];
+        // dd($userData);
         $user = $this->userRepo->create($userData);
         $user->role()->associate($role);
         $user->save();

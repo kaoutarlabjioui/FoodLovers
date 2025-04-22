@@ -1,69 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription - FoodLovers</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#FF6B6B',
-            secondary: '#4ECDC4',
-            accent: '#FFE66D',
-            dark: '#292F36',
-            light: '#F7F9F9'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Playfair Display', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-  </style>
-</head>
-<body class="font-sans bg-light text-dark">
-  <!-- Navigation -->
-  <nav class="bg-white shadow-md fixed w-full z-10">
-    <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
-        <div class="flex items-center">
-          <a href="index.html" class="text-2xl font-display font-bold text-primary">FoodLovers</a>
-        </div>
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="index.html" class="font-medium hover:text-primary transition-colors">Accueil</a>
-          <a href="recipes.html" class="font-medium hover:text-primary transition-colors">Recettes</a>
-          <a href="competition.html" class="font-medium hover:text-primary transition-colors">Compétitions</a>
-          <a href="shop.html" class="font-medium hover:text-primary transition-colors">Boutique</a>
-        </div>
-        <div class="flex items-center space-x-4">
-          <a href="login.html" class="hidden md:block font-medium hover:text-primary transition-colors">Connexion</a>
-          <a href="register.html" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Inscription</a>
-          <button class="md:hidden text-dark" id="mobile-menu-button">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
-      </div>
-      <!-- Mobile Menu -->
-      <div class="md:hidden hidden" id="mobile-menu">
-        <div class="flex flex-col space-y-4 py-4">
-          <a href="index.html" class="font-medium hover:text-primary transition-colors">Accueil</a>
-          <a href="recipes.html" class="font-medium hover:text-primary transition-colors">Recettes</a>
-          <a href="competition.html" class="font-medium hover:text-primary transition-colors">Compétitions</a>
-          <a href="shop.html" class="font-medium hover:text-primary transition-colors">Boutique</a>
-          <a href="login.html" class="font-medium hover:text-primary transition-colors">Connexion</a>
-          <a href="register.html" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors text-center">Inscription</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+@extends('layouts')
+
+@section('content')
   @if($errors->any())
         <div style="color: red;">
             <ul>
@@ -93,7 +30,7 @@
                 @csrf
               <div>
                 <label for="name" class="block text-gray-700 font-medium mb-2">
-                  Nom complet
+                  Nom
                 </label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -101,7 +38,24 @@
                   </div>
                   <input
                     id="name"
-                    name="name"
+                    name="last_name"
+                    type="text"
+                    class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Votre nom"
+                  >
+                </div>
+                <p id="name-error" class="mt-1 text-sm text-red-500 hidden"></p>
+
+                <label for="name" class="block text-gray-700 font-medium mb-2">
+                  Prenom
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-user text-gray-400"></i>
+                  </div>
+                  <input
+                    id="name"
+                    name="first_name"
                     type="text"
                     class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="Votre nom"
@@ -218,19 +172,6 @@
                     class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                   >
                 </div>
-                <div class="ml-3 text-sm">
-                  <label for="accept-terms" class="text-gray-700">
-                    J'accepte les
-                    <a href="#" class="text-primary hover:text-primary/80">
-                      conditions d'utilisation
-                    </a>
-                    et la
-                    <a href="#" class="text-primary hover:text-primary/80">
-                      politique de confidentialité
-                    </a>
-                  </label>
-                  <p id="accept-terms-error" class="mt-1 text-sm text-red-500 hidden"></p>
-                </div>
               </div>
 
               <div>
@@ -257,21 +198,9 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-8">
-    <div class="container mx-auto px-4">
-      <div class="text-center">
-        <p>&copy; <span id="current-year"></span> FoodLovers. Tous droits réservés.</p>
-        <div class="flex justify-center space-x-4 mt-4">
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-white hover:text-primary transition-colors"><i class="fab fa-pinterest"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
+@endsection
 
+@section('js')
   <!-- JavaScript -->
   <script>
     // Mobile menu toggle
@@ -393,15 +322,15 @@
     });
 
     // Form validation
-    const registerForm = document.getElementById('register-form');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const passwordError = document.getElementById('password-error');
-    const confirmPasswordError = document.getElementById('confirm-password-error');
-    const acceptTerms = document.getElementById('accept-terms');
-    const acceptTermsError = document.getElementById('accept-terms-error');
+    // const registerForm = document.getElementById('register-form');
+    // const nameInput = document.getElementById('name');
+    // const emailInput = document.getElementById('email');
+    // const nameError = document.getElementById('name-error');
+    // const emailError = document.getElementById('email-error');
+    // const passwordError = document.getElementById('password-error');
+    // const confirmPasswordError = document.getElementById('confirm-password-error');
+    // const acceptTerms = document.getElementById('accept-terms');
+    // const acceptTermsError = document.getElementById('accept-terms-error');
 
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -463,32 +392,26 @@
         isValid = false;
       }
 
-      // Validate terms acceptance
-      if (!acceptTerms.checked) {
-        acceptTermsError.textContent = "Vous devez accepter les conditions d'utilisation";
-        acceptTermsError.classList.remove('hidden');
-        isValid = false;
-      }
 
-      if (isValid) {
-        // Submit form - in a real app, this would call an API
-        console.log('Form submitted:', {
-          name: nameInput.value,
-          email: emailInput.value,
-          password: passwordInput.value
-        });
-        // Redirect or show success message
-        alert('Inscription réussie!');
-      }
+
+    //   if (isValid) {
+    //     // Submit form - in a real app, this would call an API
+    //     console.log('Form submitted:', {
+    //       name: nameInput.value,
+    //       email: emailInput.value,
+    //       password: passwordInput.value
+    //     });
+    //     // Redirect or show success message
+    //     alert('Inscription réussie!');
+    //   }
     });
 
-    function validateEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    }
+    // function validateEmail(email) {
+    //   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //   return re.test(email);
+    // }
 
     // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
   </script>
-</body>
-</html>
+@endsection

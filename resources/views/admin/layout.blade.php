@@ -66,32 +66,35 @@
                     <i class="fas fa-trophy w-5"></i>
                     <span class="ml-2">Compétitions</span>
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/admincategory" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-comment w-5"></i>
-                    <span class="ml-2">Commentaires</span>
+                    <span class="ml-2">Categories</span>
                 </a>
-                <a href="/admin/adminboutique" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/adminshop" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-shopping-bag w-5"></i>
                     <span class="ml-2">Boutique</span>
                 </a>
 
                 <div class="px-4 py-2 mt-4 text-xs text-gray-400 uppercase">Configuration</div>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/admintag" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-cog w-5"></i>
-                    <span class="ml-2">Paramètres</span>
+                    <span class="ml-2">Tags</span>
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
+                <a href="/admin/adminingredient" class="flex items-center px-4 py-3 text-gray-300 hover:bg-dark/80 hover:text-white transition-colors">
                     <i class="fas fa-palette w-5"></i>
-                    <span class="ml-2">Apparence</span>
+                    <span class="ml-2">Ingredients</span>
                 </a>
             </nav>
 
             <div class="absolute bottom-0 w-64 p-4 border-t border-gray-700">
-                <a href="/logout" class="flex items-center text-gray-300 hover:text-white transition-colors">
-                    <i class="fas fa-sign-out-alt w-5"></i>
-                    <span class="ml-2">Déconnexion</span>
-                </a>
-            </div>
+    <form action="/logout" method="get" class="flex items-center">
+        @csrf
+        <button type="submit" class="flex items-center text-gray-300 hover:text-white transition-colors bg-transparent border-0">
+            <i class="fas fa-sign-out-alt w-5"></i>
+            <span class="ml-2">Déconnexion</span>
+        </button>
+    </form>
+</div>
         </aside>
 
         <!-- Mobile sidebar -->
