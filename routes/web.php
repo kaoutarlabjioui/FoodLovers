@@ -3,9 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RecetteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
+use App\Models\Produit;
 use App\Models\Recette;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 // Route::get('/login', function () {
 //     return view('login');
@@ -92,8 +94,13 @@ Route::prefix('admin')->group(function(){
     Route::delete('/ingredient/destroy',[IngredientController::class, 'destroy'])->name("adminingredient.destroy");
     Route::get('/editingredient/{id}',[IngredientController::class,'edit']);
     Route::post('/ingredient/update',[IngredientController::class,'update']);
+//produit
 
-
+    Route::get('/adminshop',[ProduitController::class,'index']);
+    Route::post('/produit/store',[ProduitController::class,'store']);
+    Route::delete('/produit/destroy',[ProduitController::class, 'destroy'])->name("adminproduit.destroy");
+    Route::get('/editproduit/{id}',[ProduitController::class,'edit']);
+    Route::post('/produit/update',[ProduitController::class,'update']);
 });
 
 Route::get('/profile', function () {
@@ -113,6 +120,12 @@ Route::post('/logout',[AuthController::class, 'logout']);
 
 Route::get('/roles',[RoleController::class,'index']);
 Route::post('/roles/store',[RoleController::class,'store']);
+
+
+Route::get('/',[RecetteController::class,'show']);
+Route::post('/recettedetails',[RecetteController::class,'detailsRecette']);
+Route::get('/boutique',[ProduitController::class,'show']);
+Route::post('/produitdetails',[ProduitController::class,'detailsProduit']);
 
 
 // Route::get('/admincategory',[CategoryController::class,'index']);

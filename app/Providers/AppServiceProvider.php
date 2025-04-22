@@ -7,6 +7,8 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\IngredientRepository;
 use App\Repositories\IngredientRepositoryInterface;
+use App\Repositories\ProduitRepository;
+use App\Repositories\ProduitRepositoryInterface;
 use App\Repositories\RecetteRepository;
 use App\Repositories\RecetteRepositoryInterface;
 use App\Repositories\RoleRepositoryInterface;

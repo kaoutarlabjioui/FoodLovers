@@ -34,6 +34,18 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
 
    }
 
+
+   public function show(){
+
+    $recettes = $this->recetteService->getAll();
+    $categories =$this->catService->getAll();
+    $tags = $this->tagService->getAll();
+    // $ingredients = $this->ingredientService->getAll();
+    return view('home',compact('recettes','categories','tags'));
+
+   }
+
+
    public function store(StoreRecetteRequest $request){
     $recette = $request->validated();
     //  dd($request->all());
@@ -44,13 +56,17 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
 
    public function edit($id){
     $recette = $this->recetteService->getById($id);
-    // $categorie = $this->recetteService->getCategory();
-    return view('admin.editrecette',compact('recette','categorie'));
+    // $categories =$this->catService->getAll();
+    $tags = $this->tagService->getAll();
+    $ingredients = $this->ingredientService->getAll();
+
+    return view('admin.editrecette',compact('recette','tags','ingredients'));
    }
 
-   public function update(UpdateRecetteRequest $request,$id){
-    $recette = $request->validated();
-    $this->recetteService->update($id,$recette);
+   public function update(UpdateRecetteRequest $request){
+    $data = $request->validated();
+    $recette = $this->recetteService->getById($data['id']);
+    $this->recetteService->update($recette,$data);
 
     return redirect('admin/adminrecette');
    }
@@ -62,6 +78,15 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
    }
 
 
+    public function detailsRecette(Request $request){
 
+     $recette = $this->recetteService->getById($request->recette);
+
+
+        return view('detailrecette',compact('recette'));
+
+
+
+    }
 
 }

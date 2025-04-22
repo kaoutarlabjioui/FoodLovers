@@ -27,7 +27,7 @@ public function getAll(){
     return $this->recetteRepo->all();
 }
 
-public function getById(int $id)
+public function getById( $id)
 {
     return $this->recetteRepo->find($id);
 }
@@ -71,11 +71,11 @@ public function create($data){
     return $recette;
 }
 
-public function update(int $id, array $data)
+public function update( $recette,$data)
 {
 
 
-    return $this->recetteRepo->update($id, $data);
+    return $this->recetteRepo->update($recette, $data);
 }
 
 public function delete( $recette)
