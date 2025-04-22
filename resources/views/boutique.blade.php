@@ -1,102 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boutique - FoodLovers</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#FF6B6B',
-            secondary: '#4ECDC4',
-            accent: '#FFE66D',
-            dark: '#292F36',
-            light: '#F7F9F9'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Playfair Display', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #c5c5c5;
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #a8a8a8;
-    }
-  </style>
-</head>
-<body class="font-sans bg-light text-dark">
-  <!-- Header/Navigation -->
-  <header class="bg-white shadow-sm sticky top-0 z-10">
-    <div class="container mx-auto px-4">
-      <div class="flex items-center justify-between py-4">
-        <!-- Logo -->
-        <a href="/" class="flex items-center">
-          <span class="text-2xl font-display font-bold text-primary">Food<span class="text-dark">Lovers</span></span>
-        </a>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center space-x-8">
-          <a href="/" class="text-dark hover:text-primary transition-colors">Accueil</a>
-          <a href="/" class="text-dark hover:text-primary transition-colors">Recettes</a>
-          <a href="/competition" class="text-dark hover:text-primary transition-colors">Compétitions</a>
-          <a href="/boutique" class="text-primary font-medium">Boutique</a>
-        </nav>
-
-        <!-- User Actions -->
-        <div class="flex items-center space-x-4">
-          <a href="#" class="text-dark hover:text-primary transition-colors">
-            <i class="fas fa-search"></i>
-          </a>
-          <a href="/panier" class="text-dark hover:text-primary transition-colors relative">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-          </a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">
-            <i class="fas fa-user"></i>
-          </a>
-
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-button" class="md:hidden text-dark hover:text-primary transition-colors">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="md:hidden bg-white shadow-sm hidden">
-      <div class="container mx-auto px-4 py-3">
-        <nav class="flex flex-col space-y-3">
-          <a href="/home" class="text-dark hover:text-primary transition-colors py-2">Accueil</a>
-          <a href="/home" class="text-dark hover:text-primary transition-colors py-2">Recettes</a>
-          <a href="/competition" class="text-dark hover:text-primary transition-colors py-2">Compétitions</a>
-          <a href="/shop" class="text-primary font-medium py-2">Boutique</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors py-2">À propos</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+@extends('layouts')
+@section('content')
 
   <!-- Hero Section -->
   <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
@@ -221,55 +124,9 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div>
-          <h3 class="text-xl font-display font-bold mb-4">FoodLovers</h3>
-          <p class="text-gray-400 mb-4">Votre destination pour tout ce qui concerne la cuisine et la gastronomie.</p>
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-pinterest"></i>
-            </a>
-          </div>
-        </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
-          <ul class="space-y-2">
-            <li><a href="/home" class="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
-            <li><a href="/home" class="text-gray-400 hover:text-white transition-colors">Recettes</a></li>
-            <li><a href="/competirion" class="text-gray-400 hover:text-white transition-colors">Compétitions</a></li>
-            <li><a href="/boutique" class="text-gray-400 hover:text-white transition-colors">Boutique</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">Contact</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Rue de la Cuisine, Paris</li>
-            <li><i class="fas fa-phone mr-2"></i> +33 1 23 45 67 89</li>
-            <li><i class="fas fa-envelope mr-2"></i> contact@foodlovers.com</li>
-          </ul>
-        </div>
-      </div>
-      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 mb-4 md:mb-0">© 2025 FoodLovers. Tous droits réservés.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Conditions d'utilisation</a>
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Politique de confidentialité</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  @endsection
+
+  @section('js')
 
   <!-- JavaScript -->
   <script>
@@ -279,5 +136,4 @@
       mobileMenu.classList.toggle('hidden');
     });
   </script>
-</body>
-</html>
+@endsection

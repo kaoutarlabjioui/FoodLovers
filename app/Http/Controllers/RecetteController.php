@@ -56,17 +56,20 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
 
    public function edit($id){
     $recette = $this->recetteService->getById($id);
-    // $categories =$this->catService->getAll();
+    $categories =$this->catService->getAll();
     $tags = $this->tagService->getAll();
     $ingredients = $this->ingredientService->getAll();
 
-    return view('admin.editrecette',compact('recette','tags','ingredients'));
+    return view('admin.editrecette',compact('recette','tags','ingredients','categories'));
    }
 
-   public function update(UpdateRecetteRequest $request){
-    $data = $request->validated();
-    $recette = $this->recetteService->getById($data['id']);
-    $this->recetteService->update($recette,$data);
+   public function update(Request $request){
+
+
+    // dd($request->all());
+    // $data = $request->validated();
+
+    $this->recetteService->update($request->all());
 
     return redirect('admin/adminrecette');
    }

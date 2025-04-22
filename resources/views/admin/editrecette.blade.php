@@ -137,14 +137,24 @@
             </div>
 
             <div>
-              <label for="recipe-category" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
-              <input type="text" id="recipe-title" name="categoey_name" value="{{ $recette->category->title }}" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
-            </div>
+                    <label for="recipe-status" class="block text-sm font-medium text-gray-700">Categorie</label>
+                    <select id="recipe-status" name="category_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    <option value="" disabled selected>Sélectionner une catégorie</option>
+                    @foreach($categories as $category)
+                      <option value="{{$category->title}}">{{$category->title}}</option>
+                    @endforeach
+                    </select>
+                  </div>
           </div>
 
           <div>
             <label for="recipe-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
             <textarea id="recipe-description" name="description" rows="3" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">{{ $recette->description }}</textarea>
+          </div>
+
+          <div>
+            <label for="recipe-description" class="block text-sm font-medium text-gray-700 mb-1">Instructions</label>
+            <textarea id="recipe-description" name="instruction" rows="5" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">{{ $recette->instruction }}</textarea>
           </div>
 
           <div>
@@ -154,46 +164,37 @@
                 <img id="image-preview" src="{{ url('/storage/'. $recette->photo) }}" alt="{{ $recette->titre }}" class="image-preview">
               </div>
               <div class="flex-1">
-                <label for="recipe-image" class="block text-sm font-medium text-gray-700 mb-1">Changer l'image</label>
-                <input type="file" id="recipe-image" name="photo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary/90">
-                <p class="mt-1 text-xs text-gray-500">PNG, JPG ou JPEG. Max 2MB.</p>
-              </div>
+                  <label for="product-image" class="block text-sm font-medium text-gray-700 mb-1">Changer l'image</label>
+                  <input type="file" id="product-image" name="photo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary/90">
+                  <p class="mt-1 text-xs text-gray-500">PNG, JPG ou JPEG. Max 2MB.</p>
+                </div>
             </div>
           </div>
           <div>
-  <label class="block text-sm font-medium text-gray-700 mb-3">Ingrédients</label>
-  <div id="ingredients-container">
-    @foreach($recette->ingredients as $ingredient)
-      <div class="ingredient-row">
-        <select name="ingredient_ids[]" class="block border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
-          <option value="">Sélectionner un ingrédient</option>
-          @foreach($ingredients as $ing)
-            <option value="{{ $ing->id }}" {{ $ingredient->id == $ing->id ? 'selected' : '' }}>
-              {{ $ing->ingredient }}
-            </option>
-          @endforeach
-        </select>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Ingrédients</label>
+                   <div class="form-element">
+                    <div class="relative">
+                      <select id="recipe-ingredients" name="ingredients[]" multiple class="select2-ingredients w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                        @foreach($ingredients as $ingredient)
+                          <option value="{{$ingredient->ingredient}}">{{$ingredient->ingredient}}</option>
+                        @endforeach
+                      </select>
+                      <p class="text-xs text-gray-500 mt-1">Vous pouvez sélectionner plusieurs ingrédients</p>
+                    </div>
+                  </div>
+            </div>
 
-        <button type="button" class="remove-ingredient bg-red-500 text-white px-3 py-2 rounded-md text-sm hover:bg-red-600">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
-    @endforeach
-  </div>
-
-  <button type="button" id="add-ingredient" class="mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm hover:bg-gray-300">
-    <i class="fas fa-plus mr-2"></i> Ajouter un ingrédient
-  </button>
-</div>
-
-<div class="tag-selector">
-  @foreach($tags as $tag)
-    <div class="tag-item {{ $recette->tags->contains($tag->id) ? 'selected' : '' }}" data-tag-id="{{ $tag->id }}">
-      {{ $tag->nom }}
-      <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ $recette->tags->contains($tag->id) ? 'checked' : '' }} class="hidden">
-    </div>
-  @endforeach
-</div>
+            <div class="form-element">
+                    <label for="recipe-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                    <div class="relative">
+                      <select id="recipe-tags" name="tags[]" multiple class="select2-tags w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                        @foreach($tags as $tag)
+                          <option value="{{$tag->nom}}">{{$tag->nom}}</option>
+                        @endforeach
+                      </select>
+                      <p class="text-xs text-gray-500 mt-1">Vous pouvez sélectionner plusieurs tags</p>
+                    </div>
+                  </div>
 
           <div class="bg-gray-50 -mx-6 -mb-6 px-6 py-4 flex justify-between">
             <button type="button" onclick="window.location.href='/admin/adminrecette'" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm hover:bg-gray-300">

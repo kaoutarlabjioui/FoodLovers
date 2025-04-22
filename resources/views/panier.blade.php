@@ -57,8 +57,7 @@
 
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center space-x-8">
-          <a href="index" class="text-dark hover:text-primary transition-colors">Accueil</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">Recettes</a>
+          <a href="/" class="text-dark hover:text-primary transition-colors">Accueil</a>
           <a href="#" class="text-dark hover:text-primary transition-colors">Compétitions</a>
           <a href="/boutique" class="text-dark hover:text-primary transition-colors">Boutique</a>
           <a href="#" class="text-dark hover:text-primary transition-colors">Blog</a>
@@ -70,7 +69,7 @@
           <a href="#" class="text-dark hover:text-primary transition-colors">
             <i class="fas fa-search"></i>
           </a>
-          <a href="cart.html" class="text-primary transition-colors relative">
+          <a href="/panier" class="text-primary transition-colors relative">
             <i class="fas fa-shopping-cart"></i>
             <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
           </a>
@@ -150,68 +149,6 @@
               </div>
             </div>
 
-            <!-- Cart Item 2 -->
-            <div class="p-4 border-b flex flex-col sm:flex-row items-center gap-4">
-              <div class="sm:w-24 h-24 flex-shrink-0">
-                <img src="https://images.unsplash.com/photo-1588867702719-969c8c11574d" alt="Livre de recettes" class="w-full h-full object-cover rounded-md">
-              </div>
-              <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1">Livre "Cuisine du Monde"</h3>
-                <p class="text-gray-500 text-sm mb-2">Catégorie: Livres</p>
-                <div class="flex flex-wrap items-center gap-4">
-                  <div class="flex items-center border rounded-md">
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <span class="px-3 py-1 border-x">1</span>
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div>
-                  <div class="text-lg font-bold text-primary">29,99 €</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button class="text-gray-400 hover:text-primary transition-colors">
-                  <i class="fas fa-heart"></i>
-                </button>
-                <button class="text-gray-400 hover:text-red-500 transition-colors">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Cart Item 3 -->
-            <div class="p-4 flex flex-col sm:flex-row items-center gap-4">
-              <div class="sm:w-24 h-24 flex-shrink-0">
-                <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246" alt="Tablier" class="w-full h-full object-cover rounded-md">
-              </div>
-              <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1">Tablier de Cuisine Professionnel</h3>
-                <p class="text-gray-500 text-sm mb-2">Catégorie: Accessoires</p>
-                <div class="flex flex-wrap items-center gap-4">
-                  <div class="flex items-center border rounded-md">
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <span class="px-3 py-1 border-x">1</span>
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div>
-                  <div class="text-lg font-bold text-primary">24,99 €</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button class="text-gray-400 hover:text-primary transition-colors">
-                  <i class="fas fa-heart"></i>
-                </button>
-                <button class="text-gray-400 hover:text-red-500 transition-colors">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </div>
-          </div>
 
           <!-- Cart Actions -->
           <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -283,121 +220,16 @@
     <div class="container mx-auto px-4">
       <h2 class="text-2xl font-display font-bold mb-8">Vous pourriez aussi aimer</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Product Card 1 -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden group">
-          <div class="relative">
-            <img src="https://images.unsplash.com/photo-1607490398539-e8f81b7a59fc" alt="Balance de cuisine" class="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-eye"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-heart"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-lg mb-1 hover:text-primary transition-colors">
-              <a href="#">Balance de Cuisine Numérique</a>
-            </h3>
-            <div class="flex justify-between items-center">
-              <div class="text-lg font-bold text-primary">14,99 €</div>
-              <button class="bg-primary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                Ajouter au panier
-              </button>
-            </div>
-          </div>
-        </div>
+
 
         <!-- Product Card 2 -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden group">
-          <div class="relative">
-            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f" alt="Livre de pâtisserie" class="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-eye"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-heart"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-lg mb-1 hover:text-primary transition-colors">
-              <a href="#">L'Art de la Pâtisserie</a>
-            </h3>
-            <div class="flex justify-between items-center">
-              <div class="text-lg font-bold text-primary">34,99 €</div>
-              <button class="bg-primary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                Ajouter au panier
-              </button>
-            </div>
-          </div>
-        </div>
+
 
         <!-- Product Card 3 -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden group">
-          <div class="relative">
-            <img src="https://images.unsplash.com/photo-1591261730799-ee4e6c2d1b75" alt="Moule à gâteau" class="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-eye"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-heart"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-lg mb-1 hover:text-primary transition-colors">
-              <a href="#">Moule à Gâteau Silicone Premium</a>
-            </h3>
-            <div class="flex justify-between items-center">
-              <div class="text-lg font-bold text-primary">19,99 €</div>
-              <button class="bg-primary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                Ajouter au panier
-              </button>
-            </div>
-          </div>
-        </div>
+
 
         <!-- Product Card 4 -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden group">
-          <div class="relative">
-            <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d" alt="Épices" class="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-eye"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-heart"></i>
-              </button>
-              <button class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
-                <i class="fas fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-lg mb-1 hover:text-primary transition-colors">
-              <a href="#">Coffret d'Épices du Monde</a>
-            </h3>
-            <div class="flex justify-between items-center">
-              <div class="text-lg font-bold text-primary">34,99 €</div>
-              <button class="bg-primary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                Ajouter au panier
-              </button>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -409,41 +241,18 @@
         <div>
           <h3 class="text-xl font-display font-bold mb-4">FoodLovers</h3>
           <p class="text-gray-400 mb-4">Votre destination pour tout ce qui concerne la cuisine et la gastronomie.</p>
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">
-              <i class="fab fa-pinterest"></i>
-            </a>
-          </div>
         </div>
         <div>
           <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
           <ul class="space-y-2">
-            <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Recettes</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Compétitions</a></li>
-            <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Boutique</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+            <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
+            <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Recettes</a></li>
+            <li><a href="/competition" class="text-gray-400 hover:text-white transition-colors">Compétitions</a></li>
+            <li><a href="/boutique" class="text-gray-400 hover:text-white transition-colors">Boutique</a></li>
+
           </ul>
         </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">Service Client</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Mon compte</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Suivi de commande</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Aide</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Retours</a></li>
-          </ul>
-        </div>
+
         <div>
           <h4 class="text-lg font-bold mb-4">Contact</h4>
           <ul class="space-y-2 text-gray-400">
@@ -455,10 +264,6 @@
       </div>
       <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-400 mb-4 md:mb-0">© 2025 FoodLovers. Tous droits réservés.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Conditions d'utilisation</a>
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Politique de confidentialité</a>
-        </div>
       </div>
     </div>
   </footer>

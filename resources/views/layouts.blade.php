@@ -42,16 +42,30 @@
           <a href="/" class="font-medium hover:text-primary transition-colors">Home</a>
           <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
           <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
-          <a href="/shop" class="font-medium hover:text-primary transition-colors">Shop</a>
+          <a href="/boutique" class="font-medium hover:text-primary transition-colors">Shop</a>
           <a href="/blog" class="font-medium hover:text-primary transition-colors">Blog</a>
         </div>
-        <div class="flex items-center space-x-4">
-          <a href="/login" class="hidden md:block font-medium hover:text-primary transition-colors">Login</a>
-          <a href="/register" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Sign Up</a>
-          <button class="md:hidden text-dark" id="mobile-menu-button">
+        @if (Route::has('login'))
+    <div class="flex items-center space-x-4">
+        @auth
+            @if(auth()->user()->role->role_name == 'admin')
+                <a href="{{ url('/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
+            @elseif(auth()->user()->role->role_name == 'user')
+                <a href="{{ url('/profile') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Profile</a>
+            @endif
+            <a href="/logout" class="hidden md:block font-medium text-red-500 hover:text-red-700 transition-colors">Logout</a>
+        @else
+            <a href="{{ route('login') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Login</a>
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Sign Up</a>
+            @endif
+        @endauth
+        <button class="md:hidden text-dark" id="mobile-menu-button">
             <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
+        </button>
+    </div>
+@endif
+
       </div>
       <!-- Mobile Menu -->
       <div class="md:hidden hidden" id="mobile-menu">
@@ -93,7 +107,7 @@
             <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
             <li><a href="/recipes" class="hover:text-primary transition-colors">Recipes</a></li>
             <li><a href="/competition" class="hover:text-primary transition-colors">Competitions</a></li>
-            <li><a href="/shop" class="hover:text-primary transition-colors">Shop</a></li>
+            <li><a href="/boutique" class="hover:text-primary transition-colors">Shop</a></li>
             <li><a href="/about" class="hover:text-primary transition-colors">About Us</a></li>
             <li><a href="/contact" class="hover:text-primary transition-colors">Contact Us</a></li>
           </ul>

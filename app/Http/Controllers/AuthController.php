@@ -36,7 +36,8 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'     => 'required',
+            'last_name'     => 'required',
+            'first_name'     => 'required',
             'email'    => 'required|email',
             'password' => 'required',
             'role_name'     => 'nullable|string',
@@ -44,9 +45,12 @@ class AuthController extends Controller
 
         try{
             $result = $this->iAuthService->register($request->all());
+
             session(['jwt_token' => $result['token']]);
-            return redirect()->route('profile')->with('success', 'Inscription reussie');
+
+            return redirect()->route('login')->with('success', 'Inscription reussie');
         }catch(Exception $e) {
+            // dd($e);
             return redirect()->back()->withErrors(['error' => 'Erreur lors de l inscription']);
         }
 
@@ -54,7 +58,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        dd($request);
+        // dd($request);
         $credentials = $request->only('email', 'password');
         $result = $this->iAuthService->login($credentials);
         if(!$result){
@@ -62,15 +66,15 @@ class AuthController extends Controller
         }
 
         session(['jwt_token' => $result['token']]);
-        return view('profile')->with('success', 'Connexion reussie');
+        return redirect('/admin/adminshop')->with('success', 'Connexion reussie');
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         $token = session('jwt_token');
         $success = $this->iAuthService->logout($token);
         session()->forget('jwt_token');
-        return redirect()->route('login')->with('success', $success ? 'Deconnexion reussie' : 'Erreur lors de la deconnexion');
+        return redirect('/')->with('success', $success ? 'Deconnexion reussie' : 'Erreur lors de la deconnexion');
     }
 
 

@@ -115,7 +115,7 @@ Route::get('/login',[AuthController::class,'index'])->name('login');
 Route::post('/logins',[AuthController::class, 'login']);
 Route::get('/register',[AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/registers',[AuthController::class, 'register']);
-Route::post('/logout',[AuthController::class, 'logout']);
+Route::get('/logout',[AuthController::class, 'logout']);
 
 
 Route::get('/roles',[RoleController::class,'index']);
