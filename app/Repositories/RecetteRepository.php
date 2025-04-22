@@ -11,7 +11,7 @@ class RecetteRepository implements RecetteRepositoryInterface
     }
 
     public function find($id){
-        return Recette::with('category')->findOrFail($id);
+        return Recette::with('category','tags','ingredients')->findOrFail($id);
 
     }
 
@@ -29,10 +29,13 @@ class RecetteRepository implements RecetteRepositoryInterface
     }
 
 
-    public function update($id,$data){
-        $recette = Recette::findOrFail($id);
-        $recette->update($data);
-        return $recette;
+    public function update($recette){
+
+        // $array_recette = $recette->toarray();
+        // $recette->update($data);
+        // $recette->tags()->attach($data['tags']);
+        // $recette->ingredient()->attach($data['ingredients']);
+        return $recette->save();
     }
 
 
