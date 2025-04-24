@@ -7,6 +7,8 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\IngredientRepository;
 use App\Repositories\IngredientRepositoryInterface;
+use App\Repositories\PanierRepository;
+use App\Repositories\PanierRepositoryInterface;
 use App\Repositories\ProduitRepository;
 use App\Repositories\ProduitRepositoryInterface;
 use App\Repositories\RecetteRepository;
@@ -24,11 +26,13 @@ use App\Services\CategoryService;
 use App\Services\ICategoryService;
 use App\Services\IIngredientService;
 use App\Services\IngredientService;
+use App\Services\IPanierService;
 use App\Services\IProduitService;
 use App\Services\IRecetteService;
 use App\Services\RecetteService;
 use App\Services\TagService;
 use App\Services\ITagService;
+use App\Services\PanierService;
 use App\Services\ProduitService;
 use Illuminate\Support\ServiceProvider;
 
@@ -58,8 +62,8 @@ class AppServiceProvider extends ServiceProvider
        $this->app->bind(IngredientRepositoryInterface::class,IngredientRepository::class);
        $this->app->bind(ProduitRepositoryInterface::class,ProduitRepository::class);
        $this->app->bind(IProduitService::class,ProduitService::class);
-
-
+       $this->app->bind(IPanierService::class, PanierService::class);
+       $this->app->bind(PanierRepositoryInterface::class, PanierRepository::class);
     }
 
     /**

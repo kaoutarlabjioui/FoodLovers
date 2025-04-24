@@ -120,18 +120,26 @@
           <a href="/" class="text-gray-600 hover:text-primary">Accueil</a>
           <a href="/recipes" class="text-gray-600 hover:text-primary">Recettes</a>
           <a href="/competitions" class="text-gray-600 hover:text-primary">Compétitions</a>
-          <a href="/shop" class="text-gray-600 hover:text-primary">Boutique</a>
-          <a href="/blog" class="text-gray-600 hover:text-primary">Blog</a>
+          <a href="/boutique" class="text-gray-600 hover:text-primary">Boutique</a>
+          <!-- <a href="/blog" class="text-gray-600 hover:text-primary">Blog</a> -->
         </nav>
         <div class="flex items-center space-x-4">
-          <a href="/cart" class="text-gray-600 hover:text-primary">
+          <a href="/panier" class="text-gray-600 hover:text-primary">
             <i class="fas fa-shopping-cart"></i>
             <span class="ml-1">Panier</span>
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+            </form>
+
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="hidden md:block font-medium text-red-500 hover:text-red-700 transition-colors">
+                Logout
+                </a>
           <div class="relative">
             <button class="flex items-center text-gray-600 hover:text-primary focus:outline-none">
               <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Photo de profil" class="w-8 h-8 rounded-full object-cover">
-              <span class="ml-1">Marie</span>
+              <span class="ml-1">{{auth()->user()->first_name}}</span>
               <i class="fas fa-chevron-down ml-1 text-xs"></i>
             </button>
           </div>
@@ -155,8 +163,8 @@
             </div>
           </div>
           <div class="flex-1 text-center md:text-left">
-            <h1 class="text-2xl font-bold">Marie Dupont</h1>
-            <p class="text-gray-600">Membre depuis Janvier 2023</p>
+            <h1 class="text-2xl font-bold">{{auth()->user()->first_name}}</h1>
+            <p class="text-gray-600">Membre depuis {{auth()->user()->created_at}}</p>
             <div class="mt-2 flex flex-wrap justify-center md:justify-start gap-2">
               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
                 <i class="fas fa-utensils mr-1"></i> 12 Recettes
@@ -168,12 +176,6 @@
                 <i class="fas fa-shopping-bag mr-1"></i> 8 Commandes
               </span>
             </div>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center">
-              <i class="fas fa-edit mr-2"></i>
-              Modifier mon profil
-            </button>
           </div>
         </div>
       </div>
@@ -194,9 +196,6 @@
             <button class="tab-button whitespace-nowrap py-4 px-6 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium" data-tab="recipes">
               <i class="fas fa-utensils mr-2"></i> Mes recettes
             </button>
-            <button class="tab-button whitespace-nowrap py-4 px-6 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium" data-tab="settings">
-              <i class="fas fa-cog mr-2"></i> Paramètres
-            </button>
           </nav>
         </div>
       </div>
@@ -210,19 +209,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 class="text-sm font-medium text-gray-500 mb-1">Nom complet</h3>
-                <p class="text-gray-900">Marie Dupont</p>
+                <p class="text-gray-900">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
               </div>
               <div>
                 <h3 class="text-sm font-medium text-gray-500 mb-1">Email</h3>
-                <p class="text-gray-900">marie.dupont@example.com</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-500 mb-1">Téléphone</h3>
-                <p class="text-gray-900">+33 6 12 34 56 78</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-500 mb-1">Date de naissance</h3>
-                <p class="text-gray-900">15 mars 1985</p>
+                <p class="text-gray-900">{{auth()->user()->email}}</p>
               </div>
             </div>
           </div>
@@ -233,19 +224,6 @@
               <div class="border border-gray-200 rounded-lg p-4">
                 <div class="flex justify-between items-start mb-2">
                   <h3 class="font-medium">Adresse de livraison</h3>
-                  <button class="text-primary hover:text-primary/80">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                </div>
-                <p class="text-gray-600">Marie Dupont</p>
-                <p class="text-gray-600">123 Rue de Paris</p>
-                <p class="text-gray-600">75001 Paris</p>
-                <p class="text-gray-600">France</p>
-                <p class="text-gray-600">+33 6 12 34 56 78</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-4">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium">Adresse de facturation</h3>
                   <button class="text-primary hover:text-primary/80">
                     <i class="fas fa-edit"></i>
                   </button>

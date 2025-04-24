@@ -19,7 +19,7 @@ class AuthService implements IAuthService
 
     public function register($data){
 
-        $roleName = $data['role_name']??'client';
+        $roleName = $data['role_name']??'user';
         $role =Role::firstORCreate(['role_name'=>$roleName]);
         $userData = [
             'last_name' => $data['last_name'],
@@ -32,9 +32,8 @@ class AuthService implements IAuthService
         $user->role()->associate($role);
         $user->save();
 
-        $token = auth()->login($user);
+           Auth::login($user);
         return [
-            'token'=>$token,
             'user'=>$user->load('role'),
         ];
 
@@ -42,12 +41,12 @@ class AuthService implements IAuthService
     }
 
         public function login($credentials){
-            if(!$token = auth()->attempt($credentials)){
+
+            if(!Auth::attempt($credentials)){
                 return null;
             }
 
             return [
-                'token' => $token,
                 'user'  => auth()->user(),
             ];
 
@@ -55,19 +54,13 @@ class AuthService implements IAuthService
 
 
 
-        public function  logout ($token){
+        public function  logout (){
 
-            try {
-                JWTAuth::setToken($token)->invalidate();
-                return true ;
-            } catch(JWTException){
-                return false ;
-            }
-        }
+            Auth::logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
 
-        public function getUSer($token)
-        {
-            return JWTAuth::setToken($token)->authenticate();
+            return true;
         }
 
         public function updateRole(string $email, string $roleName)

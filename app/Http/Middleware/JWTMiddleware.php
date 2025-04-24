@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JWTMiddleware
@@ -20,7 +21,15 @@ class JWTMiddleware
         $message = '';
         try {
             // check validation of the token
-            JWTAuth::parseToken()->authenticate();
+            if (session()->has('jwt_token')) {
+                $token = session('jwt_token');
+                $request->headers->set('Authorization', 'Bearer ' . $token);
+            }
+           $user= JWTAuth::parseToken()->authenticate();
+            if ($user) {
+
+                Auth::login($user);
+            }
             return $next($request);
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             $message = 'Token expired';

@@ -32,27 +32,23 @@ Route::get('/', function () {
 // Route::get('/register', function () {
 //     return view('register');
 // });
-Route::get('/detailrecette', function () {
-    return view('detailrecette');
-});
-Route::get('/boutique', function () {
-    return view('boutique');
-});
-Route::get('/panier', function () {
-    return view('panier');
-});
-Route::get('/competition', function () {
-    return view('competition');
-});
-Route::get('/detailcompetition', function () {
-    return view('detailcompetition');
-});
+// Route::get('/detailrecette', function () {
+//     return view('detailrecette');
+// });
+// Route::get('/boutique', function () {
+//     return view('boutique');
+// });
+// Route::get('/panier', function () {
+//     return view('panier');
+// });
+// Route::get('/competition', function () {
+//     return view('competition');
+// });
+// Route::get('/detailcompetition', function () {
+//     return view('detailcompetition');
+// });
 
 Route::prefix('admin')->group(function(){
-
-    // Route::get('/adminrecette', function () {
-    //     return view('admin.adminrecette');
-    // });
     Route::get('/adminusers', function () {
         return view('admin.adminusers');
     });
@@ -103,11 +99,9 @@ Route::prefix('admin')->group(function(){
     Route::post('/produit/update',[ProduitController::class,'update']);
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-
+    Route::get('/profile', function () {
+        return view('profile');
+    });
 
 
 
@@ -115,20 +109,25 @@ Route::get('/login',[AuthController::class,'index'])->name('login');
 Route::post('/logins',[AuthController::class, 'login']);
 Route::get('/register',[AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/registers',[AuthController::class, 'register']);
-Route::get('/logout',[AuthController::class, 'logout']);
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/roles',[RoleController::class,'index']);
 Route::post('/roles/store',[RoleController::class,'store']);
 
 
+Route::get('/panier',[ProduitController::class,'voirPanier']);
+Route::post('/panier/ajouter',[ProduitController::class,'ajouterAuPanier'])->name('panier.ajouter');
+Route::delete('/panier/suprimer',[ProduitController::class,'supprimerDuPanier'])->name('panier.supprimer');
+Route::post('/panier/vider', [ProduitController::class, 'viderPanier'])->name('panier.vider');
+Route::post('/panier/mettre-a-jour/{id}', [ProduitController::class, 'updateQuantite'])->name('panier.updateQuantite');
+
 Route::get('/',[RecetteController::class,'show']);
 Route::post('/recettedetails',[RecetteController::class,'detailsRecette']);
 Route::get('/boutique',[ProduitController::class,'show']);
-Route::post('/produitdetails',[ProduitController::class,'detailsProduit']);
+Route::post('/detailsproduit',[ProduitController::class,'detailsProduit']);
+Route::get('/detailsproduit',[ProduitController::class,'detailsProduit']);
 
 
-// Route::get('/admincategory',[CategoryController::class,'index']);
-// Route::post('/category/store',[CategoryController::class,'store']);
-// Route::delete('/category/destroy',[CategoryController::class, 'destroy']);
+
 

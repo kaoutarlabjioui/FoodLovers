@@ -2,82 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommandeRequest;
 use App\Models\Commande;
+use App\Services\ICommandeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommandeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected ICommandeService $commandeService;
+
+    public function __construct(ICommandeService $commandeService)
+    {
+        $this->commandeService = $commandeService;
+    }
+
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function store(StoreCommandeRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['client_id'] = Auth::id();
+
+        $data['status']=$data['status']??'pending';
+        $commande = $this->commandeService->creerCommande($data,$data['items']);
+        return redirect("/commandeshow");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Commande  $commande
-     * @return \Illuminate\Http\Response
-     */
     public function show(Commande $commande)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Commande  $commande
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Commande $commande)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Commande  $commande
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Commande $commande)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Commande  $commande
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Commande $commande)
     {
         //
