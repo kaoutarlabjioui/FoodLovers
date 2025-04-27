@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCommandeRequest;
 use App\Models\Commande;
 use App\Repositories\CommandeRepositoryInterface;
 use App\Services\ICommandeService;
+use App\Services\IStripePaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,11 +15,13 @@ class CommandeController extends Controller
 
     protected ICommandeService $commandeService;
     protected CommandeRepositoryInterface $commandeRepo;
+    protected IStripePaymentService $stripePaymentService;
 
-    public function __construct(ICommandeService $commandeService,CommandeRepositoryInterface $commandeRepo)
+    public function __construct(ICommandeService $commandeService,CommandeRepositoryInterface $commandeRepo,IStripePaymentService $stripePaymentService)
     {
         $this->commandeService = $commandeService;
         $this->commandeRepo = $commandeRepo;
+        $this->stripePaymentService= $stripePaymentService;
     }
 
 
@@ -48,6 +51,9 @@ class CommandeController extends Controller
 
         return view("commandepage", compact('commande', 'produits', 'total'));
     }
+
+
+
 
 
     public function show(Commande $commande)

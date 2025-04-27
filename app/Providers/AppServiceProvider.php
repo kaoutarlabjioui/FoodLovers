@@ -41,12 +41,14 @@ use App\Services\IngredientService;
 use App\Services\IPanierService;
 use App\Services\IProduitService;
 use App\Services\IRecetteService;
+use App\Services\IStripePaymentService;
 use App\Services\RecetteService;
 use App\Services\TagService;
 use App\Services\ITagService;
 use App\Services\IUserService;
 use App\Services\PanierService;
 use App\Services\ProduitService;
+use App\Services\StripePayementService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -86,6 +88,7 @@ class AppServiceProvider extends ServiceProvider
        $this->app->bind(CommandeRepositoryInterface::class,CommandeRepository::class);
        $this->app->bind(ICommandeItemsService::class,CommandeItemsService::class);
        $this->app->bind(CommandeItemsRepositoryInterface::class,CommandeItemsRepository::class);
+       $this->app->bind(IStripePaymentService::class,StripePayementService::class);
 
 
     }

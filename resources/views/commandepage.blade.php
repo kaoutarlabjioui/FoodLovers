@@ -72,7 +72,7 @@
                                         placeholder="France">
                                 </div>
                             </fieldset>
-
+                            
                             <div class="pt-6 border-t border-gray-100">
                                 <button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
                                     <i class="fas fa-lock mr-2"></i> Payer Dh

@@ -79,6 +79,16 @@ class CommandeService implements ICommandeService{
         }
         return $total;
     }
+
+    public function updateStatus($commande,$status){
+        $commande->statut = $status;
+        $commande->save;
+        return $commande;
+    }
+
+
+    
+
 }
 
 
