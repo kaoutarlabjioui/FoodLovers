@@ -35,18 +35,17 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
         $request->validate([
-            'last_name'     => 'required',
-            'first_name'     => 'required',
+            'last_name' => 'required',
+            'first_name'=> 'required',
             'email'    => 'required|email',
             'password' => 'required',
-            'role_name'     => 'nullable|string',
+            'role_name'=> 'nullable|string',
         ]);
 
         try{
-            $result = $this->iAuthService->register($request->all());
-
-            // session(['jwt_token' => $result['token']]);
+           $this->iAuthService->register($request->all());
 
             return redirect()->route('login')->with('success', 'Inscription reussie');
         }catch(Exception $e) {
@@ -71,17 +70,16 @@ class AuthController extends Controller
 
         if ($user->role->role_name === 'admin') {
             return redirect('/admin/dashboard')->with('success', 'Connexion réussie en tant qu\'admin');
+
         } elseif ($user->role->role_name === 'user') {
             return redirect('/profile')->with('success', 'Connexion réussie en tant qu\'utilisateur');
         }
-        // return redirect('/admin/adminshop')->with('success', 'Connexion reussie');
+
     }
 
     public function logout()
     {
-        // $token = session('jwt_token');
         $success = $this->iAuthService->logout();
-        // session()->forget('jwt_token');
         return redirect('/')->with('success', $success ? 'Deconnexion reussie' : 'Erreur lors de la deconnexion');
     }
 

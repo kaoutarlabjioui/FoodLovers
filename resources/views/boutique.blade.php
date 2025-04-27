@@ -1,6 +1,6 @@
 @extends('layouts')
-@section('content')
 
+@section('content')
   <!-- Hero Section -->
   <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
     <div class="container mx-auto px-4">

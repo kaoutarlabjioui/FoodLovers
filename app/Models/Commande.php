@@ -9,10 +9,12 @@ class Commande extends Model
 {
     use HasFactory;
 
+    protected $fillable=['prix_totale','status'];
+
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'client_id');
     }
 
     public function commandesItems()
@@ -20,7 +22,7 @@ class Commande extends Model
         return $this->hasMany(CommandeItems::class);
     }
 
-    
+
 
 }
 

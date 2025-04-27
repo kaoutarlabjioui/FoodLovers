@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommandeRequest;
 use App\Models\Commande;
+use App\Repositories\CommandeRepositoryInterface;
 use App\Services\ICommandeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,27 +13,40 @@ class CommandeController extends Controller
 {
 
     protected ICommandeService $commandeService;
+    protected CommandeRepositoryInterface $commandeRepo;
 
-    public function __construct(ICommandeService $commandeService)
+    public function __construct(ICommandeService $commandeService,CommandeRepositoryInterface $commandeRepo)
     {
         $this->commandeService = $commandeService;
+        $this->commandeRepo = $commandeRepo;
     }
 
 
     public function index()
     {
-        //
+        $commandes = $this->commandeRepo->getAll();
+
+        return view('admin.admincommande',compact('commandes'));
+
     }
 
 
-    public function store(StoreCommandeRequest $request)
+    public function store()
     {
-        $data = $request->validated();
-        $data['client_id'] = Auth::id();
 
-        $data['status']=$data['status']??'pending';
-        $commande = $this->commandeService->creerCommande($data,$data['items']);
-        return redirect("/commandeshow");
+
+        $resultat = $this->commandeService->creerCommande();
+
+
+        if ($resultat === null) {
+            return back();
+        }
+
+        $commande = $resultat['commande'];
+        $produits = $resultat['produits'];
+        $total = $resultat['total'];
+
+        return view("commandepage", compact('commande', 'produits', 'total'));
     }
 
 

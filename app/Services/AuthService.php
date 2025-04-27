@@ -18,7 +18,7 @@ class AuthService implements IAuthService
     }
 
     public function register($data){
-
+        // dd($data);
         $roleName = $data['role_name']??'user';
         $role =Role::firstORCreate(['role_name'=>$roleName]);
         $userData = [
@@ -55,7 +55,6 @@ class AuthService implements IAuthService
 
 
         public function  logout (){
-
             Auth::logout();
             request()->session()->invalidate();
             request()->session()->regenerateToken();

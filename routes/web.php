@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RecetteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use App\Models\Produit;
 use App\Models\Recette;
 use App\Models\Tag;
@@ -48,10 +51,10 @@ Route::get('/', function () {
 //     return view('detailcompetition');
 // });
 
-Route::prefix('admin')->group(function(){
-    Route::get('/adminusers', function () {
-        return view('admin.adminusers');
-    });
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+    // Route::get('/adminusers', function () {
+    //     return view('admin.adminusers');
+    // });
     Route::get('/admincompetition', function () {
         return view('admincompetition');
     });
@@ -97,11 +100,24 @@ Route::prefix('admin')->group(function(){
     Route::delete('/produit/destroy',[ProduitController::class, 'destroy'])->name("adminproduit.destroy");
     Route::get('/editproduit/{id}',[ProduitController::class,'edit']);
     Route::post('/produit/update',[ProduitController::class,'update']);
+//commande
+  Route::get('/admincommande',[CommandeController::class,'index']);
+
+//user
+Route::get('/adminusers',[UserController::class,'index']);
+
 });
 
-    Route::get('/profile', function () {
-        return view('profile');
+    Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
+    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+    Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
+    Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
+    Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
+
+    Route::get('/profile',function(){
+       return view('client.clientinfo');
     });
+    Route::post('/commandes/page',[CommandeController::class,'store']);
 
 
 
@@ -128,6 +144,32 @@ Route::get('/boutique',[ProduitController::class,'show']);
 Route::post('/detailsproduit',[ProduitController::class,'detailsProduit']);
 Route::get('/detailsproduit',[ProduitController::class,'detailsProduit']);
 
+Route::post('/address/store',[UserController::class,'storeAddress']);
 
 
 
+
+// Profile routes
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/profile', [ProfileController::class, 'info'])->name('profile.info');
+    // Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    // Route::get('/profile/competitions', [ProfileController::class, 'competitions'])->name('profile.competitions');
+    // Route::get('/profile/recipes', [ProfileController::class, 'recipes'])->name('profile.recipes');
+
+    // Address routes
+    // Route::post('/address/store', [ProfileController::class, 'storeAddress']);
+
+    // // Recipe routes
+    // Route::post('/recipes/store', [ProfileController::class, 'storeRecipe']);
+    // Route::get('/recipes/{id}/edit', [ProfileController::class, 'editRecipe']);
+    // Route::put('/recipes/{id}', [ProfileController::class, 'updateRecipe']);
+    // Route::delete('/recipes/{id}', [ProfileController::class, 'deleteRecipe']);
+});
+
+
+
+
+
+Route::fallback(function () {
+    return redirect('/');
+});

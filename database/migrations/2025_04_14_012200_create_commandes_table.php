@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('prix_totale');
             $table->enum('status',['pending','en cours','terminer'])->default('pending');
-            $table->integer('client_id')->unsigned();
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

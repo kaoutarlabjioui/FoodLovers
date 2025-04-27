@@ -30,7 +30,7 @@
         <!-- Recipe Info -->
         <div class="md:w-1/2">
           <div class="flex items-center mb-2">
-            <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">{{$recette->category->title}}</span>
+            <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">{{$recette->category->title ??'Sans catégorie'}}</span>
             <span class="ml-2 text-gray-500 text-sm">{{$recette->created_at}}</span>
           </div>
 

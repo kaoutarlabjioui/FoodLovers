@@ -6,9 +6,16 @@ use App\Models\Commande;
 
 class CommandeRepository implements CommandeRepositoryInterface {
 
-    public function create($data)
+    public function create($commande)
     {
-        $commande = Commande::create($data);
-        return $commande;
+
+        return $commande->save();
+    }
+
+
+    public function getAll(){
+
+     return Commande::all();
+
     }
 }

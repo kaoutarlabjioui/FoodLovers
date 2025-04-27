@@ -58,7 +58,7 @@
                           <button class="quantity-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors" data-action="increase" data-id="{{ $id }}" data-stock="{{ $item['stock'] ?? 0 }}">
                             <i class="fas fa-plus text-gray-600"></i>
                           </button> -->
-                                <input type="number" name="quantite" value="{{ $item['quantite'] }}" class="w-16 p-2 border rounded-md text-center" min="1" required>
+                                <input type="number" name="quantite" value="{{ $item['quantite'] }}" class="w-16 p-2 border rounded-md text-center" min="1" max="{{ $item['stock'] ?? 0 }}" required>
                                 <button type="submit" id="update-cart" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
                                     <i class="fas fa-sync-alt mr-2"></i> Mettre à jour
                                 </button>
@@ -99,15 +99,6 @@
                     <a href="/boutique" class="text-primary hover:underline flex items-center">
                       <i class="fas fa-arrow-left mr-2"></i> Continuer les achats
                     </a>
-                    <!-- <form action="{{ route('panier.updateQuantite', $id) }}" method="POST">
-                        @csrf
-                        <div class="flex items-center">
-                            <input type="number" name="quantite" value="{{ $item['quantite'] }}" class="w-16 p-2 border rounded-md" min="1" required>
-                            <button type="submit" id="update-cart" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-sync-alt mr-2"></i> Mettre à jour
-                            </button>
-                        </div>
-                    </form> -->
                   </div>
                 </div>
               </div>
@@ -123,46 +114,32 @@
               </div>
               <div class="p-6">
                 <div class="space-y-4 mb-6">
-                  <div class="flex justify-between">
-                    <span class="text-gray-600">Sous-total</span>
-                    <span class="font-medium" id="subtotal">
-                      @php
-                        $subtotal = 0;
-                        foreach($panier as $item) {
-                          $subtotal += $item['prix'] * $item['quantite'];
-                        }
-                        echo $subtotal . ' Dh';
-                      @endphp
-                    </span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-600">Frais de livraison</span>
-                    <span class="font-medium" id="shipping">
-                      @php
-                        $shipping = 30; // Frais de livraison fixes
-                        echo $shipping . ' Dh';
-                      @endphp
-                    </span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-600">Remise</span>
-                    <span class="font-medium text-green-600" id="discount">-0 Dh</span>
-                  </div>
+
                   <div class="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
                     <span class="font-bold text-lg">Total</span>
                     <span class="font-bold text-primary text-xl" id="total">
                       @php
-                        $total = $subtotal + $shipping;
+                      $subtotal = 0;
+                        foreach($panier as $item) {
+                          $subtotal += $item['prix'] * $item['quantite'];
+                        }
+                        $total = $subtotal ;
                         echo $total . ' Dh';
                       @endphp
                     </span>
                   </div>
                 </div>
-
-                <button id="checkout-btn" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 mb-6">
+                @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+                <form action="/commandes/page" method="POST">
+                @csrf
+                <button id="checkout-btn" type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 mb-6">
                   <i class="fas fa-lock"></i> Procéder au paiement
                 </button>
-
+                </form>
                 <!-- Payment Methods -->
                 <div class="flex justify-center space-x-4 mb-6">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
