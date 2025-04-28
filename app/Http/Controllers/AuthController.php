@@ -35,18 +35,17 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
         $request->validate([
-            'last_name'     => 'required',
-            'first_name'     => 'required',
+            'last_name' => 'required',
+            'first_name'=> 'required',
             'email'    => 'required|email',
             'password' => 'required',
-            'role_name'     => 'nullable|string',
+            'role_name'=> 'nullable|string',
         ]);
 
         try{
-            $result = $this->iAuthService->register($request->all());
-
-            session(['jwt_token' => $result['token']]);
+           $this->iAuthService->register($request->all());
 
             return redirect()->route('login')->with('success', 'Inscription reussie');
         }catch(Exception $e) {
@@ -60,20 +59,27 @@ class AuthController extends Controller
     {
         // dd($request);
         $credentials = $request->only('email', 'password');
+
         $result = $this->iAuthService->login($credentials);
+
         if(!$result){
             return redirect()->back()->withErrors(['error' => 'Email ou mot de passe invalide']);
         }
 
-        session(['jwt_token' => $result['token']]);
-        return redirect('/admin/adminshop')->with('success', 'Connexion reussie');
+        $user = $result['user'];
+
+        if ($user->role->role_name === 'admin') {
+            return redirect('/admin/dashboard')->with('success', 'Connexion réussie en tant qu\'admin');
+
+        } elseif ($user->role->role_name === 'user') {
+            return redirect('/profile')->with('success', 'Connexion réussie en tant qu\'utilisateur');
+        }
+
     }
 
     public function logout()
     {
-        $token = session('jwt_token');
-        $success = $this->iAuthService->logout($token);
-        session()->forget('jwt_token');
+        $success = $this->iAuthService->logout();
         return redirect('/')->with('success', $success ? 'Deconnexion reussie' : 'Erreur lors de la deconnexion');
     }
 

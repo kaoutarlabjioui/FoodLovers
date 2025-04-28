@@ -1,6 +1,12 @@
 @extends('layouts')
 
 @section('content')
+
+@if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+        <span class="block sm:inline">{{ session('success') }}</span>
+    </div>
+@endif
 <!-- Hero Section -->
 <section class="pt-24 pb-12 md:pt-32 md:pb-16 bg-gradient-to-r from-primary/10 to-secondary/10">
   <div class="container mx-auto px-4">
@@ -14,6 +20,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- Featured Recipes Section -->
 <section id="featured-recipes" class="py-12 bg-white">
@@ -74,7 +81,7 @@
               <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-2">
                 <i class="fas fa-user text-gray-500"></i>
               </div>
-              <span class="text-sm text-gray-500">auteur name</span>
+              <span class="text-sm text-gray-500">{{$recette->user->first_name}}</span>
             </div>
             <div class="flex items-center space-x-3">
               <button class="text-gray-400 hover:text-red-500 transition-colors">

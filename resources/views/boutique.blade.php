@@ -1,6 +1,6 @@
 @extends('layouts')
-@section('content')
 
+@section('content')
   <!-- Hero Section -->
   <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-12">
     <div class="container mx-auto px-4">
@@ -74,8 +74,9 @@
           <div class="relative">
             <img src="{{url('/storage/'. $produit->photo)}}" alt="{{$produit->nom}}" class="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-300">
             <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <form action="/produitdetails" method="POST" class="inline">
+            <form action="/detailsproduit" method="POST" class="inline">
                 @csrf
+
                 <input type="hidden" name="produit" value="{{ $produit->id }}">
                 <button type="submit" class="bg-white text-dark p-2 rounded-full mx-1 hover:bg-primary hover:text-white transition-colors">
                     <i class="fas fa-eye"></i>
@@ -96,9 +97,18 @@
             <div class="flex justify-between items-center">
               <div class="text-lg font-bold text-primary">{{$produit->prix}}Dh</div>
               <div class="text-lg font-bold text-primary">{{$produit->stock}}</div>
-              <a href="/panier" class="bg-primary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                Ajouter au panier
-              </a>
+              <form action="{{ route('panier.ajouter') }}" method="POST">
+                @csrf
+                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                <input type="hidden" name="nom" value="{{ $produit->nom }}">
+                <input type="hidden" name="prix" value="{{ $produit->prix }}">
+                <input type="hidden" name="photo" value="{{ $produit->photo }}">
+                <input type="hidden" name="quantite" id="quantite_hidden" value="1">
+
+                <button type="submit" title="Ajouter au panier" class="bg-primary text-white p-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                </button>
+            </form>
             </div>
           </div>
         </div>

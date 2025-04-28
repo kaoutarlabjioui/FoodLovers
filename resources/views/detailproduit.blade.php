@@ -50,7 +50,12 @@
               <i class="fas fa-star-half-alt"></i>
             </div>
           </div>
-          <div class="text-2xl font-bold text-primary mb-4">{{ $produit->prix }}Dh</div>
+          <div class="text-2xl font-bold text-primary mb-4">
+            <span id="unit-price" data-price="{{ $produit->prix }}">{{ $produit->prix }}</span>Dh
+            <span class="text-sm text-gray-500">x <span id="quantity-display">1</span> = </span>
+            <span id="total-price">{{ $produit->prix }}</span>Dh
+            </div>
+
           <p class="text-gray-600 mb-6">{{ $produit->description }}</p>
         </div>
 
@@ -80,9 +85,18 @@
                 <i class="fas fa-plus"></i>
               </button>
             </div>
-            <button class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center">
-              <i class="fas fa-shopping-cart mr-2"></i> Ajouter au panier
-            </button>
+            <form action="{{ route('panier.ajouter') }}" method="POST">
+                @csrf
+                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                <input type="hidden" name="nom" value="{{ $produit->nom }}">
+                <input type="hidden" name="prix" value="{{ $produit->prix }}">
+                <input type="hidden" name="photo" value="{{ $produit->photo }}">
+                <input type="hidden" name="quantite" id="quantite_hidden" value="1">
+
+                <button type="submit" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center">
+                    <i class="fas fa-shopping-cart mr-2"></i> Ajouter au panier
+                </button>
+            </form>
             <button class="p-3 border border-gray-300 rounded-lg text-gray-500 hover:text-primary hover:border-primary transition-colors">
               <i class="fas fa-heart"></i>
             </button>
@@ -120,68 +134,68 @@
         </button>
       </nav>
     </div>
-
-    <div class="py-8">
-      <!-- Description Tab -->
-      <div id="description-tab" class="tab-content active">
-        <div class="prose max-w-none">
-          <p>{{ $produit->description }}</p>
-
-          <h3 class="text-xl font-bold mt-6 mb-4">Caractéristiques</h3>
-          <ul class="list-disc pl-5 space-y-2">
-              <li>Fabriqué avec des matériaux de haute qualité</li>
-              <li>Design ergonomique pour une utilisation facile</li>
-              <li>Facile à nettoyer et à entretenir</li>
-              <li>Idéal pour la cuisine quotidienne</li>
-          </ul>
-        </div>
-      </div>
-
-      
-    </div>
-  </div>
 </section>
 @endsection
 
 @section('js')
 <script>
-  // Image gallery
-  function changeImage(src) {
-    document.getElementById('main-image').src = src;
+
+
+  const inputVisible = document.getElementById('quantity');
+  const inputHidden = document.getElementById('quantite_hidden');
+
+  inputVisible.addEventListener('input', function () {
+    inputHidden.value = this.value;
+  });
+
+  // Recalcul du prix total
+  function updateTotalPrice() {
+    const unitPrice = parseFloat(document.getElementById('unit-price').dataset.price);
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const total = unitPrice * quantity;
+
+    document.getElementById('quantity-display').textContent = quantity;
+    document.getElementById('total-price').textContent = total.toFixed(2);
   }
 
-  // Quantity increment/decrement
+  // Incrémenter la quantité
   function incrementQuantity() {
     const input = document.getElementById('quantity');
     const max = parseInt(input.getAttribute('max'));
     const currentValue = parseInt(input.value);
     if (currentValue < max) {
       input.value = currentValue + 1;
+      updateTotalPrice();
     }
   }
 
+  // Décrémenter la quantité
   function decrementQuantity() {
     const input = document.getElementById('quantity');
     const currentValue = parseInt(input.value);
     if (currentValue > 1) {
       input.value = currentValue - 1;
+      updateTotalPrice();
     }
   }
 
-  // Tabs functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  // Événements au chargement du DOM
+  document.addEventListener('DOMContentLoaded', function () {
+    // Mise à jour du prix si changement manuel
+    document.getElementById('quantity').addEventListener('input', updateTotalPrice);
+    updateTotalPrice();
+
+    // Onglets de la fiche produit
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
     tabButtons.forEach(button => {
       button.addEventListener('click', () => {
-        // Remove active class from all buttons and contents
         tabButtons.forEach(btn => btn.classList.remove('active', 'text-primary', 'border-primary'));
         tabButtons.forEach(btn => btn.classList.add('text-gray-500', 'border-transparent'));
         tabContents.forEach(content => content.classList.add('hidden'));
         tabContents.forEach(content => content.classList.remove('active'));
 
-        // Add active class to clicked button and corresponding content
         button.classList.add('active', 'text-primary', 'border-primary');
         button.classList.remove('text-gray-500', 'border-transparent');
 
@@ -193,4 +207,5 @@
     });
   });
 </script>
+
 @endsection

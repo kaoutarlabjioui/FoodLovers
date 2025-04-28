@@ -4,82 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Competition;
 use Illuminate\Http\Request;
+use App\Services\ICompetitionService;
 
 class CompetitionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct(protected ICompetitionService $competitionService) {}
+
+    public function index() {
+        $competitions = $this->competitionService->getAll();
+        return view('competition.index', compact('competitions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('competition.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $this->competitionService->create($request->all());
+        return redirect()->route('competitions.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Competition $competition)
-    {
-        //
+    public function edit($id) {
+        $competition = $this->competitionService->getById($id);
+        return view('competition.edit', compact('competition'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Competition $competition)
-    {
-        //
+    public function update(Request $request, $id) {
+        $this->competitionService->update($id, $request->all());
+        return redirect()->route('competitions.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Competition $competition)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Competition $competition)
-    {
-        //
+    public function destroy($id) {
+        $this->competitionService->delete($id);
+        return redirect()->route('competitions.index');
     }
 }
+

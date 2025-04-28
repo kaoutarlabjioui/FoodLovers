@@ -43,13 +43,14 @@ public function create($data){
     $cat=  $this->catService->findByName($data['category_name']);
     $tags = $data['tags'];
     $ingredients = $data['ingredients'];
-
+    $user= auth()->user();
     $recette = new Recette();
     $recette->titre=$data["titre"];
     $recette->description=$data["description"];
     $recette->instruction=$data["instruction"];
     $recette->photo=$data["photo"];
     $recette->category()->associate($cat);
+    $recette->user()->associate($user);
     $this->recetteRepo->create($recette);
     foreach($tags as $tag_name){
 

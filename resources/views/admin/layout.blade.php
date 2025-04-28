@@ -38,7 +38,7 @@
             <div class="p-4 border-b border-gray-700">
                 <div class="flex items-center">
                     <span class="text-xl font-display font-bold text-primary">Food<span class="text-white">Lovers</span></span>
-                    <span class="ml-2 bg-primary/20 text-primary text-xs px-2 py-1 rounded">Admin</span>
+                    <!-- <span class="ml-2 bg-primary/20 text-primary text-xs px-2 py-1 rounded"></span> -->
                 </div>
             </div>
 
@@ -87,7 +87,7 @@
             </nav>
 
             <div class="absolute bottom-0 w-64 p-4 border-t border-gray-700">
-    <form action="/logout" method="get" class="flex items-center">
+    <form action="/logout" method="post" class="flex items-center">
         @csrf
         <button type="submit" class="flex items-center text-gray-300 hover:text-white transition-colors bg-transparent border-0">
             <i class="fas fa-sign-out-alt w-5"></i>

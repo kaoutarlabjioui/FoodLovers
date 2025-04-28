@@ -9,6 +9,8 @@ class CommandeItems extends Model
 {
     use HasFactory;
 
+    protected $fillable=['prix','quantite'];
+
     public function commande()
     {
         return $this->belongsTo(Commande::class);
