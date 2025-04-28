@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RecetteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use App\Models\Produit;
 use App\Models\Recette;
 use App\Models\Tag;
@@ -32,36 +36,28 @@ Route::get('/', function () {
 // Route::get('/register', function () {
 //     return view('register');
 // });
-Route::get('/detailrecette', function () {
-    return view('detailrecette');
-});
-Route::get('/boutique', function () {
-    return view('boutique');
-});
-Route::get('/panier', function () {
-    return view('panier');
-});
-Route::get('/competition', function () {
-    return view('competition');
-});
-Route::get('/detailcompetition', function () {
-    return view('detailcompetition');
-});
+// Route::get('/detailrecette', function () {
+//     return view('detailrecette');
+// });
+// Route::get('/boutique', function () {
+//     return view('boutique');
+// });
+// Route::get('/panier', function () {
+//     return view('panier');
+// });
 
-Route::prefix('admin')->group(function(){
+// Route::get('/detailcompetition', function () {
+//     return view('detailcompetition');
+// });
 
-    // Route::get('/adminrecette', function () {
-    //     return view('admin.adminrecette');
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+    // Route::get('/adminusers', function () {
+    //     return view('admin.adminusers');
     // });
-    Route::get('/adminusers', function () {
-        return view('admin.adminusers');
-    });
     Route::get('/admincompetition', function () {
         return view('admincompetition');
     });
-    Route::get('/adminshop', function () {
-        return view('adminshop');
-    });
+
 
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -101,13 +97,24 @@ Route::prefix('admin')->group(function(){
     Route::delete('/produit/destroy',[ProduitController::class, 'destroy'])->name("adminproduit.destroy");
     Route::get('/editproduit/{id}',[ProduitController::class,'edit']);
     Route::post('/produit/update',[ProduitController::class,'update']);
+//commande
+  Route::get('/admincommande',[CommandeController::class,'index']);
+
+//user
+Route::get('/adminusers',[UserController::class,'index']);
+
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
+    Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
+    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+    Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
+    Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
+    Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
 
-
+    Route::get('/profile',function(){
+       return view('client.clientinfo');
+    });
+    Route::post('/commandes/page',[CommandeController::class,'store']);
 
 
 
@@ -115,20 +122,56 @@ Route::get('/login',[AuthController::class,'index'])->name('login');
 Route::post('/logins',[AuthController::class, 'login']);
 Route::get('/register',[AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/registers',[AuthController::class, 'register']);
-Route::get('/logout',[AuthController::class, 'logout']);
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/roles',[RoleController::class,'index']);
 Route::post('/roles/store',[RoleController::class,'store']);
 
 
+Route::get('/panier',[ProduitController::class,'voirPanier']);
+Route::post('/panier/ajouter',[ProduitController::class,'ajouterAuPanier'])->name('panier.ajouter');
+Route::delete('/panier/suprimer',[ProduitController::class,'supprimerDuPanier'])->name('panier.supprimer');
+Route::post('/panier/vider', [ProduitController::class, 'viderPanier'])->name('panier.vider');
+Route::post('/panier/mettre-a-jour/{id}', [ProduitController::class, 'updateQuantite'])->name('panier.updateQuantite');
+
 Route::get('/',[RecetteController::class,'show']);
 Route::post('/recettedetails',[RecetteController::class,'detailsRecette']);
 Route::get('/boutique',[ProduitController::class,'show']);
-Route::post('/produitdetails',[ProduitController::class,'detailsProduit']);
+Route::post('/detailsproduit',[ProduitController::class,'detailsProduit']);
+Route::get('/detailsproduit',[ProduitController::class,'detailsProduit']);
+
+Route::post('/address/store',[UserController::class,'storeAddress']);
 
 
-// Route::get('/admincategory',[CategoryController::class,'index']);
-// Route::post('/category/store',[CategoryController::class,'store']);
-// Route::delete('/category/destroy',[CategoryController::class, 'destroy']);
 
+
+// Profile routes
+Route::middleware(['auth'])->group(function () {
+    // Route::get('/profile', [ProfileController::class, 'info'])->name('profile.info');
+    // Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    // Route::get('/profile/competitions', [ProfileController::class, 'competitions'])->name('profile.competitions');
+    // Route::get('/profile/recipes', [ProfileController::class, 'recipes'])->name('profile.recipes');
+
+    // Address routes
+    // Route::post('/address/store', [ProfileController::class, 'storeAddress']);
+
+    // // Recipe routes
+    // Route::post('/recipes/store', [ProfileController::class, 'storeRecipe']);
+    // Route::get('/recipes/{id}/edit', [ProfileController::class, 'editRecipe']);
+    // Route::put('/recipes/{id}', [ProfileController::class, 'updateRecipe']);
+    // Route::delete('/recipes/{id}', [ProfileController::class, 'deleteRecipe']);
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::controller(PaymentController::class)->group(function(){
+        Route::post('/makepay', 'makePay');
+        Route::post('/command/pay', 'processPayment');
+    });
+});
+
+
+// Route::fallback(function () {
+//     return redirect('/');
+// });

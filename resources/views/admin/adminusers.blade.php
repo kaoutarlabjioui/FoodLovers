@@ -113,7 +113,7 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <!-- User 1 -->
+            @foreach($users as $user)
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
@@ -121,16 +121,16 @@
                     <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Marie Dupont">
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Marie Dupont</div>
-                    <div class="text-sm text-gray-500">@mariedupont</div>
+                    <div class="text-sm font-medium text-gray-900">{{$user->first_name}} {{$user->last_name}}</div>
+                    <div class="text-sm text-gray-500"></div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">marie.dupont@example.com</div>
+                <div class="text-sm text-gray-900">{{$user->email}}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Contributeur</div>
+                <div class="text-sm text-gray-900">{{$user->role->role_name}}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -138,190 +138,17 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                15/03/2023
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div class="flex space-x-2 justify-end">
-                  <button class="text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="text-yellow-600 hover:text-yellow-800 edit-user">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
 
-            <!-- User 2 -->
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="Thomas Martin">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Thomas Martin</div>
-                    <div class="text-sm text-gray-500">@thomasmartin</div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">thomas.martin@example.com</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Utilisateur</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Actif
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                22/05/2023
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex space-x-2 justify-end">
-                  <button class="text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-eye"></i>
-                  </button>
                   <button class="text-yellow-600 hover:text-yellow-800 edit-user">
                     <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800">
-                    <i class="fas fa-trash"></i>
                   </button>
                 </div>
               </td>
             </tr>
-
-            <!-- User 3 -->
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Sophie Leroy">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Sophie Leroy</div>
-                    <div class="text-sm text-gray-500">@sophieleroy</div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">sophie.leroy@example.com</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Modérateur</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Actif
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                10/01/2023
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div class="flex space-x-2 justify-end">
-                  <button class="text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="text-yellow-600 hover:text-yellow-800 edit-user">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            <!-- User 4 -->
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt="Lucas Bernard">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Lucas Bernard</div>
-                    <div class="text-sm text-gray-500">@lucasbernard</div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">lucas.bernard@example.com</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Utilisateur</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                  En attente
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                05/06/2023
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div class="flex space-x-2 justify-end">
-                  <button class="text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="text-yellow-600 hover:text-yellow-800 edit-user">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            <!-- User 5 -->
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="Julie Petit">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Julie Petit</div>
-                    <div class="text-sm text-gray-500">@juliepetit</div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">julie.petit@example.com</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Utilisateur</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                  Suspendu
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                18/04/2023
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div class="flex space-x-2 justify-end">
-                  <button class="text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="text-yellow-600 hover:text-yellow-800 edit-user">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>

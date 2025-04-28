@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title ?? 'FoodLovers - Discover Delicious Recipes' }}</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -45,21 +46,29 @@
           <a href="/boutique" class="font-medium hover:text-primary transition-colors">Shop</a>
           <a href="/blog" class="font-medium hover:text-primary transition-colors">Blog</a>
         </div>
-        @if (Route::has('login'))
+     @if (Route::has('login'))
     <div class="flex items-center space-x-4">
-        @auth
+            @auth
+
             @if(auth()->user()->role->role_name == 'admin')
-                <a href="{{ url('/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
+                <a href="{{ url('/admin/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
             @elseif(auth()->user()->role->role_name == 'user')
                 <a href="{{ url('/profile') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Profile</a>
             @endif
-            <a href="/logout" class="hidden md:block font-medium text-red-500 hover:text-red-700 transition-colors">Logout</a>
-        @else
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+            </form>
+
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="hidden md:block font-medium text-red-500 hover:text-red-700 transition-colors">
+                Logout
+                </a>
+     @else
             <a href="{{ route('login') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Login</a>
             @if (Route::has('register'))
                 <a href="{{ route('register') }}" class="hidden md:block bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Sign Up</a>
             @endif
-        @endauth
+          @endauth
         <button class="md:hidden text-dark" id="mobile-menu-button">
             <i class="fas fa-bars text-xl"></i>
         </button>

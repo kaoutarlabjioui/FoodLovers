@@ -120,18 +120,26 @@
           <a href="/" class="text-gray-600 hover:text-primary">Accueil</a>
           <a href="/recipes" class="text-gray-600 hover:text-primary">Recettes</a>
           <a href="/competitions" class="text-gray-600 hover:text-primary">Compétitions</a>
-          <a href="/shop" class="text-gray-600 hover:text-primary">Boutique</a>
-          <a href="/blog" class="text-gray-600 hover:text-primary">Blog</a>
+          <a href="/boutique" class="text-gray-600 hover:text-primary">Boutique</a>
+          <!-- <a href="/blog" class="text-gray-600 hover:text-primary">Blog</a> -->
         </nav>
         <div class="flex items-center space-x-4">
-          <a href="/cart" class="text-gray-600 hover:text-primary">
+          <a href="/panier" class="text-gray-600 hover:text-primary">
             <i class="fas fa-shopping-cart"></i>
             <span class="ml-1">Panier</span>
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+            </form>
+
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="hidden md:block font-medium text-red-500 hover:text-red-700 transition-colors">
+                Logout
+                </a>
           <div class="relative">
             <button class="flex items-center text-gray-600 hover:text-primary focus:outline-none">
               <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Photo de profil" class="w-8 h-8 rounded-full object-cover">
-              <span class="ml-1">Marie</span>
+              <span class="ml-1">{{auth()->user()->first_name}}</span>
               <i class="fas fa-chevron-down ml-1 text-xs"></i>
             </button>
           </div>
@@ -155,8 +163,8 @@
             </div>
           </div>
           <div class="flex-1 text-center md:text-left">
-            <h1 class="text-2xl font-bold">Marie Dupont</h1>
-            <p class="text-gray-600">Membre depuis Janvier 2023</p>
+            <h1 class="text-2xl font-bold">{{auth()->user()->first_name}}</h1>
+            <p class="text-gray-600">Membre depuis {{auth()->user()->created_at}}</p>
             <div class="mt-2 flex flex-wrap justify-center md:justify-start gap-2">
               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
                 <i class="fas fa-utensils mr-1"></i> 12 Recettes
@@ -168,12 +176,6 @@
                 <i class="fas fa-shopping-bag mr-1"></i> 8 Commandes
               </span>
             </div>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center">
-              <i class="fas fa-edit mr-2"></i>
-              Modifier mon profil
-            </button>
           </div>
         </div>
       </div>
@@ -194,9 +196,6 @@
             <button class="tab-button whitespace-nowrap py-4 px-6 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium" data-tab="recipes">
               <i class="fas fa-utensils mr-2"></i> Mes recettes
             </button>
-            <button class="tab-button whitespace-nowrap py-4 px-6 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium" data-tab="settings">
-              <i class="fas fa-cog mr-2"></i> Paramètres
-            </button>
           </nav>
         </div>
       </div>
@@ -210,19 +209,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 class="text-sm font-medium text-gray-500 mb-1">Nom complet</h3>
-                <p class="text-gray-900">Marie Dupont</p>
+                <p class="text-gray-900">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
               </div>
               <div>
                 <h3 class="text-sm font-medium text-gray-500 mb-1">Email</h3>
-                <p class="text-gray-900">marie.dupont@example.com</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-500 mb-1">Téléphone</h3>
-                <p class="text-gray-900">+33 6 12 34 56 78</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-500 mb-1">Date de naissance</h3>
-                <p class="text-gray-900">15 mars 1985</p>
+                <p class="text-gray-900">{{auth()->user()->email}}</p>
               </div>
             </div>
           </div>
@@ -233,28 +224,15 @@
               <div class="border border-gray-200 rounded-lg p-4">
                 <div class="flex justify-between items-start mb-2">
                   <h3 class="font-medium">Adresse de livraison</h3>
-                  <button class="text-primary hover:text-primary/80">
+                  <button  id='openModal' class="text-primary hover:text-primary/80">
                     <i class="fas fa-edit"></i>
                   </button>
                 </div>
-                <p class="text-gray-600">Marie Dupont</p>
-                <p class="text-gray-600">123 Rue de Paris</p>
-                <p class="text-gray-600">75001 Paris</p>
-                <p class="text-gray-600">France</p>
-                <p class="text-gray-600">+33 6 12 34 56 78</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-4">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium">Adresse de facturation</h3>
-                  <button class="text-primary hover:text-primary/80">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                </div>
-                <p class="text-gray-600">Marie Dupont</p>
-                <p class="text-gray-600">123 Rue de Paris</p>
-                <p class="text-gray-600">75001 Paris</p>
-                <p class="text-gray-600">France</p>
-                <p class="text-gray-600">+33 6 12 34 56 78</p>
+                <p class="text-gray-600">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+                <p class="text-gray-600">{{auth()->user()->address->ville ?? ' ' }}</p>
+                <p class="text-gray-600">{{auth()->user()->address->address ?? ''}}</p>
+                <p class="text-gray-600">{{auth()->user()->address->pays ?? '' }}</p>
+
               </div>
             </div>
           </div>
@@ -329,42 +307,6 @@
                 </div>
               </div>
 
-              <!-- Order 2 -->
-              <div class="border border-gray-200 rounded-lg p-4 order-card">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <div class="flex items-center">
-                      <h3 class="font-bold">Commande #FL-2023-1732</h3>
-                      <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                        Expédiée
-                      </span>
-                    </div>
-                    <p class="text-sm text-gray-500">Passée le 28 février 2023</p>
-                  </div>
-                  <div class="mt-2 md:mt-0">
-                    <span class="font-bold text-lg">199,99 €</span>
-                  </div>
-                </div>
-                <div class="mt-4 border-t border-gray-200 pt-4">
-                  <div class="flex flex-wrap gap-2">
-                    <div class="flex items-center bg-gray-100 rounded-lg p-2">
-                      <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246" alt="Robot Culinaire" class="w-12 h-12 object-cover rounded-md">
-                      <div class="ml-2">
-                        <p class="text-sm font-medium">Robot Culinaire Multifonction</p>
-                        <p class="text-xs text-gray-500">Qté: 1</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex justify-between items-center">
-                    <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-                      Voir les détails
-                    </a>
-                    <button class="bg-primary hover:bg-primary/90 text-white font-medium py-1 px-3 rounded-lg transition-colors text-sm">
-                      Acheter à nouveau
-                    </button>
-                  </div>
-                </div>
-              </div>
 
               <!-- Order 3 -->
               <div class="border border-gray-200 rounded-lg p-4 order-card">
@@ -460,127 +402,6 @@
 
             <!-- Competitions List -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- Competition 1 -->
-              <div class="border border-gray-200 rounded-lg overflow-hidden competition-card">
-                <div class="relative">
-                  <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e" alt="Tarte Tatin Challenge" class="w-full h-48 object-cover">
-                  <div class="absolute top-0 right-0 mt-2 mr-2">
-                    <span class="px-2 py-1 bg-green-500 text-white text-xs rounded-full">En cours</span>
-                  </div>
-                </div>
-                <div class="p-4">
-                  <h3 class="text-lg font-bold">Tarte Tatin Challenge</h3>
-                  <p class="text-sm text-gray-500">15/04/2025 - 30/04/2025</p>
-                  <div class="mt-2">
-                    <div class="flex items-center text-sm text-gray-600">
-                      <i class="fas fa-trophy text-yellow-500 mr-2"></i>
-                      <span>Prix: 500€</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600 mt-1">
-                      <i class="fas fa-users text-blue-500 mr-2"></i>
-                      <span>128 participants</span>
-                    </div>
-                  </div>
-                  <div class="mt-4">
-                    <div class="flex items-center">
-                      <div class="flex-1">
-                        <p class="text-xs text-gray-500 mb-1">Votre participation</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                          <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
-                        </div>
-                      </div>
-                      <span class="ml-2 text-sm font-medium">75%</span>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm font-medium text-gray-600">Soumission: 25/04/2025</span>
-                    <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-                      Voir les détails
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Competition 2 -->
-              <div class="border border-gray-200 rounded-lg overflow-hidden competition-card">
-                <div class="relative">
-                  <img src="https://images.unsplash.com/photo-1555126634-323283e090fa" alt="Cuisine Asiatique" class="w-full h-48 object-cover">
-                  <div class="absolute top-0 right-0 mt-2 mr-2">
-                    <span class="px-2 py-1 bg-gray-500 text-white text-xs rounded-full">Terminée</span>
-                  </div>
-                </div>
-                <div class="p-4">
-                  <h3 class="text-lg font-bold">Cuisine Asiatique</h3>
-                  <p class="text-sm text-gray-500">01/03/2025 - 31/03/2025</p>
-                  <div class="mt-2">
-                    <div class="flex items-center text-sm text-gray-600">
-                      <i class="fas fa-trophy text-yellow-500 mr-2"></i>
-                      <span>Prix: 750€</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600 mt-1">
-                      <i class="fas fa-users text-blue-500 mr-2"></i>
-                      <span>156 participants</span>
-                    </div>
-                  </div>
-                  <div class="mt-4">
-                    <div class="flex items-center">
-                      <div class="flex-1">
-                        <p class="text-xs text-gray-500 mb-1">Votre résultat</p>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          <i class="fas fa-medal mr-1"></i> 3ème place
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm font-medium text-gray-600">Soumis le: 28/03/2025</span>
-                    <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-                      Voir les détails
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Competition 3 -->
-              <div class="border border-gray-200 rounded-lg overflow-hidden competition-card">
-                <div class="relative">
-                  <img src="https://images.unsplash.com/photo-1607478900766-efe13248b125" alt="Smoothie Challenge" class="w-full h-48 object-cover">
-                  <div class="absolute top-0 right-0 mt-2 mr-2">
-                    <span class="px-2 py-1 bg-green-500 text-white text-xs rounded-full">En cours</span>
-                  </div>
-                </div>
-                <div class="p-4">
-                  <h3 class="text-lg font-bold">Smoothie Challenge</h3>
-                  <p class="text-sm text-gray-500">10/04/2025 - 20/04/2025</p>
-                  <div class="mt-2">
-                    <div class="flex items-center text-sm text-gray-600">
-                      <i class="fas fa-trophy text-yellow-500 mr-2"></i>
-                      <span>Prix: 250€</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600 mt-1">
-                      <i class="fas fa-users text-blue-500 mr-2"></i>
-                      <span>93 participants</span>
-                    </div>
-                  </div>
-                  <div class="mt-4">
-                    <div class="flex items-center">
-                      <div class="flex-1">
-                        <p class="text-xs text-gray-500 mb-1">Votre participation</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                          <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
-                        </div>
-                      </div>
-                      <span class="ml-2 text-sm font-medium">30%</span>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm font-medium text-gray-600">Soumission: 18/04/2025</span>
-                    <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-                      Voir les détails
-                    </a>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <!-- Pagination -->
@@ -594,13 +415,206 @@
           </div>
         </div>
 
-        <!-- Recipes Tab -->
-        <div id="recipes-tab" class="tab-content hidden">
-          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">Mes recettes</h2>
-            <p class="text-gray-600">Contenu de l'onglet Mes recettes à venir prochainement.</p>
+        <!-- !-- Recipes Tab -->
+<div id="recipes-tab" class="tab-content hidden">
+  <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <div class="flex justify-between items-center mb-6">
+    <a href="/profileuserrecette" class="text-xl font-bold">Mes recettes</a>
+       <button id="addRecipeBtn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center">
+        <i class="fas fa-plus mr-2"></i> Ajouter une recette
+      </button>
+    </div>
+    <!-- Recipes Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Recette
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Catégorie
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Date de création
+            </th>
+
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            @foreach($recettes as $recette)
+          <!-- Recipe 1 -->
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10">
+                  <img class="h-10 w-10 rounded-md object-cover" src="{{url('/storage/' . $recette->photo )}}" alt="{{$recette->titre}}">
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900">{{$recette->titre}}</div>
+                  <!-- <div class="text-sm text-gray-500">15 min de préparation</div> -->
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              {{$recette->category->title ?? 'sans categorie'}}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{$recette->created_at}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <a href="#" class="text-accent hover:text-accent/80" title="Voir">
+                  <i class="fas fa-eye"></i>
+                </a>
+                <a href="#" class="text-primary hover:text-primary/80" title="Modifier">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="#" class="text-red-600 hover:text-red-800" title="Supprimer">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex items-center justify-between">
+  <div>
+    <p class="text-sm text-gray-700">
+      Affichage de
+      <span class="font-medium">{{ $recettes->firstItem() }}</span> à
+      <span class="font-medium">{{ $recettes->lastItem() }}</span> sur
+      <span class="font-medium">{{ $recettes->total() }}</span> recettes
+    </p>
+  </div>
+
+  <div>
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+      {{-- Lien vers la page précédente --}}
+      @if ($recettes->onFirstPage())
+        <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-400">
+          <span class="sr-only">Précédent</span>
+          <i class="fas fa-chevron-left text-xs"></i>
+        </span>
+      @else
+        <a href="{{ $recettes->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <span class="sr-only">Précédent</span>
+          <i class="fas fa-chevron-left text-xs"></i>
+        </a>
+      @endif
+
+      {{-- Numéros de page --}}
+      @foreach ($recettes->getUrlRange(1, $recettes->lastPage()) as $page => $url)
+        <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium
+          {{ $page == $recettes->currentPage() ? 'bg-primary text-white border-primary' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50' }}">
+          {{ $page }}
+        </a>
+      @endforeach
+
+      {{-- Lien vers la page suivante --}}
+      @if ($recettes->hasMorePages())
+        <a href="{{ $recettes->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <span class="sr-only">Suivant</span>
+          <i class="fas fa-chevron-right text-xs"></i>
+        </a>
+      @else
+        <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-400">
+          <span class="sr-only">Suivant</span>
+          <i class="fas fa-chevron-right text-xs"></i>
+        </span>
+      @endif
+    </nav>
+  </div>
+</div>
+
+  </div>
+
+  <!-- Add Recipe Modal -->
+  <div id="addRecipeModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                Ajouter une nouvelle recette
+              </h3>
+
+              <div class="mt-2">
+                <form action="/recipes/store" method="POST" enctype="multipart/form-data" class="w-full space-y-4">
+                  @csrf
+                  <div class="form-element">
+                    <label for="titre" class="block text-sm font-medium text-gray-700 mb-1">Titre de la recette</label>
+                    <input type="text" name="titre" required placeholder="Ex: Tarte aux pommes maison"
+                      class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                  </div>
+
+                  <div class="form-element">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea name="description" required placeholder="Une courte description de votre recette"
+                      class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" rows="3"></textarea>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="form-element">
+                      <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                      <select name="category_id" required
+                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="1">Entrées</option>
+                        <option value="2">Plats principaux</option>
+                        <option value="3">Desserts</option>
+                        <option value="4">Boissons</option>
+                      </select>
+                    </div>
+
+                    <div class="form-element">
+                      <label for="prep_time" class="block text-sm font-medium text-gray-700 mb-1">Temps de préparation (min)</label>
+                      <input type="number" name="prep_time" required min="1"
+                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                    </div>
+                  </div>
+
+                  <div class="form-element">
+                    <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">Photo de la recette</label>
+                    <input type="file" name="photo" required accept="image/*"
+                      class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                  </div>
+
+                  <div class="flex justify-end space-x-2 pt-4 border-t border-gray-100 mt-6">
+                    <button type="button" id="closeRecipeModal"
+                      class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600">
+                      Annuler
+                    </button>
+                    <button type="submit"
+                      class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90 cursor-pointer">
+                      Créer la recette
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
         <!-- Settings Tab -->
         <div id="settings-tab" class="tab-content hidden">
@@ -684,6 +698,75 @@
     </div>
   </main>
 
+
+
+
+
+
+<!-- Modale ajouter -->
+<div id="jobModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="category-modal-title">
+
+                        </h3>
+
+                        <div class="mt-2">
+                            <form action="/address/store" method="POST" class="w-full space-y-4">
+
+                                @csrf
+                                <input type="hidden" value="{{auth()->user()->id}}" name="user_id">
+                                <div class="form-element">
+                                    <label for="titre" class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                                    <input type="text" name="ville" required placeholder="Ville"
+                                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                                </div>
+
+                                <div class="form-element">
+                                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                    <input type="text" name="address" required placeholder="Address"
+                                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                                </div>
+                                <div class="form-element">
+                                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Pays</label>
+                                    <input type="text" name="pays" required placeholder="Pays"
+                                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                                </div>
+                                <div class="form-element">
+                                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Code_Postal</label>
+                                    <input type="number" name="code_postal" required placeholder="Code_Postal"
+                                        class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary" />
+                                </div>
+
+                                <div class="flex justify-end space-x-2 pt-4 border-t border-gray-100 mt-6">
+                                    <button type="button" id="closeModal"
+                                        class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600">
+                                        Annuler
+                                    </button>
+                                    <input type="submit" name="submit"
+                                        class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90 cursor-pointer"
+                                        value="Ajouter">
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
   <!-- Footer -->
   <footer class="bg-white border-t border-gray-200 mt-8">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -752,6 +835,38 @@
 
   <!-- JavaScript -->
   <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const addRecipeBtn = document.getElementById('addRecipeBtn');
+    const addRecipeModal = document.getElementById('addRecipeModal');
+    const closeRecipeModal = document.getElementById('closeRecipeModal');
+
+    if (addRecipeBtn && addRecipeModal && closeRecipeModal) {
+      addRecipeBtn.addEventListener('click', function() {
+        addRecipeModal.classList.remove('hidden');
+      });
+
+      closeRecipeModal.addEventListener('click', function() {
+        addRecipeModal.classList.add('hidden');
+      });
+    }
+  });
+
+const modal = document.getElementById("jobModal");
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    // const projectsContainer = document.getElementById("projects");
+
+    openModal.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+
+    });
+
+    closeModal.addEventListener("click", () => {
+        modal.classList.add("hidden");
+
+    });
+
     // Tab switching functionality
     document.addEventListener('DOMContentLoaded', function() {
       const tabButtons = document.querySelectorAll('.tab-button');

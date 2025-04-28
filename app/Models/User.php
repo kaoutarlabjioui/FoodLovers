@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable  implements JWTSubject
+
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -46,31 +46,20 @@ class User extends Authenticatable  implements JWTSubject
 
 
 
-public function getJWTIdentifier()
-{
-    return $this->getKey();
-}
-
-public function getJWTCustomClaims()
-{
-    return [];
-}
-
-
 public function role(){
     return $this->belongsTo(Role::class,'role_id');
 }
 public function address(){
-    return $this->belongsTo(Address::class);
+    return $this->belongsTo(Address::class,'address_id');
 }
 public function commandes()
 {
-    return $this->hasMany(Commande::class);
+    return $this->hasMany(Commande::class,'client_id');
 }
 
 public function recettes()
 {
-    return $this->hasMany(Recette::class, 'chef');
+    return $this->hasMany(Recette::class);
 }
 
 public function competitions()

@@ -1,299 +1,344 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panier - FoodLovers</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#FF6B6B',
-            secondary: '#4ECDC4',
-            accent: '#FFE66D',
-            dark: '#292F36',
-            light: '#F7F9F9'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Playfair Display', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@extends('layouts')
 
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #c5c5c5;
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #a8a8a8;
-    }
-  </style>
-</head>
-<body class="font-sans bg-light text-dark">
-  <!-- Header/Navigation -->
-  <header class="bg-white shadow-sm sticky top-0 z-10">
-    <div class="container mx-auto px-4">
-      <div class="flex items-center justify-between py-4">
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center">
-          <span class="text-2xl font-display font-bold text-primary">Food<span class="text-dark">Lovers</span></span>
-        </a>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center space-x-8">
-          <a href="/" class="text-dark hover:text-primary transition-colors">Accueil</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">Compétitions</a>
-          <a href="/boutique" class="text-dark hover:text-primary transition-colors">Boutique</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">Blog</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">À propos</a>
-        </nav>
-
-        <!-- User Actions -->
-        <div class="flex items-center space-x-4">
-          <a href="#" class="text-dark hover:text-primary transition-colors">
-            <i class="fas fa-search"></i>
-          </a>
-          <a href="/panier" class="text-primary transition-colors relative">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-          </a>
-          <a href="#" class="text-dark hover:text-primary transition-colors">
-            <i class="fas fa-user"></i>
-          </a>
-
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-button" class="md:hidden text-dark hover:text-primary transition-colors">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="md:hidden bg-white shadow-sm hidden">
-      <div class="container mx-auto px-4 py-3">
-        <nav class="flex flex-col space-y-3">
-          <a href="index.html" class="text-dark hover:text-primary transition-colors py-2">Accueil</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors py-2">Recettes</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors py-2">Compétitions</a>
-          <a href="shop.html" class="text-dark hover:text-primary transition-colors py-2">Boutique</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors py-2">Blog</a>
-          <a href="#" class="text-dark hover:text-primary transition-colors py-2">À propos</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
+@section('content')
   <!-- Page Title -->
-  <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-8">
+  <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-10">
     <div class="container mx-auto px-4">
       <h1 class="text-3xl md:text-4xl font-display font-bold text-center">Votre Panier</h1>
+      <p class="text-center text-gray-600 mt-2">Vérifiez et modifiez vos articles avant de passer commande</p>
     </div>
   </section>
 
   <!-- Cart Content -->
   <section class="py-12">
     <div class="container mx-auto px-4">
-      <div class="flex flex-col lg:flex-row gap-8">
-        <!-- Cart Items -->
-        <div class="lg:w-2/3">
-          <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-            <div class="p-4 border-b">
-              <h2 class="text-xl font-bold">Articles dans votre panier (3)</h2>
-            </div>
-
-            <!-- Cart Item 1 -->
-            <div class="p-4 border-b flex flex-col sm:flex-row items-center gap-4">
-              <div class="sm:w-24 h-24 flex-shrink-0">
-                <img src="https://images.unsplash.com/photo-1556911073-38141963c9e0" alt="Couteau de chef" class="w-full h-full object-cover rounded-md">
+      @if(count($panier) > 0)
+        <div class="flex flex-col lg:flex-row gap-8">
+          <!-- Cart Items -->
+          <div class="lg:w-2/3">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+              <div class="p-6 border-b border-gray-100">
+                <div class="flex justify-between items-center">
+                  <h2 class="text-xl font-bold">Articles dans votre panier ({{ count($panier) }})</h2>
+                  <form action="{{ route('panier.vider') }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir vider votre panier ?')">
+                    @csrf
+                    <button type="submit" id="clear-cart" class="text-sm text-gray-500 hover:text-primary transition-colors flex items-center">
+                        <i class="fas fa-trash-alt mr-2"></i> Vider le panier
+                    </button>
+                    </form>
+                </div>
               </div>
-              <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1">Couteau de Chef Professionnel</h3>
-                <p class="text-gray-500 text-sm mb-2">Catégorie: Ustensiles</p>
-                <div class="flex flex-wrap items-center gap-4">
-                  <div class="flex items-center border rounded-md">
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <span class="px-3 py-1 border-x">1</span>
-                    <button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors">
-                      <i class="fas fa-plus"></i>
-                    </button>
+              <!-- <pre>{{ print_r(session('panier'), true) }}</pre> -->
+              <!-- Cart Items List -->
+              @foreach($panier as $id => $item)
+                <div class="p-6 border-b border-gray-100 hover:bg-gray-50 transition-colors" id="cart-item-{{ $id }}">
+                  <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <!-- Product Image -->
+                    <div class="sm:w-28 h-28 flex-shrink-0">
+                      <img src="{{ url('/storage/' . $item['photo']) }}" alt="{{ $item['nom'] }}" class="w-full h-full object-cover rounded-lg shadow-sm">
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="flex-1 w-full sm:w-auto">
+                      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                        <h3 class="font-bold text-lg mb-2">{{ $item['nom'] }}</h3>
+                        <div class="text-lg font-bold text-primary">{{ $item['prix'] * $item['quantite'] }} Dh</div>
+                      </div>
+
+                      <div class="flex flex-wrap items-center justify-between gap-4 mt-3">
+                        <!-- Quantity Controls -->
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+
+                          <form action="{{ route('panier.updateQuantite', $id) }}" method="POST" class="flex items-center space-x-2">
+                                @csrf
+                                <!-- <button class="quantity-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors" data-action="decrease" data-id="{{ $id }}">
+                            <i class="fas fa-minus text-gray-600"></i>
+                          </button>
+                          <span class="quantity-value px-4 py-2 border-x border-gray-300 min-w-[40px] text-center">{{ $item['quantite'] }}</span>
+                          <button class="quantity-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors" data-action="increase" data-id="{{ $id }}" data-stock="{{ $item['stock'] ?? 0 }}">
+                            <i class="fas fa-plus text-gray-600"></i>
+                          </button> -->
+                                <input type="number" name="quantite" value="{{ $item['quantite'] }}" class="w-16 p-2 border rounded-md text-center" min="1" max="{{ $item['stock'] ?? 0 }}" required>
+                                <button type="submit" id="update-cart" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                    <i class="fas fa-sync-alt mr-2"></i> Mettre à jour
+                                </button>
+                            </form>
+
+                        </div>
+
+                        <!-- Item Price -->
+                        <div class="text-sm text-gray-500">
+                          Prix unitaire: <span class="font-medium">{{ $item['prix'] }} Dh</span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-3 ml-auto">
+                          <button class="save-for-later text-gray-400 hover:text-primary transition-colors" data-id="{{ $id }}" title="Sauvegarder pour plus tard">
+                            <i class="fas fa-heart"></i>
+                          </button>
+                          <form action="{{ route('panier.supprimer') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="produit_id" value="{{ $id }}">
+                            @method('DELETE')
+                            <button type="submit" class="text-primary hover:underline flex items-center">
+                                <i class="fas fa-trash-alt mr-2"></i> Supprimer
+                            </button>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="text-lg font-bold text-primary">89,99 €</div>
+                </div>
+
+
+              <!-- Cart Actions -->
+              <div class="p-6 bg-gray-50">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+
+                  <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
+                    <a href="/boutique" class="text-primary hover:underline flex items-center">
+                      <i class="fas fa-arrow-left mr-2"></i> Continuer les achats
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-center gap-2">
-                <button class="text-gray-400 hover:text-primary transition-colors">
-                  <i class="fas fa-heart"></i>
-                </button>
-                <button class="text-gray-400 hover:text-red-500 transition-colors">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
+              @endforeach
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:w-1/3">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden sticky top-24">
+              <div class="p-6 border-b border-gray-100">
+                <h2 class="text-xl font-bold">Récapitulatif de la commande</h2>
               </div>
-            </div>
+              <div class="p-6">
+                <div class="space-y-4 mb-6">
 
+                  <div class="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
+                    <span class="font-bold text-lg">Total</span>
+                    <span class="font-bold text-primary text-xl" id="total">
+                      @php
+                      $subtotal = 0;
+                        foreach($panier as $item) {
+                          $subtotal += $item['prix'] * $item['quantite'];
+                        }
+                        $total = $subtotal ;
+                        echo $total . ' Dh';
+                      @endphp
+                    </span>
+                  </div>
+                </div>
+                @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+                <form action="/commandes/page" method="POST">
+                @csrf
+                <button id="checkout-btn" type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 mb-6">
+                  <i class="fas fa-lock"></i> Procéder au paiement
+                </button>
+                </form>
+                <!-- Payment Methods -->
+                <div class="flex justify-center space-x-4 mb-6">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png" alt="PayPal" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
+                </div>
 
-          <!-- Cart Actions -->
-          <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2">
-              <input type="text" placeholder="Code promo" class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
-              <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">Appliquer</button>
-            </div>
-            <div class="flex items-center gap-4">
-              <a href="shop.html" class="text-primary hover:underline flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Continuer les achats
-              </a>
-              <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
-                Mettre à jour le panier
-              </button>
+                <!-- Shipping & Returns Info -->
+                <div class="text-sm text-gray-500 space-y-2">
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-truck text-primary"></i>
+                    <p>Livraison gratuite à partir de 200 Dh d'achat</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-undo text-primary"></i>
+                    <p>Retours acceptés sous 30 jours</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-shield-alt text-primary"></i>
+                    <p>Paiement 100% sécurisé</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- Order Summary -->
-        <div class="lg:w-1/3">
-          <div class="bg-white rounded-lg shadow-sm overflow-hidden sticky top-24">
-            <div class="p-4 border-b">
-              <h2 class="text-xl font-bold">Récapitulatif de la commande</h2>
+      @else
+        <!-- Empty Cart -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden p-8 text-center">
+          <div class="max-w-md mx-auto">
+            <div class="text-6xl text-gray-300 mb-6">
+              <i class="fas fa-shopping-cart"></i>
             </div>
-            <div class="p-4">
-              <div class="space-y-3 mb-6">
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Sous-total</span>
-                  <span class="font-medium">144,97 €</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Frais de livraison</span>
-                  <span class="font-medium">5,99 €</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Remise</span>
-                  <span class="font-medium text-green-600">-0,00 €</span>
-                </div>
-                <div class="border-t pt-3 flex justify-between">
-                  <span class="font-bold">Total</span>
-                  <span class="font-bold text-primary text-xl">150,96 €</span>
-                </div>
-              </div>
-
-              <button class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors mb-4">
-                Procéder au paiement
-              </button>
-
-              <div class="flex justify-center space-x-2 mb-4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="h-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png" alt="PayPal" class="h-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="h-6">
-              </div>
-
-              <div class="text-sm text-gray-500 text-center">
-                <p>Nous acceptons les retours sous 30 jours.</p>
-                <p>Livraison gratuite à partir de 75€ d'achat.</p>
-              </div>
-            </div>
+            <h2 class="text-2xl font-bold mb-4">Votre panier est vide</h2>
+            <p class="text-gray-600 mb-6">Vous n'avez pas encore ajouté d'articles à votre panier.</p>
+            <a href="/boutique" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors">
+              Découvrir nos produits
+            </a>
           </div>
         </div>
-      </div>
+      @endif
     </div>
   </section>
+@endsection
 
-  <!-- You Might Also Like -->
-  <section class="py-12 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <h2 class="text-2xl font-display font-bold mb-8">Vous pourriez aussi aimer</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+@section('js')
+<script>
+  // Mobile menu toggle
+  document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+  });
 
+  // Quantity buttons
+  document.querySelectorAll('.quantity-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const action = this.getAttribute('data-action');
+      const id = this.getAttribute('data-id');
+      const quantityElement = this.parentElement.querySelector('.quantity-value');
+      const stock = parseInt(this.getAttribute('data-stock')) || Infinity;
+      let quantity = parseInt(quantityElement.textContent);
 
-        <!-- Product Card 2 -->
+      if (action === 'decrease' && quantity > 1) {
+        quantity--;
+      } else if (action === 'increase' && quantity < stock) {
+        quantity++;
+      }
 
+      quantityElement.textContent = quantity;
 
-        <!-- Product Card 3 -->
+      // Here you would typically update the cart via AJAX
+      // updateCartItem(id, quantity);
 
-
-        <!-- Product Card 4 -->
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div>
-          <h3 class="text-xl font-display font-bold mb-4">FoodLovers</h3>
-          <p class="text-gray-400 mb-4">Votre destination pour tout ce qui concerne la cuisine et la gastronomie.</p>
-        </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
-          <ul class="space-y-2">
-            <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
-            <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Recettes</a></li>
-            <li><a href="/competition" class="text-gray-400 hover:text-white transition-colors">Compétitions</a></li>
-            <li><a href="/boutique" class="text-gray-400 hover:text-white transition-colors">Boutique</a></li>
-
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="text-lg font-bold mb-4">Contact</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Rue de la Cuisine, Paris</li>
-            <li><i class="fas fa-phone mr-2"></i> +33 1 23 45 67 89</li>
-            <li><i class="fas fa-envelope mr-2"></i> contact@foodlovers.com</li>
-          </ul>
-        </div>
-      </div>
-      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 mb-4 md:mb-0">© 2025 FoodLovers. Tous droits réservés.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- JavaScript -->
-  <script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenu.classList.toggle('hidden');
+      // For demo purposes, let's update the price display
+      updateItemPrice(id, quantity);
     });
+  });
 
-    // Quantity buttons
-    document.querySelectorAll('.fa-minus').forEach(button => {
-      button.parentElement.addEventListener('click', function() {
-        const quantityElement = this.nextElementSibling;
-        let quantity = parseInt(quantityElement.textContent);
-        if (quantity > 1) {
-          quantityElement.textContent = quantity - 1;
+  // Remove item button
+  document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', function() {
+      const id = this.getAttribute('data-id');
+      const cartItem = document.getElementById('cart-item-' + id);
+
+      // Animation for removal
+      cartItem.style.transition = 'all 0.3s ease';
+      cartItem.style.opacity = '0';
+      cartItem.style.height = '0';
+      cartItem.style.overflow = 'hidden';
+
+      setTimeout(() => {
+        cartItem.remove();
+        updateCartTotals();
+
+        // Check if cart is empty
+        if (document.querySelectorAll('[id^="cart-item-"]').length === 0) {
+          location.reload(); // Reload to show empty cart state
         }
-      });
+      }, 300);
+
+      // Here you would typically remove the item via AJAX
+      // removeCartItem(id);
+    });
+  });
+
+  // Save for later
+  document.querySelectorAll('.save-for-later').forEach(button => {
+    button.addEventListener('click', function() {
+      this.classList.toggle('text-primary');
+
+      // Here you would typically save the item for later via AJAX
+      // saveForLater(this.getAttribute('data-id'));
+
+      // Show feedback
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 right-4 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50';
+      toast.textContent = 'Article sauvegardé pour plus tard';
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => toast.remove(), 500);
+      }, 2000);
+    });
+  });
+
+  // Update cart button
+  document.getElementById('update-cart')?.addEventListener('click', function() {
+    // Here you would typically update the entire cart via AJAX
+    // updateCart();
+
+    // Show feedback
+    this.innerHTML = '<i class="fas fa-check mr-2"></i> Mis à jour';
+    this.classList.remove('bg-gray-200', 'text-gray-700');
+    this.classList.add('bg-green-500', 'text-white');
+
+    setTimeout(() => {
+      this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Mettre à jour';
+      this.classList.remove('bg-green-500', 'text-white');
+      this.classList.add('bg-gray-200', 'text-gray-700');
+    }, 2000);
+  });
+
+  // Clear cart button
+  document.getElementById('clear-cart')?.addEventListener('click', function() {
+    if (confirm('Êtes-vous sûr de vouloir vider votre panier ?')) {
+      // Here you would typically clear the cart via AJAX
+      // clearCart();
+
+      location.reload(); // Reload to show empty cart state
+    }
+  });
+
+  // Checkout button
+  document.getElementById('checkout-btn')?.addEventListener('click', function() {
+    window.location.href = '/checkout';
+  });
+
+  // Helper function to update item price display
+  function updateItemPrice(id, quantity) {
+    const cartItem = document.getElementById('cart-item-' + id);
+    const priceElement = cartItem.querySelector('.text-primary');
+    const unitPriceText = cartItem.querySelector('.text-gray-500 .font-medium').textContent;
+    const unitPrice = parseFloat(unitPriceText.replace(' Dh', ''));
+
+    const newPrice = (unitPrice * quantity).toFixed(2);
+    priceElement.textContent = newPrice + ' Dh';
+
+    updateCartTotals();
+  }
+
+  // Helper function to update cart totals
+  function updateCartTotals() {
+    let subtotal = 0;
+
+    // Calculate subtotal
+    document.querySelectorAll('[id^="cart-item-"]').forEach(item => {
+      const priceText = item.querySelector('.text-primary').textContent;
+      const price = parseFloat(priceText.replace(' Dh', ''));
+      subtotal += price;
     });
 
-    document.querySelectorAll('.fa-plus').forEach(button => {
-      button.parentElement.addEventListener('click', function() {
-        const quantityElement = this.previousElementSibling;
-        let quantity = parseInt(quantityElement.textContent);
-        quantityElement.textContent = quantity + 1;
-      });
-    });
-  </script>
-</body>
-</html>
+    // Update subtotal display
+    const subtotalElement = document.getElementById('subtotal');
+    subtotalElement.textContent = subtotal.toFixed(2) + ' Dh';
+
+    // Get shipping cost
+    const shippingText = document.getElementById('shipping').textContent;
+    const shipping = parseFloat(shippingText.replace(' Dh', ''));
+
+    // Get discount
+    const discountText = document.getElementById('discount').textContent;
+    const discount = parseFloat(discountText.replace('-', '').replace(' Dh', ''));
+
+    // Calculate and update total
+    const total = subtotal + shipping - discount;
+    document.getElementById('total').textContent = total.toFixed(2) + ' Dh';
+  }
+</script>
+@endsection
