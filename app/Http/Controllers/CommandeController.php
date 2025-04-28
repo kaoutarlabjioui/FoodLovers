@@ -9,19 +9,20 @@ use App\Services\ICommandeService;
 use App\Services\IStripePaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Termwind\Components\Raw;
 
 class CommandeController extends Controller
 {
 
     protected ICommandeService $commandeService;
     protected CommandeRepositoryInterface $commandeRepo;
-    protected IStripePaymentService $stripePaymentService;
+    // protected IStripePaymentService $stripePaymentService;
 
-    public function __construct(ICommandeService $commandeService,CommandeRepositoryInterface $commandeRepo,IStripePaymentService $stripePaymentService)
+    public function __construct(ICommandeService $commandeService,CommandeRepositoryInterface $commandeRepo)
     {
         $this->commandeService = $commandeService;
         $this->commandeRepo = $commandeRepo;
-        $this->stripePaymentService= $stripePaymentService;
+        // $this->stripePaymentService= $stripePaymentService;
     }
 
 
@@ -60,6 +61,9 @@ class CommandeController extends Controller
     {
         //
     }
+
+
+
 
 
     public function edit(Commande $commande)

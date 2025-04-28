@@ -7,7 +7,7 @@
 <section class="bg-gradient-to-r from-primary/10 to-secondary/10 py-10">
     <div class="container mx-auto px-4">
         <h1 class="text-3xl md:text-4xl font-display font-bold text-center">Finaliser votre commande</h1>
-        <p class="text-center text-gray-600 mt-2">Complétez vos informations de livraison pour finaliser votre commande</p>
+        <p class="text-center text-gray-600 mt-2">Vérifiez vos informations de livraison pour finaliser votre commande</p>
     </div>
 </section>
 
@@ -28,54 +28,59 @@
                     </div>
 
                     <div class="p-6">
-                        <form id="payment-form" method="POST" action="/pay" class="space-y-6">
+                        <form id="payment-form" method="POST" action="/makepay" class="space-y-6">
                             @csrf
 
                             <fieldset class="space-y-6">
                                 <!-- Street Address -->
                                 <div>
-                                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Adresse
                                     </label>
-                                    <input type="text" id="address" name="address" value="{{Auth::user()->address->address ?? ''}}"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary transition"
-                                        placeholder="123 Rue Principale">
+                                    <div class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-800">
+                                        {{Auth::user()->address->address ?? 'Aucune adresse enregistrée'}}
+                                    </div>
+                                    <input type="hidden" name="address" value="{{Auth::user()->address->address ?? ''}}">
                                 </div>
 
                                 <!-- City, State, ZIP -->
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label for="ville" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
                                             Ville
                                         </label>
-                                        <input type="text" id="ville" name="ville" value="{{Auth::user()->address->ville ?? ''}}"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary transition"
-                                            placeholder="Paris">
+                                        <div class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-800">
+                                            {{Auth::user()->address->ville ?? 'Non spécifiée'}}
+                                        </div>
+                                        <input type="hidden" name="ville" value="{{Auth::user()->address->ville ?? ''}}">
                                     </div>
                                     <div>
-                                        <label for="codepostal" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
                                             Code Postal
                                         </label>
-                                        <input type="text" id="codepostal" name="codepostal" value="{{Auth::user()->address->codepostal ?? ''}}"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary transition"
-                                            placeholder="75001">
+                                        <div class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-800">
+                                            {{Auth::user()->address->codepostal ?? 'Non spécifié'}}
+                                        </div>
+                                        <input type="hidden" name="code_postal" value="{{Auth::user()->address->code_postal ?? ''}}">
                                     </div>
                                 </div>
 
                                 <!-- Country -->
                                 <div>
-                                    <label for="pays" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Pays
                                     </label>
-                                    <input type="text" id="pays" name="pays" value="{{ Auth::user()->address->pays ?? '' }}"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary transition"
-                                        placeholder="France">
+                                    <div class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-800">
+                                        {{ Auth::user()->address->pays ?? 'Non spécifié' }}
+                                    </div>
+                                    <input type="hidden" name="pays" value="{{ Auth::user()->address->pays ?? '' }}">
+                                    <input type="hidden" name="pays" value="{{$commande->id}}">
                                 </div>
                             </fieldset>
-                            
                             <div class="pt-6 border-t border-gray-100">
+                            <input type="hidden" name="totalAmont" value="{{ $total}}">
                                 <button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
-                                    <i class="fas fa-lock mr-2"></i> Payer Dh
+                                    <i class="fas fa-lock mr-2"></i> Payer {{ number_format($total, 2, ',', ' ') }} Dh
                                 </button>
                                 <p class="text-center text-sm text-gray-500 mt-3">
                                     <i class="fas fa-shield-alt mr-1"></i> Paiement 100% sécurisé
@@ -97,10 +102,6 @@
                         <ul class="divide-y divide-gray-100 mb-6">
                             @if(!is_null($produits) && count($produits) > 0)
                             @foreach($produits as $produit)
-
-
-
-
                             <li class="py-4 flex">
                                 <div class="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden">
                                     <img src="{{ url('/storage/' . $produit['photo']) }}" alt="{{ $produit['nom'] }}" class="w-full h-full object-cover">

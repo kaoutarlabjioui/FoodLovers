@@ -56,7 +56,7 @@ class CommandeService implements ICommandeService{
 
         }
         DB::commit();
-        session()->forget('panier');
+        // session()->forget('panier');
         return [
             'commande' => $commande,
             'produits' => $panier,
@@ -80,14 +80,15 @@ class CommandeService implements ICommandeService{
         return $total;
     }
 
-    public function updateStatus($commande,$status){
-        $commande->statut = $status;
+    public function updateStatus($commande_id){
+        $commande = $this->commandeRepo->findById($commande_id);
+        $commande->statut = 'Payée';
         $commande->save;
         return $commande;
     }
 
 
-    
+
 
 }
 

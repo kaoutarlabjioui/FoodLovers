@@ -6,6 +6,6 @@ use App\Models\Commande;
 
 interface IStripePaymentService
 {
-    public function makePayment();
+    public function makePayment($total);
     public function processPayment($data);
 }

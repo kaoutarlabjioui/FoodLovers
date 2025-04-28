@@ -18,4 +18,11 @@ class CommandeRepository implements CommandeRepositoryInterface {
      return Commande::all();
 
     }
+
+    public function findById($id){
+
+        return Commande::find($id);
+
+       }
+
 }

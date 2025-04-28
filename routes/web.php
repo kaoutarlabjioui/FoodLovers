@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RecetteController;
 use App\Http\Controllers\RoleController;
@@ -44,9 +45,7 @@ Route::get('/', function () {
 // Route::get('/panier', function () {
 //     return view('panier');
 // });
-// Route::get('/competition', function () {
-//     return view('competition');
-// });
+
 // Route::get('/detailcompetition', function () {
 //     return view('detailcompetition');
 // });
@@ -58,9 +57,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::get('/admincompetition', function () {
         return view('admincompetition');
     });
-    Route::get('/adminshop', function () {
-        return view('adminshop');
-    });
+
 
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -167,9 +164,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-
-
-Route::fallback(function () {
-    return redirect('/');
+Route::middleware('auth')->group(function () {
+    Route::controller(PaymentController::class)->group(function(){
+        Route::post('/makepay', 'makePay');
+        Route::post('/command/pay', 'processPayment');
+    });
 });
+
+
+// Route::fallback(function () {
+//     return redirect('/');
+// });
