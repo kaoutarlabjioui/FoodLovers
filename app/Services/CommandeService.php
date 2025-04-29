@@ -81,9 +81,16 @@ class CommandeService implements ICommandeService{
     }
 
     public function updateStatus($commande_id){
+
+        // dd($commande_id);
         $commande = $this->commandeRepo->findById($commande_id);
-        $commande->statut = 'Payée';
-        $commande->save;
+        if (!$commande) {
+            throw new \Exception('Commande introuvable.');
+        }
+
+        $commande->status = 'terminer';
+        $commande->save();
+        // dd('hi');
         return $commande;
     }
 

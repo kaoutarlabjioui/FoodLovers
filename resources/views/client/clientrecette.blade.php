@@ -54,10 +54,10 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <div class="flex space-x-2">
-              <a href="/recipes/{{$recette->id}}" class="text-accent hover:text-accent/80" title="Voir">
+              <!-- <a href="" class="text-accent hover:text-accent/80" title="Voir">
                 <i class="fas fa-eye"></i>
-              </a>
-              <a href="/recipes/{{$recette->id}}/edit" class="text-primary hover:text-primary/80" title="Modifier">
+              </a> -->
+              <a href="/client/edituserrecette/{{$recette->id}}" class="text-primary hover:text-primary/80" title="Modifier">
                 <i class="fas fa-edit"></i>
               </a>
               <form action="{{ route('clientrecette.destroy') }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette?')">

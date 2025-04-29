@@ -71,8 +71,10 @@ class AuthController extends Controller
         if ($user->role->role_name === 'admin') {
             return redirect('/admin/dashboard')->with('success', 'Connexion réussie en tant qu\'admin');
 
-        } elseif ($user->role->role_name === 'user') {
+        } elseif ($user->role->role_name === 'user' && $user->status === 'active') {
             return redirect('/profile')->with('success', 'Connexion réussie en tant qu\'utilisateur');
+        }elseif($user->role->role_name === 'user' && $user->status != 'active'){
+            return redirect('/userdesactive');
         }
 
     }

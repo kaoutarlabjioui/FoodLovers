@@ -55,18 +55,18 @@
         <h1 class="text-2xl font-bold">Gestion des Utilisateurs</h1>
         <p class="text-gray-600">Gérez tous les utilisateurs de la plateforme</p>
       </div>
-      <div class="mt-4 md:mt-0">
+      <!-- <div class="mt-4 md:mt-0">
         <button id="add-user-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center">
           <i class="fas fa-plus mr-2"></i>
           Ajouter un utilisateur
         </button>
-      </div>
+      </div> -->
     </div>
 
 
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+    <!-- <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between">
         <h2 class="text-lg font-bold mb-4 md:mb-0">Filtres</h2>
         <div class="flex flex-col md:flex-row gap-4">
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Users Table -->
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -134,7 +134,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Actif
+                  {{$user->status}}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -142,9 +142,13 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex space-x-2 justify-end">
-                  <button class="text-yellow-600 hover:text-yellow-800 edit-user">
+                <button
+                    type="button"
+                    class="ml-3 text-yellow-600 hover:text-yellow-900 status-btn inline-flex items-center"
+                    data-id="{{ $user->id }}"
+                    data-status="{{ $user->status }}">
                     <i class="fas fa-edit"></i>
-                  </button>
+                </button>
                 </div>
               </td>
             </tr>
@@ -194,183 +198,99 @@
 @endsection
 
 @section('modal')
-  <!-- Modales -->
+<div id="statusModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Change User Status
+                        </h3>
+                        <div class="mt-4">
+                            <form action="/admin/updateuserstatus" method="POST" id="statusForm">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" id="status_user_id" name="id">
 
-  <!-- Modale Ajouter/Modifier Utilisateur -->
-  <div id="add-user-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
-
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-              <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="user-modal-title">
-                Ajouter un nouvel utilisateur
-              </h3>
-
-              <div class="mt-2">
-                <form id="user-form" class="space-y-4">
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label for="user-firstname" class="block text-sm font-medium text-gray-700">Prénom</label>
-                      <input type="text" id="user-firstname" name="firstname" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                                <div class="mb-4">
+                                    <label for="update_status" class="block text-sm font-medium text-gray-700">Status</label>
+                                    <select name="status" id="update_status" class="mt-1 focus:ring-yellow-500 focus:border-yellow-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="banned">Banned</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <div>
-                      <label for="user-lastname" class="block text-sm font-medium text-gray-700">Nom</label>
-                      <input type="text" id="user-lastname" name="lastname" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
-                  </div>
-
-                  <div>
-                    <label for="user-email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="user-email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                  </div>
-
-                  <div>
-                    <label for="user-username" class="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
-                    <input type="text" id="user-username" name="username" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                  </div>
-
-                  <div id="password-container">
-                    <label for="user-password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-                    <input type="password" id="user-password" name="password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                  </div>
-
-                  <div>
-                    <label for="user-role" class="block text-sm font-medium text-gray-700">Rôle</label>
-                    <select id="user-role" name="role" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                      <option value="user">Utilisateur</option>
-                      <option value="contributor">Contributeur</option>
-                      <option value="moderator">Modérateur</option>
-                      <option value="admin">Administrateur</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label for="user-status" class="block text-sm font-medium text-gray-700">Statut</label>
-                    <select id="user-status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
-                      <option value="active">Actif</option>
-                      <option value="pending">En attente</option>
-                      <option value="suspended">Suspendu</option>
-                      <option value="banned">Banni</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label for="user-avatar" class="block text-sm font-medium text-gray-700">Avatar</label>
-                    <div class="mt-1 flex items-center">
-                      <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <img id="user-avatar-preview" src="/placeholder.svg?height=48&width=48" alt="Avatar" class="h-full w-full object-cover">
-                      </span>
-                      <button type="button" id="user-avatar-button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                        Changer
-                      </button>
-                      <input type="file" id="user-avatar" name="avatar" class="hidden" accept="image/*">
-                    </div>
-                  </div>
-                </form>
-              </div>
+                </div>
             </div>
-          </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="submit" form="statusForm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Update Status
+                </button>
+                <button type="button" class="closeModal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
         </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="button" id="save-user-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm">
-            <span id="user-save-button-text">Ajouter</span>
-          </button>
-          <button type="button" class="close-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-            Annuler
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
+
 @endsection
 
 @section('js')
   <!-- JavaScript -->
-  <script>
-    // Modal handling
-    const userModal = document.getElementById('add-user-modal');
-    const userModalTitle = document.getElementById('user-modal-title');
-    const userSaveButtonText = document.getElementById('user-save-button-text');
-    const userForm = document.getElementById('user-form');
-    const passwordContainer = document.getElementById('password-container');
 
-    // Image upload preview
-    const userAvatarInput = document.getElementById('user-avatar');
-    const userAvatarButton = document.getElementById('user-avatar-button');
-    const userAvatarPreview = document.getElementById('user-avatar-preview');
 
-    // Open modal
-    document.getElementById('add-user-btn').addEventListener('click', function() {
-      userModalTitle.textContent = 'Ajouter un nouvel utilisateur';
-      userSaveButtonText.textContent = 'Ajouter';
-      userForm.reset();
-      userAvatarPreview.src = '/placeholder.svg?height=48&width=48';
-      passwordContainer.style.display = 'block';
-      userModal.classList.remove('hidden');
+<script>
+    // Modal functionality
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+        // Open status modal and populate form
+        const statusButtons = document.querySelectorAll('.status-btn');
+        statusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const status = this.getAttribute('data-status');
+
+                // Populate form fields
+                document.getElementById('status_user_id').value = id;
+                document.getElementById('update_status').value = status;
+
+                // Show modal
+                document.getElementById('statusModal').classList.remove('hidden');
+            });
+        });
+
+
+
+        // Close modals
+        const closeButtons = document.querySelectorAll('.closeModal');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+
+                document.getElementById('statusModal').classList.add('hidden');
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('fixed') && event.target.classList.contains('inset-0')) {
+
+                document.getElementById('statusModal').classList.add('hidden');
+
+            }
+        });
     });
 
-    // Edit user
-    document.querySelectorAll('.edit-user').forEach(button => {
-      button.addEventListener('click', function() {
-        userModalTitle.textContent = 'Modifier l\'utilisateur';
-        userSaveButtonText.textContent = 'Enregistrer les modifications';
-        passwordContainer.style.display = 'none';
+</script>
 
-        // Ici, vous chargeriez les données de l'utilisateur à modifier
-        // Pour cet exemple, nous allons simplement remplir avec des données fictives
-        document.getElementById('user-firstname').value = 'Marie';
-        document.getElementById('user-lastname').value = 'Dupont';
-        document.getElementById('user-email').value = 'marie.dupont@example.com';
-        document.getElementById('user-username').value = 'mariedupont';
-        document.getElementById('user-role').value = 'contributor';
-        document.getElementById('user-status').value = 'active';
 
-        userModal.classList.remove('hidden');
-      });
-    });
 
-    // Close modal
-    document.querySelectorAll('.close-modal').forEach(button => {
-      button.addEventListener('click', function() {
-        userModal.classList.add('hidden');
-      });
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-      if (event.target === userModal) {
-        userModal.classList.add('hidden');
-      }
-    });
-
-    // Avatar preview
-    userAvatarButton.addEventListener('click', function() {
-      userAvatarInput.click();
-    });
-
-    userAvatarInput.addEventListener('change', function() {
-      if (this.files && this.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          userAvatarPreview.src = e.target.result;
-        };
-        reader.readAsDataURL(this.files[0]);
-      }
-    });
-
-    // Save user
-    document.getElementById('save-user-btn').addEventListener('click', function() {
-      // Ici, vous ajouteriez le code pour envoyer les données au serveur
-      alert('Utilisateur enregistré avec succès !');
-      userModal.classList.add('hidden');
-    });
-  </script>
 @endsection

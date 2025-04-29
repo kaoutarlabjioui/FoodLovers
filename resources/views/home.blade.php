@@ -1,7 +1,5 @@
 @extends('layouts')
-
 @section('content')
-
 @if (session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
         <span class="block sm:inline">{{ session('success') }}</span>
@@ -15,7 +13,7 @@
       <p class="text-lg mb-8">Discover delicious recipes, join exciting cooking competitions, and connect with food enthusiasts from around the world!</p>
       <div class="flex flex-wrap justify-center gap-4">
         <a href="#featured-recipes" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors">Explore Recipes</a>
-        <a href="#active-competitions" class="bg-white border border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-white transition-colors">Join Competitions</a>
+        <a href="/competition" class="bg-white border border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-white transition-colors">Join Competitions</a>
       </div>
     </div>
   </div>
@@ -78,18 +76,12 @@
           <!-- Footer avec infos et actions -->
           <div class="flex justify-between items-center">
             <div class="flex items-center">
+
               <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-2">
                 <i class="fas fa-user text-gray-500"></i>
               </div>
               <span class="text-sm text-gray-500">{{$recette->user->first_name}}</span>
-            </div>
-            <div class="flex items-center space-x-3">
-              <button class="text-gray-400 hover:text-red-500 transition-colors">
-                <i class="far fa-heart"></i>
-              </button>
-              <button class="text-gray-400 hover:text-primary transition-colors">
-                <i class="far fa-bookmark"></i>
-              </button>
+
             </div>
           </div>
         </div>
@@ -99,59 +91,7 @@
   </div>
 </section>
 
-<!-- Active Competitions Section -->
-<section id="active-competitions" class="py-12 bg-light">
-  <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center mb-8">
-      <h2 class="text-3xl font-display font-bold">Active Competitions</h2>
-      <a href="/competition" class="text-primary font-medium hover:underline flex items-center">
-        View All <i class="fas fa-arrow-right ml-2"></i>
-      </a>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Competition Card -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <img src="/placeholder.svg" alt="" class="w-full h-48 object-cover">
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-3">
-            <div class="bg-primary text-white text-sm font-medium px-2 py-1 rounded">Active</div>
-            <span class="text-sm text-gray-600">Ends in days</span>
-          </div>
-          <h3 class="font-bold text-xl mb-2"></h3>
-          <p class="text-gray-600 mb-4"></p>
-          <div class="mb-4">
-            <div class="flex items-center mb-1">
-              <i class="fas fa-trophy text-yellow-500 mr-2"></i>
-              <span class="font-medium">Prizes:</span>
-            </div>
-            <ul class="list-disc list-inside text-gray-600 ml-6">
-              <li></li>
-            </ul>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-500">participants</span>
-            <a href="" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Join Now</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="py-12 bg-primary/10">
-  <div class="container mx-auto px-4">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-display font-bold mb-4">Join Our Culinary Community</h2>
-      <p class="text-lg mb-6">Subscribe to our newsletter to receive new recipes, cooking tips, and exclusive competition announcements.</p>
-      <div class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-        <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-        <button class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors">Subscribe</button>
-      </div>
-    </div>
-  </div>
-</section>
 @endsection
 
 @section('js')

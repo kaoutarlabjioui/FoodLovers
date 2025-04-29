@@ -23,23 +23,20 @@
         <!-- Competition Card -->
         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm competition-card">
           <div class="relative">
-            <img src="{{ url('/storage/' . $competition->image) }}" alt="{{ $competition->title }}" class="w-full h-48 object-cover">
+            <img src="{{ url('/storage/' . $competition->image) }}" alt="{{ $competition->name }}" class="w-full h-48 object-cover">
             <div class="absolute top-0 right-0 m-2">
               <span class="px-2 py-1 bg-primary text-white text-xs font-semibold rounded-full">
-                {{ $competition->status }}
+                {{ $competition->pivot->status }}
               </span>
             </div>
           </div>
           <div class="p-4">
-            <h3 class="font-bold text-lg mb-2">{{ $competition->title }}</h3>
+            <h3 class="font-bold text-lg mb-2">{{ $competition->name }}</h3>
             <p class="text-gray-600 text-sm mb-3">{{ $competition->description }}</p>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500">
-                <i class="far fa-calendar-alt mr-1"></i> Fin: {{ $competition->end_date }}
+                <i class="far fa-calendar-alt mr-1"></i> Fin: {{ $competition->date_fin }}
               </span>
-              <a href="/competitions/{{ $competition->id }}" class="text-primary hover:text-primary/80 font-medium">
-                Voir les détails
-              </a>
             </div>
           </div>
         </div>

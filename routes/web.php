@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProduitController;
@@ -30,35 +31,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
-// Route::get('/login', function () {
-//     return view('login');
-// });
-// Route::get('/register', function () {
-//     return view('register');
-// });
-// Route::get('/detailrecette', function () {
-//     return view('detailrecette');
-// });
-// Route::get('/boutique', function () {
-//     return view('boutique');
-// });
-// Route::get('/panier', function () {
-//     return view('panier');
-// });
-
-// Route::get('/detailcompetition', function () {
-//     return view('detailcompetition');
-// });
-
-Route::middleware(['auth'])->prefix('admin')->group(function(){
-    // Route::get('/adminusers', function () {
-    //     return view('admin.adminusers');
-    // });
-    Route::get('/admincompetition', function () {
-        return view('admincompetition');
-    });
 
 
+
+Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function(){
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     });
@@ -90,33 +66,39 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::delete('/ingredient/destroy',[IngredientController::class, 'destroy'])->name("adminingredient.destroy");
     Route::get('/editingredient/{id}',[IngredientController::class,'edit']);
     Route::post('/ingredient/update',[IngredientController::class,'update']);
-//produit
+    //produit
 
     Route::get('/adminshop',[ProduitController::class,'index']);
     Route::post('/produit/store',[ProduitController::class,'store']);
     Route::delete('/produit/destroy',[ProduitController::class, 'destroy'])->name("adminproduit.destroy");
     Route::get('/editproduit/{id}',[ProduitController::class,'edit']);
     Route::post('/produit/update',[ProduitController::class,'update']);
-//commande
-  Route::get('/admincommande',[CommandeController::class,'index']);
+    //commande
+    Route::get('/admincommande',[CommandeController::class,'index']);
 
-//user
-Route::get('/adminusers',[UserController::class,'index']);
+    //user
+    Route::get('/adminusers',[UserController::class,'index']);
+    Route::put('/updateuserstatus',[UserController::class,'updateStatus']);
+
+    //competition
+    Route::get('/admincompetition',[CompetitionController::class,'index']);
+    Route::post('/competition/store',[CompetitionController::class,'store']);
+    Route::delete('/competition/destroy',[CompetitionController::class,'destroy']);
+    Route::put('/updatecompetition',[CompetitionController::class,'updateCompetition']);
+    Route::post('/choisirgagnant',[CompetitionController::class,'choisirGagnant']);
 
 });
 
-    Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
-    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
-    Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
-    Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
-    Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
+
 
     Route::get('/profile',function(){
        return view('client.clientinfo');
     });
     Route::post('/commandes/page',[CommandeController::class,'store']);
 
-
+    Route::get('/userdesactive',function(){
+        return view('pageuserdesactive');
+    });
 
 Route::get('/login',[AuthController::class,'index'])->name('login');
 Route::post('/logins',[AuthController::class, 'login']);
@@ -137,6 +119,23 @@ Route::post('/panier/mettre-a-jour/{id}', [ProduitController::class, 'updateQuan
 
 Route::get('/',[RecetteController::class,'show']);
 Route::post('/recettedetails',[RecetteController::class,'detailsRecette']);
+
+
+
+Route::get('/competition',[CompetitionController::class,'show']);
+Route::middleware(['auth'])->group(function () {
+  Route::post('/inscrire',[CompetitionController::class,'inscription']);
+  Route::get('/client/edituserrecette/{id}',[RecetteController::class,'editMyRecette']);
+Route::post('/client/userrecette/update',[RecetteController::class,'updateMyRecette']);
+Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
+    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+    Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
+    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+    Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
+    Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
+});
+
+
 Route::get('/boutique',[ProduitController::class,'show']);
 Route::post('/detailsproduit',[ProduitController::class,'detailsProduit']);
 Route::get('/detailsproduit',[ProduitController::class,'detailsProduit']);
@@ -146,22 +145,7 @@ Route::post('/address/store',[UserController::class,'storeAddress']);
 
 
 
-// Profile routes
-Route::middleware(['auth'])->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'info'])->name('profile.info');
-    // Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
-    // Route::get('/profile/competitions', [ProfileController::class, 'competitions'])->name('profile.competitions');
-    // Route::get('/profile/recipes', [ProfileController::class, 'recipes'])->name('profile.recipes');
 
-    // Address routes
-    // Route::post('/address/store', [ProfileController::class, 'storeAddress']);
-
-    // // Recipe routes
-    // Route::post('/recipes/store', [ProfileController::class, 'storeRecipe']);
-    // Route::get('/recipes/{id}/edit', [ProfileController::class, 'editRecipe']);
-    // Route::put('/recipes/{id}', [ProfileController::class, 'updateRecipe']);
-    // Route::delete('/recipes/{id}', [ProfileController::class, 'deleteRecipe']);
-});
 
 
 Route::middleware('auth')->group(function () {
@@ -169,9 +153,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/makepay', 'makePay');
         Route::post('/command/pay', 'processPayment');
     });
+
+
 });
 
 
-// Route::fallback(function () {
-//     return redirect('/');
-// });
+Route::fallback(function () {
+    return redirect('/');
+});

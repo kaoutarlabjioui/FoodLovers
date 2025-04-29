@@ -29,4 +29,10 @@ class UserService implements IUserService{
 
     }
 
+    public function updateStatus($data){
+        
+        return $this->userRepo->changeStatus($data);
+
+    }
+
 }

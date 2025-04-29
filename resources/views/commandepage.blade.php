@@ -74,7 +74,7 @@
                                         {{ Auth::user()->address->pays ?? 'Non spécifié' }}
                                     </div>
                                     <input type="hidden" name="pays" value="{{ Auth::user()->address->pays ?? '' }}">
-                                    <input type="hidden" name="pays" value="{{$commande->id}}">
+                                    <input type="hidden" name="commande_id" value="{{$commande->id}}">
                                 </div>
                             </fieldset>
                             <div class="pt-6 border-t border-gray-100">

@@ -1,35 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Paiement Stripe - FoodLovers</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://js.stripe.com/v2/"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@extends('client.layouts')
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #c5c5c5;
-          border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: #a8a8a8;
-        }
-    </style>
-</head>
-<body class="bg-pink-50 dark:bg-gray-900">
+@section('title', 'payment page')
+@section('content')
 
 <div class="max-w-7xl mx-auto py-10 px-6">
     <!-- Header -->
@@ -82,6 +54,8 @@
                 </div>
 
                 <input type="hidden" name="balance" value="{{$finalAPaye}}">
+                <input type="hidden" name="commande_id" value="{{ $commandeId }}">
+
 
                 <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg text-lg font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
                     Payer maintenant
@@ -158,7 +132,6 @@
         <i class="fas fa-moon text-blue-300 hidden dark:block"></i>
     </button>
 </div>
-
 <script>
     $(function() {
         var $form = $(".require-validation");
@@ -202,6 +175,4 @@
         });
     });
 </script>
-
-</body>
-</html>
+@endsection

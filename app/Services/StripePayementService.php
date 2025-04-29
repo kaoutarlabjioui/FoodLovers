@@ -12,21 +12,25 @@ protected ICommandeService $commandeService;
  }
 
     public function makePayment($total){
-            dd($total);
+            // dd($total);
         $totalAPaye = $total["totalAmont"];
         $tax = 99;
         $livraison = 'Gratuite';
         $finalAPaye = $totalAPaye + $tax;
+        $commandeId = $total['id'];
         return[
             "totalApaye"=>$totalAPaye,
             "tax"=>$tax,
             "livraison"=>$livraison,
-            "finalAPaye"=>$finalAPaye
+            "finalAPaye"=>$finalAPaye,
+            "commande_id"=>$commandeId
         ];
 
     }
 
     public function processPayment($data){
+        // dd($data);
+
         Stripe::setApiKey(config('stripe.secret'));
         try{
             Charge::create([
@@ -35,7 +39,9 @@ protected ICommandeService $commandeService;
                 'source' => $data['stripeToken'],
                 'description' => '',
             ]);
+
             session()->forget('panier');
+                // dd($data['commande_id']);
              $this->commandeService->updateStatus($data['commande_id']);
          return true;
 

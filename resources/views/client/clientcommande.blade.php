@@ -39,12 +39,15 @@
           @endforeach
         </div>
         <div class="mt-4 flex justify-between items-center">
-          <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-            Voir les détails
-          </a>
+          <form id="payment-form" method="POST" action="/makepay" class="space-y-6">
+            @csrf
+            <input type="hidden" name="totalAmont" value="{{ $commande->prix_totale}}">
+            <input type="hidden" name="commande_id" value="{{ $commande->id}}">
           <button class="bg-primary hover:bg-primary/90 text-white font-medium py-1 px-3 rounded-lg transition-colors text-sm">
             Acheter à nouveau
           </button>
+          </form>
+
         </div>
       </div>
     </div>
