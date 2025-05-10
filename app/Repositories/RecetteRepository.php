@@ -35,7 +35,9 @@ class RecetteRepository implements RecetteRepositoryInterface
         // $recette->update($data);
         // $recette->tags()->attach($data['tags']);
         // $recette->ingredient()->attach($data['ingredients']);
+        
         return $recette->save();
+
     }
 
 

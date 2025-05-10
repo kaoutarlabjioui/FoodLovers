@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'Mon Profil') - FoodLovers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://js.stripe.com/v2/"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -193,7 +197,7 @@
             <a href="/client/clientcommande" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 {{ request()->routeIs('profile.orders') ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} font-medium">
               <i class="fas fa-shopping-bag mr-2"></i> Mes commandes
             </a>
-            <a href="" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 {{ request()->routeIs('profile.competitions') ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} font-medium">
+            <a href="/client/clientcompetition" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 {{ request()->routeIs('profile.competitions') ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} font-medium">
               <i class="fas fa-trophy mr-2"></i> Mes compétitions
             </a>
             <a href="/client/clientrecette" class="tab-button whitespace-nowrap py-4 px-6 border-b-2 {{ request()->routeIs('profile.recipes') ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} font-medium">

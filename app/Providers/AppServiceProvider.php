@@ -11,6 +11,8 @@ use App\Repositories\CommandeItemsRepository;
 use App\Repositories\CommandeItemsRepositoryInterface;
 use App\Repositories\CommandeRepository;
 use App\Repositories\CommandeRepositoryInterface;
+use App\Repositories\CompetitionRepository;
+use App\Repositories\CompetitionRepositoryInterface;
 use App\Repositories\IngredientRepository;
 use App\Repositories\IngredientRepositoryInterface;
 use App\Repositories\PanierRepository;
@@ -32,10 +34,12 @@ use App\Services\IRoleService;
 use App\Services\CategoryService;
 use App\Services\CommandeItemsService;
 use App\Services\CommandeService;
+use App\Services\CompetitionService;
 use App\Services\IAddressService;
 use App\Services\ICategoryService;
 use App\Services\ICommandeItemsService;
 use App\Services\ICommandeService;
+use App\Services\ICompetitionService;
 use App\Services\IIngredientService;
 use App\Services\IngredientService;
 use App\Services\IPanierService;
@@ -89,6 +93,9 @@ class AppServiceProvider extends ServiceProvider
        $this->app->bind(ICommandeItemsService::class,CommandeItemsService::class);
        $this->app->bind(CommandeItemsRepositoryInterface::class,CommandeItemsRepository::class);
        $this->app->bind(IStripePaymentService::class,StripePayementService::class);
+       $this->app->bind(ICompetitionService::class,CompetitionService::class);
+       $this->app->bind(CompetitionRepositoryInterface::class,CompetitionRepository::class);
+
 
 
     }

@@ -23,6 +23,7 @@ class CategoryController extends Controller
     {
         $categories =$this->categoryService->getAll();
         return view('admin.admincategory',compact('categories'));
+
     }
     public function store(StoreCategoryRequest $request)
     {
@@ -46,7 +47,7 @@ class CategoryController extends Controller
 
 
         $data = $request->validated();
-        
+
         $category = $this->categoryService->getById($data['id']);
        $this->categoryService->update($category,$data);
        return redirect('/admin/admincategory')->with("success",'Categorie modifier');

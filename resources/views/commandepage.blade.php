@@ -74,7 +74,7 @@
                                         {{ Auth::user()->address->pays ?? 'Non spécifié' }}
                                     </div>
                                     <input type="hidden" name="pays" value="{{ Auth::user()->address->pays ?? '' }}">
-                                    <input type="hidden" name="pays" value="{{$commande->id}}">
+                                    <input type="hidden" name="commande_id" value="{{$commande->id}}">
                                 </div>
                             </fieldset>
                             <div class="pt-6 border-t border-gray-100">
@@ -146,14 +146,6 @@
                                 <i class="fas fa-undo text-primary mr-3"></i>
                                 <span class="text-sm text-gray-600">Politique de retour: <span class="font-medium">30 jours</span></span>
                             </div>
-                        </div>
-
-                        <!-- Payment Methods -->
-                        <div class="flex justify-center space-x-4 mt-6 pt-6 border-t border-gray-100">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png" alt="PayPal" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
                         </div>
                     </div>
                 </div>

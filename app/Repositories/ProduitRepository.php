@@ -23,8 +23,11 @@ class ProduitRepository implements ProduitRepositoryInterface{
 
     }
 
-    public function update($produit,$data){
-        return $produit->update($data);
+    public function update($produit){
+        // dd($produit);
+       $produit->save();
+
+       return $produit;
     }
     public function delete($produit){
 

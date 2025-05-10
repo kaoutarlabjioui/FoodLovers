@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRecetteRequest;
 use App\Http\Requests\UpdateRecetteRequest;
 use App\Models\Recette;
+use App\Repositories\UserRepositoryInterface;
 use App\Services\ICategoryService;
 use App\Services\IRecetteService;
 use App\Services\IIngredientService;
 use App\Services\ITagService;
+use App\Services\IUserService;
 use Illuminate\Http\Request;
 
 class RecetteController extends Controller
@@ -17,12 +19,14 @@ class RecetteController extends Controller
    protected ICategoryService $catService;
    protected ITagService $tagService;
    protected IIngredientService $ingredientService;
+   protected UserRepositoryInterface $userRepo;
 
-public function __construct(IRecetteService $recetteService,ICategoryService $catService,ITagService $tagService,IIngredientService $ingredientService){
+public function __construct(IRecetteService $recetteService,ICategoryService $catService,ITagService $tagService,IIngredientService $ingredientService, UserRepositoryInterface $userRepo){
     $this->recetteService = $recetteService;
     $this->catService = $catService;
     $this->tagService = $tagService;
     $this->ingredientService = $ingredientService;
+    $this->userRepo = $userRepo;
 }
    public function index(){
 
@@ -38,9 +42,11 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
    public function show(){
 
     $recettes = $this->recetteService->getAll();
+    // dd($recettes);
     $categories =$this->catService->getAll();
     $tags = $this->tagService->getAll();
     // $ingredients = $this->ingredientService->getAll();
+
     return view('home',compact('recettes','categories','tags'));
 
    }
@@ -61,6 +67,26 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
     $ingredients = $this->ingredientService->getAll();
 
     return view('admin.editrecette',compact('recette','tags','ingredients','categories'));
+   }
+
+   public function editMyRecette($id){
+    $recette = $this->recetteService->getById($id);
+    $categories =$this->catService->getAll();
+    $tags = $this->tagService->getAll();
+    $ingredients = $this->ingredientService->getAll();
+
+    return view('client.editeuserrecette',compact('recette','tags','ingredients','categories'));
+   }
+
+
+   public function updateMyRecette(Request $request){
+    // dd($request->all());
+    // $data = $request->validated();
+
+   $this->recetteService->update($request->all());
+//   dd($data);
+    return redirect('/client/clientrecette');
+
    }
 
    public function update(Request $request){
@@ -89,6 +115,17 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
         return view('detailrecette',compact('recette'));
 
 
+
+    }
+
+    public function search(Request $request){
+
+        $titre = $request->query('query');
+// dd($titre);
+        $recettes=Recette::where('titre','like','%'. $titre.'%')->get();
+        // dd($recettes);
+
+        return view('components.recettes',compact('recettes'));
 
     }
 

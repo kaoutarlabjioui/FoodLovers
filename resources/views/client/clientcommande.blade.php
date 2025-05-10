@@ -30,7 +30,7 @@
         <div class="flex flex-wrap gap-2">
           @foreach($commande->commandesItems as $item)
             <div class="flex items-center bg-gray-100 rounded-lg p-2">
-              <img src="{{ $item->produit->image_url }}" alt="{{ $item->produit->name }}" class="w-12 h-12 object-cover rounded-md">
+              <img src="{{url('/storage/' .$item->produit->photo) }}" alt="{{ $item->produit->name }}" class="w-12 h-12 object-cover rounded-md">
               <div class="ml-2">
                 <p class="text-sm font-medium">{{ $item->produit->name }}</p>
                 <p class="text-xs text-gray-500">Qté: {{ $item->quantite }}</p>
@@ -38,14 +38,19 @@
             </div>
           @endforeach
         </div>
+        @if($commande->status != 'terminer')
         <div class="mt-4 flex justify-between items-center">
-          <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
-            Voir les détails
-          </a>
+          <form id="payment-form" method="POST" action="/makepay" class="space-y-6">
+            @csrf
+            <input type="hidden" name="totalAmont" value="{{ $commande->prix_totale}}">
+            <input type="hidden" name="commande_id" value="{{ $commande->id}}">
           <button class="bg-primary hover:bg-primary/90 text-white font-medium py-1 px-3 rounded-lg transition-colors text-sm">
-            Acheter à nouveau
+            payé
           </button>
+          </form>
+
         </div>
+        @endif
       </div>
     </div>
     @endforeach
