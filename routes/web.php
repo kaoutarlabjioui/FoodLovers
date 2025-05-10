@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProduitController;
@@ -38,6 +39,7 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function(){
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     });
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
 //category
     Route::get('/admincategory',[CategoryController::class,'index']);
@@ -89,17 +91,32 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function(){
 
 });
 
-
-
-    Route::get('/profile',function(){
-       return view('client.clientinfo');
+Route::middleware(['auth', 'client'])->group(function () {
+    Route::get('/profile', function () {
+        return view('client.clientinfo');
     });
+
+    Route::post('/inscrire', [CompetitionController::class, 'inscription']);
+    Route::get('/client/edituserrecette/{id}', [RecetteController::class, 'editMyRecette']);
+    Route::post('/client/userrecette/update', [RecetteController::class, 'updateMyRecette']);
+    Route::get('/client/clientrecette', [UserController::class, 'showUserRecette']);
+    Route::get('/client/clientcompetition', [UserController::class, 'showUserCompetition']);
+    Route::get('/client/clientcommande', [UserController::class, 'showUserCommande']);
+    Route::post('/client/clientrecettestor', [RecetteController::class, 'store']);
+    Route::delete('/client/clientrecettedestroy', [RecetteController::class, 'destroy'])->name("clientrecette.destroy");
+});
+
+    // Route::get('/profile',function(){
+    //    return view('client.clientinfo');
+    // });
     Route::post('/commandes/page',[CommandeController::class,'store']);
 
     Route::get('/userdesactive',function(){
         return view('pageuserdesactive');
     });
-
+//recette
+Route::get('/search',[RecetteController::class,'search']);
+Route::get('/searchproduit',[ProduitController::class,'search']);
 Route::get('/login',[AuthController::class,'index'])->name('login');
 Route::post('/logins',[AuthController::class, 'login']);
 Route::get('/register',[AuthController::class, 'showRegisterForm'])->name('register');
@@ -123,17 +140,17 @@ Route::post('/recettedetails',[RecetteController::class,'detailsRecette']);
 
 
 Route::get('/competition',[CompetitionController::class,'show']);
-Route::middleware(['auth'])->group(function () {
-  Route::post('/inscrire',[CompetitionController::class,'inscription']);
-  Route::get('/client/edituserrecette/{id}',[RecetteController::class,'editMyRecette']);
-Route::post('/client/userrecette/update',[RecetteController::class,'updateMyRecette']);
-Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
-    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
-    Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
-    Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
-    Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
-    Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
-});
+// Route::middleware(['auth'])->group(function () {
+//   Route::post('/inscrire',[CompetitionController::class,'inscription']);
+//   Route::get('/client/edituserrecette/{id}',[RecetteController::class,'editMyRecette']);
+// Route::post('/client/userrecette/update',[RecetteController::class,'updateMyRecette']);
+// Route::get('/client/clientrecette',[UserController::class,'showUserRecette'] );
+//     Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+//     Route::get('/client/clientcommande',[UserController::class,'showUserCommande'] );
+//     Route::get('/client/clientcompetition',[UserController::class,'showUserCompetition'] );
+//     Route::post('/client/clientrecettestor',[RecetteController::class,'store']);
+//     Route::delete('/client/clientrecettedestroy',[RecetteController::class,'destroy'])->name("clientrecette.destroy");
+// });
 
 
 Route::get('/boutique',[ProduitController::class,'show']);

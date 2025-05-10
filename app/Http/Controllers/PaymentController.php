@@ -30,12 +30,12 @@ class PaymentController extends Controller
 
 
     public function processPayment(Request $request){
-     $payment= $this->iStripePaymentService->processPayment($request->all());
+     $commande= $this->iStripePaymentService->processPayment($request->all());
 
 
-        if($payment){
+        if($commande){
             session()->forget('panier');
-            return view('client.success');
+            return view('client.success',compact('commande'));
         }else{
             return view('client.failure');
         }

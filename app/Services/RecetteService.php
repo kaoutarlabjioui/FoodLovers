@@ -82,7 +82,8 @@ public function update( $data)
     $fileName = 'recette_'.time().'.'.$extension;
     $path=$image->storeAs('uploads',$fileName,'public');
     $data['photo']=$path;
-    // dd($data);
+
+    // dd($data['photo']);
     $cat=  $this->catService->findByName($data['category_name']);
     $tags = $data['tags'];
     $ingredients = $data['ingredients'];

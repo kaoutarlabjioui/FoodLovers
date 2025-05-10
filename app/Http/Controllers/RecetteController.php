@@ -118,4 +118,15 @@ public function __construct(IRecetteService $recetteService,ICategoryService $ca
 
     }
 
+    public function search(Request $request){
+
+        $titre = $request->query('query');
+// dd($titre);
+        $recettes=Recette::where('titre','like','%'. $titre.'%')->get();
+        // dd($recettes);
+
+        return view('components.recettes',compact('recettes'));
+
+    }
+
 }

@@ -44,7 +44,7 @@
 
             <nav class="mt-4">
                 <div class="px-4 py-2 text-xs text-gray-400 uppercase">Principal</div>
-                <a href="/dashboard" class="flex items-center px-4 py-3 text-white bg-primary/20 border-l-4 border-primary">
+                <a href="/admin/dashboard" class="flex items-center px-4 py-3 text-white bg-primary/20 border-l-4 border-primary">
                     <i class="fas fa-tachometer-alt w-5"></i>
                     <span class="ml-2">Tableau de bord</span>
                 </a>
@@ -203,7 +203,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Utilisateurs</p>
-                                <h3 class="text-2xl font-bold">2,845</h3>
+                                <h3 class="text-2xl font-bold">{{$userCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +12.5%
                                 </p>
@@ -218,7 +218,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Recettes</p>
-                                <h3 class="text-2xl font-bold">1,253</h3>
+                                <h3 class="text-2xl font-bold">{{$recetteCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +8.3%
                                 </p>
@@ -233,7 +233,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Compétitions</p>
-                                <h3 class="text-2xl font-bold">12</h3>
+                                <h3 class="text-2xl font-bold">{{$competitionCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +33.3%
                                 </p>

@@ -62,7 +62,7 @@
               </div>
               <div class="flex-1">
                   <label for="product-image" class="block text-sm font-medium text-gray-700 mb-1">Changer l'image</label>
-                  <input type="file" id="product-image" name="photo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary/90">
+                  <input type="file" id="product-image" name="photo" value="{{  $recette->photo }}" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary/90">
                   <p class="mt-1 text-xs text-gray-500">PNG, JPG ou JPEG. Max 2MB.</p>
                 </div>
             </div>

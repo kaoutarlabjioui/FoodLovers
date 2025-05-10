@@ -54,8 +54,16 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <div class="flex space-x-2">
+            <form action="/recettedetails" method="POST">
+            @csrf
+            <input type="hidden" name="recette" value="{{ $recette->id }}">
+
+            <button type="submit" class="text-black-600 hover:text-yellow-800 edit-ingredient">
+            <i class="fas fa-eye"></i>
+            </button>
+            </form>
               <!-- <a href="" class="text-accent hover:text-accent/80" title="Voir">
-                <i class="fas fa-eye"></i>
+
               </a> -->
               <a href="/client/edituserrecette/{{$recette->id}}" class="text-primary hover:text-primary/80" title="Modifier">
                 <i class="fas fa-edit"></i>

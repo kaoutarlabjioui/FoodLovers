@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.dashboard')
 @section('title','Gestion des recettes')
 @section('css')
 <style>

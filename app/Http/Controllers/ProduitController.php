@@ -56,10 +56,10 @@ public function __construct(IProduitService $produitService, IPanierService $pan
 
     public function update(UpdateProduitRequest $request)
     {
+        // dd($request);
         $data = $request->validated();
-       $produit= $this->produitService->getById($data['id']);
-    //    dd($produit);
-        $this->produitService->update($produit,$data);
+        // dd($data);
+        $this->produitService->update($data);
         return redirect('/admin/adminshop');
     }
 
@@ -88,20 +88,20 @@ public function __construct(IProduitService $produitService, IPanierService $pan
         return redirect('/panier')->with('success', 'Produit ajouté au panier.');
     }
 
-    public function voirPanier(){
-        $panier = $this->panierService->getContenuPanier();
-        $total = array_sum(array_column($panier,'sous_total'));
-        return view('panier',compact('panier'));
-    }
+        public function voirPanier(){
+            $panier = $this->panierService->getContenuPanier();
+            $total = array_sum(array_column($panier,'sous_total'));
+            return view('panier',compact('panier'));
+        }
 
-    public function supprimerDuPanier(Request $request)
-    {
-        // dd($request);
-        $this->panierService->supprimerProduit($request->produit_id);
-        return redirect()->back()->with('success', 'Produit supprimé du panier.');
-    }
+        public function supprimerDuPanier(Request $request)
+        {
+            // dd($request);
+            $this->panierService->supprimerProduit($request->produit_id);
+            return redirect()->back()->with('success', 'Produit supprimé du panier.');
+        }
 
-    public function updateQuantite(Request $request, $id)
+         public function updateQuantite(Request $request, $id)
         {
             $request->validate([
                 'quantite' => 'required|integer|min:1'
@@ -113,10 +113,23 @@ public function __construct(IProduitService $produitService, IPanierService $pan
         }
 
         public function viderPanier()
-    {
+       {
         $this->panierService->viderPanier();
         return redirect()->back()->with('success', 'Le panier a été vidé.');
+       }
+
+
+       public function search(Request $request){
+        // dd($request);
+        $nom = $request->query('query');
+
+        $produits=Produit::where('nom','like','%'. $nom.'%')->get();
+
+
+        return view('components.produits',compact('produits'));
+
     }
+
 
 
 }

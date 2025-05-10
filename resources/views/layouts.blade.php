@@ -43,19 +43,21 @@
         <div class="hidden md:flex items-center space-x-8">
           <a href="/" class="font-medium hover:text-primary transition-colors">Home</a>
           <a href="/boutique" class="font-medium hover:text-primary transition-colors">Shop</a>
-          <a href="/blog" class="font-medium hover:text-primary transition-colors">Blog</a>
+          <a href="/panier" class="font-medium hover:text-primary transition-colors">Cart</a>
+          <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
+          <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
         </div>
      @if (Route::has('login'))
     <div class="flex items-center space-x-4">
             @auth
 
             @if(auth()->user()->role->role_name == 'admin')
-            <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
-            <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
             <a href="{{ url('/admin/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
             @elseif(auth()->user()->role->role_name == 'user' && auth()->user()->status === 'active' )
-            <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
-            <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
+
+            <!-- <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
+            <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a> -->
+
                 <a href="{{ url('/profile') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Profile</a>
             @endif
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

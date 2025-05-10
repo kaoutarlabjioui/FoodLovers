@@ -91,20 +91,6 @@
                     <dt class="text-lg font-bold text-gray-900 dark:text-white">Total</dt>
                     <dd class="text-lg font-bold text-pink-600 dark:text-pink-400">{{$finalAPaye}}</dd>
                 </dl>
-
-
-                <!-- Méthodes de paiement -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">Méthodes de paiement acceptées</h3>
-                    <div class="flex items-center justify-center gap-8 mt-4">
-                        <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal.svg" alt="Paypal">
-                        <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal-dark.svg" alt="Paypal">
-                        <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg" alt="Visa">
-                        <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg" alt="Visa">
-                        <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg" alt="Mastercard">
-                        <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard-dark.svg" alt="Mastercard">
-                    </div>
-                </div>
             </div>
 
             <!-- Politique de retour -->

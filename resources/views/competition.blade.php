@@ -82,7 +82,7 @@
         <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
 
           <div class="relative">
-            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187" alt="Desserts d'été" class="w-full h-48 object-cover">
+            <img src="https://npr.brightspotcdn.com/dims4/default/1bd6b9c/2147483647/strip/true/crop/768x360+0+0/resize/1760x826!/format/webp/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F54%2F0a%2Fc673ab8445a18a37241611140f27%2F360-f-436660407-tiu4y4rrxwpd7uyy5kjzmttapn2kciwl.jpeg" alt="Desserts d'été" class="w-full h-48 object-cover">
             <!-- <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">
               En cours
             </div> -->

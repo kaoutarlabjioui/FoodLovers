@@ -23,7 +23,7 @@
         <!-- Competition Card -->
         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm competition-card">
           <div class="relative">
-            <img src="{{ url('/storage/' . $competition->image) }}" alt="{{ $competition->name }}" class="w-full h-48 object-cover">
+            <img src="https://npr.brightspotcdn.com/dims4/default/1bd6b9c/2147483647/strip/true/crop/768x360+0+0/resize/1760x826!/format/webp/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F54%2F0a%2Fc673ab8445a18a37241611140f27%2F360-f-436660407-tiu4y4rrxwpd7uyy5kjzmttapn2kciwl.jpeg" alt="{{ $competition->name }}" class="w-full h-48 object-cover">
             <div class="absolute top-0 right-0 m-2">
               <span class="px-2 py-1 bg-primary text-white text-xs font-semibold rounded-full">
                 {{ $competition->pivot->status }}
