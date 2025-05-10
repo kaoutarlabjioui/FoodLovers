@@ -23,23 +23,20 @@
         <!-- Competition Card -->
         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm competition-card">
           <div class="relative">
-            <img src="{{ url('/storage/' . $competition->image) }}" alt="{{ $competition->title }}" class="w-full h-48 object-cover">
+            <img src="https://npr.brightspotcdn.com/dims4/default/1bd6b9c/2147483647/strip/true/crop/768x360+0+0/resize/1760x826!/format/webp/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F54%2F0a%2Fc673ab8445a18a37241611140f27%2F360-f-436660407-tiu4y4rrxwpd7uyy5kjzmttapn2kciwl.jpeg" alt="{{ $competition->name }}" class="w-full h-48 object-cover">
             <div class="absolute top-0 right-0 m-2">
               <span class="px-2 py-1 bg-primary text-white text-xs font-semibold rounded-full">
-                {{ $competition->status }}
+                {{ $competition->pivot->status }}
               </span>
             </div>
           </div>
           <div class="p-4">
-            <h3 class="font-bold text-lg mb-2">{{ $competition->title }}</h3>
+            <h3 class="font-bold text-lg mb-2">{{ $competition->name }}</h3>
             <p class="text-gray-600 text-sm mb-3">{{ $competition->description }}</p>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500">
-                <i class="far fa-calendar-alt mr-1"></i> Fin: {{ $competition->end_date }}
+                <i class="far fa-calendar-alt mr-1"></i> Fin: {{ $competition->date_fin }}
               </span>
-              <a href="/competitions/{{ $competition->id }}" class="text-primary hover:text-primary/80 font-medium">
-                Voir les détails
-              </a>
             </div>
           </div>
         </div>

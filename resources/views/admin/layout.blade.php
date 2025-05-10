@@ -26,7 +26,7 @@
             }
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     @yield('css')
 </head>
 
@@ -44,7 +44,7 @@
 
             <nav class="mt-4">
                 <div class="px-4 py-2 text-xs text-gray-400 uppercase">Principal</div>
-                <a href="/dashboard" class="flex items-center px-4 py-3 text-white bg-primary/20 border-l-4 border-primary">
+                <a href="/admin/dashboard" class="flex items-center px-4 py-3 text-white bg-primary/20 border-l-4 border-primary">
                     <i class="fas fa-tachometer-alt w-5"></i>
                     <span class="ml-2">Tableau de bord</span>
                 </a>
@@ -203,7 +203,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Utilisateurs</p>
-                                <h3 class="text-2xl font-bold">2,845</h3>
+                                <h3 class="text-2xl font-bold">{{$userCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +12.5%
                                 </p>
@@ -218,7 +218,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Recettes</p>
-                                <h3 class="text-2xl font-bold">1,253</h3>
+                                <h3 class="text-2xl font-bold">{{$recetteCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +8.3%
                                 </p>
@@ -233,7 +233,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500 text-sm">Compétitions</p>
-                                <h3 class="text-2xl font-bold">12</h3>
+                                <h3 class="text-2xl font-bold">{{$competitionCount ?? 0}}</h3>
                                 <p class="text-green-500 text-sm mt-1">
                                     <i class="fas fa-arrow-up mr-1"></i> +33.3%
                                 </p>
@@ -256,36 +256,6 @@
                             <div class="bg-primary/10 p-3 rounded-full">
                                 <i class="fas fa-comment text-primary text-xl"></i>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Charts Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    <!-- User Growth Chart -->
-                    <div class="bg-white rounded-lg shadow-sm p-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-lg">Croissance des utilisateurs</h3>
-                            <div class="flex space-x-2">
-                                <button class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">Mois</button>
-                                <button class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded hover:bg-gray-200">Année</button>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="userGrowthChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Recipe Categories Chart -->
-                    <div class="bg-white rounded-lg shadow-sm p-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-lg">Catégories de recettes</h3>
-                            <button class="text-primary hover:text-primary/80 text-sm">
-                                <i class="fas fa-download mr-1"></i> Exporter
-                            </button>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="recipeCategoriesChart"></canvas>
                         </div>
                     </div>
                 </div>

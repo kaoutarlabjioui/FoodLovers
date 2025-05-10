@@ -10,4 +10,5 @@ interface UserRepositoryInterface
     public function save($user);
     public function getAll();
     public function update(User $user, array $data);
+    public function changeStatus($data);
 }

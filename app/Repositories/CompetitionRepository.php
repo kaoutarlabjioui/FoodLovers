@@ -16,13 +16,14 @@ class CompetitionRepository implements CompetitionRepositoryInterface
         return Competition::findOrFail($id);
     }
 
-    public function create(array $data) {
-        return Competition::create($data);
+    public function create($competition) {
+        return $competition->save() ;
     }
 
-    public function update($id, array $data) {
-        $competition = Competition::findOrFail($id);
-        $competition->update($data);
+    public function update($data){
+        // dd($data['date_fin']);
+        $competition = Competition::find($data['id']);
+        $competition->update(["date_fin"=>$data['date_fin']]);
         return $competition;
     }
 

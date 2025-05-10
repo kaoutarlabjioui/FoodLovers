@@ -76,17 +76,21 @@ public function update( $data)
 {
 
 
+
     $image = $data['photo'];
     $extension = $image->getClientOriginalExtension();
     $fileName = 'recette_'.time().'.'.$extension;
     $path=$image->storeAs('uploads',$fileName,'public');
     $data['photo']=$path;
-    // dd($data);
+
+    // dd($data['photo']);
     $cat=  $this->catService->findByName($data['category_name']);
     $tags = $data['tags'];
     $ingredients = $data['ingredients'];
 
-    $recette = new Recette();
+    // $recette = new Recette();
+    $recette = $this->getById($data['id']);
+
     $recette->titre=$data["titre"];
     $recette->description=$data["description"];
     $recette->instruction=$data["instruction"];
@@ -105,10 +109,6 @@ public function update( $data)
         $ingredient = $this->ingredientService->findByName($ingredient_name);
         $recette->ingredients()->attach($ingredient);
     }
-
-
-
-
 
     return $recette;
 

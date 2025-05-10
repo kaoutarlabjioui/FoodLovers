@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Commande;
 use Stripe\Charge;
 use Stripe\Exception\CardException;
 use Stripe\Stripe;
@@ -12,21 +13,25 @@ protected ICommandeService $commandeService;
  }
 
     public function makePayment($total){
-            dd($total);
+            // dd($total);
         $totalAPaye = $total["totalAmont"];
         $tax = 99;
         $livraison = 'Gratuite';
         $finalAPaye = $totalAPaye + $tax;
+        $commandeId = $total['id'];
         return[
             "totalApaye"=>$totalAPaye,
             "tax"=>$tax,
             "livraison"=>$livraison,
-            "finalAPaye"=>$finalAPaye
+            "finalAPaye"=>$finalAPaye,
+            "commande_id"=>$commandeId
         ];
 
     }
 
     public function processPayment($data){
+        // dd($data);
+
         Stripe::setApiKey(config('stripe.secret'));
         try{
             Charge::create([
@@ -35,9 +40,11 @@ protected ICommandeService $commandeService;
                 'source' => $data['stripeToken'],
                 'description' => '',
             ]);
+
             session()->forget('panier');
-             $this->commandeService->updateStatus($data['commande_id']);
-         return true;
+                // dd($data['commande_id']);
+          $commande = $this->commandeService->updateStatus($data['commande_id']);
+          return    $commande;
 
         }catch(CardException $e){
             echo $e->getMessage();

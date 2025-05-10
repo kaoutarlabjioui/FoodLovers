@@ -8,7 +8,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAll(){
 
         return User::all();
-          
+
     }
 
     public function findByEmail(string $email)
@@ -30,6 +30,16 @@ class UserRepository implements UserRepositoryInterface
     public function update(User $user, array $data)
     {
         return $user->update($data);
+    }
+
+    public function changeStatus($data){
+        // dd($data['status']);
+     $user = User::find($data['id']);
+     $user->update(['status' => $data['status']]);
+     $user->save();
+     return $user;
+
+
     }
 
 }

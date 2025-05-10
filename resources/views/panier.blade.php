@@ -140,14 +140,6 @@
                   <i class="fas fa-lock"></i> Procéder au paiement
                 </button>
                 </form>
-                <!-- Payment Methods -->
-                <div class="flex justify-center space-x-4 mb-6">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png" alt="PayPal" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="h-6 opacity-70 hover:opacity-100 transition-opacity">
-                </div>
-
                 <!-- Shipping & Returns Info -->
                 <div class="text-sm text-gray-500 space-y-2">
                   <div class="flex items-center gap-2">

@@ -58,7 +58,7 @@ public function storeAddress(Request $request){
 public function showUserRecette(){
 
 $recettes = auth()->user()->recettes()->latest()
-->paginate(2);
+->paginate(5);
   $categories =$this->catService->getAll();
     $tags = $this->tagService->getAll();
     $ingredients = $this->ingredientService->getAll();
@@ -70,14 +70,24 @@ return  view('client.clientrecette',compact('recettes','categories','tags','ingr
 
 
 public function showUserCommande(){
-    $commandes = auth()->user()->commandes()->with('commandesItems.produit')->latest()
-    ->paginate(5);
+    $commandes = auth()->user()->commandes()->with('commandesItems.produit')->latest()->paginate(5);
+
     // dd($commands);
 
     return view('client.clientcommande',compact('commandes'));
 }
 
+public function showUserCompetition()
+{
+    $competitions = auth()->user()->competitions()->withPivot('status')->latest()->paginate(2);
+    return view('client.clientcompetition', compact('competitions'));
+}
 
+public function updateStatus(Request $request){
 
+    $this->userService->updateStatus($request);
+
+    return redirect()->back();
+}
 
 }

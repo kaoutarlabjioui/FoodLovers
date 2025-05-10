@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="https://js.stripe.com/v2/"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title ?? 'FoodLovers - Discover Delicious Recipes' }}</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -41,18 +42,22 @@
         </div>
         <div class="hidden md:flex items-center space-x-8">
           <a href="/" class="font-medium hover:text-primary transition-colors">Home</a>
+          <a href="/boutique" class="font-medium hover:text-primary transition-colors">Shop</a>
+          <a href="/panier" class="font-medium hover:text-primary transition-colors">Cart</a>
           <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
           <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a>
-          <a href="/boutique" class="font-medium hover:text-primary transition-colors">Shop</a>
-          <a href="/blog" class="font-medium hover:text-primary transition-colors">Blog</a>
         </div>
      @if (Route::has('login'))
     <div class="flex items-center space-x-4">
             @auth
 
             @if(auth()->user()->role->role_name == 'admin')
-                <a href="{{ url('/admin/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
-            @elseif(auth()->user()->role->role_name == 'user')
+            <a href="{{ url('/admin/dashboard') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Dashboard</a>
+            @elseif(auth()->user()->role->role_name == 'user' && auth()->user()->status === 'active' )
+
+            <!-- <a href="/recipes" class="font-medium hover:text-primary transition-colors">Recipes</a>
+            <a href="/competition" class="font-medium hover:text-primary transition-colors">Competitions</a> -->
+
                 <a href="{{ url('/profile') }}" class="hidden md:block font-medium hover:text-primary transition-colors">Profile</a>
             @endif
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
