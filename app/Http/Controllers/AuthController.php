@@ -57,7 +57,10 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // dd($request);
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
         $credentials = $request->only('email', 'password');
 
         $result = $this->iAuthService->login($credentials);

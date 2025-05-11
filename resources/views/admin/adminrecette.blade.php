@@ -142,21 +142,40 @@
               </tbody>
             </table>
           </div>
-
           <div class="flex justify-between items-center mt-4">
-            <div class="text-sm text-gray-500">
-              Affichage de 1 à 5 sur 253 recettes
-            </div>
-            <div class="flex space-x-1">
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">Précédent</button>
-              <button class="px-3 py-1 rounded bg-primary text-white text-sm">1</button>
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">2</button>
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">3</button>
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">...</button>
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">51</button>
-              <button class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">Suivant</button>
-            </div>
-          </div>
+    <div class="text-sm text-gray-500">
+        Affichage de
+        <span class="font-medium">{{ $recettes->firstItem() }}</span>
+        à
+        <span class="font-medium">{{ $recettes->lastItem() }}</span>
+        sur
+        <span class="font-medium">{{ $recettes->total() }}</span> recettes
+    </div>
+    <div class="flex space-x-1">
+        {{-- Bouton précédent --}}
+        @if ($recettes->onFirstPage())
+            <span class="px-3 py-1 rounded bg-gray-100 text-gray-400 text-sm">Précédent</span>
+        @else
+            <a href="{{ $recettes->previousPageUrl() }}" class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">Précédent</a>
+        @endif
+
+        {{-- Pages numérotées --}}
+        @foreach ($recettes->getUrlRange(1, $recettes->lastPage()) as $page => $url)
+            <a href="{{ $url }}" class="px-3 py-1 rounded text-sm
+                {{ $recettes->currentPage() == $page ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                {{ $page }}
+            </a>
+        @endforeach
+
+        {{-- Bouton suivant --}}
+        @if ($recettes->hasMorePages())
+            <a href="{{ $recettes->nextPageUrl() }}" class="px-3 py-1 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm">Suivant</a>
+        @else
+            <span class="px-3 py-1 rounded bg-gray-100 text-gray-400 text-sm">Suivant</span>
+        @endif
+    </div>
+</div>
+
         </div>
 
 
