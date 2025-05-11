@@ -7,7 +7,7 @@ use App\Models\Recette;
 class RecetteRepository implements RecetteRepositoryInterface
 {
     public function all(){
-        return Recette::with('category')->latest()->get();
+        return Recette::with('category')->latest()->paginate(5);
     }
 
     public function find($id){
@@ -20,22 +20,19 @@ class RecetteRepository implements RecetteRepositoryInterface
 
 
 
-        // $recette->user()->associate(auth()->user());
+
 
         $recette->save();
 
         return $recette;
-        // return Recette::create($data);
+
     }
 
 
     public function update($recette){
 
-        // $array_recette = $recette->toarray();
-        // $recette->update($data);
-        // $recette->tags()->attach($data['tags']);
-        // $recette->ingredient()->attach($data['ingredients']);
-        
+
+
         return $recette->save();
 
     }

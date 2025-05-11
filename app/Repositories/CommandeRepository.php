@@ -15,7 +15,7 @@ class CommandeRepository implements CommandeRepositoryInterface {
 
     public function getAll(){
 
-     return Commande::all();
+     return Commande::paginate(5);
 
     }
 

@@ -159,41 +159,60 @@
 
       <!-- Pagination -->
       <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div>
+    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
             <p class="text-sm text-gray-700">
-              Affichage de <span class="font-medium">1</span> à <span class="font-medium">5</span> sur <span class="font-medium">1,248</span> résultats
+                Affichage de
+                <span class="font-medium">{{ $users->firstItem() }}</span> à
+                <span class="font-medium">{{ $users->lastItem() }}</span> sur
+                <span class="font-medium">{{ $users->total() }}</span> résultats
             </p>
-          </div>
-          <div>
-            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span class="sr-only">Précédent</span>
-                <i class="fas fa-chevron-left text-xs"></i>
-              </a>
-              <a href="#" aria-current="page" class="z-10 bg-primary text-white relative inline-flex items-center px-4 py-2 border border-primary text-sm font-medium">
-                1
-              </a>
-              <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                2
-              </a>
-              <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                3
-              </a>
-              <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                ...
-              </span>
-              <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                125
-              </a>
-              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span class="sr-only">Suivant</span>
-                <i class="fas fa-chevron-right text-xs"></i>
-              </a>
-            </nav>
-          </div>
         </div>
-      </div>
+        <div>
+            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                {{-- Lien Précédent --}}
+                @if ($users->onFirstPage())
+                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </span>
+                @else
+                    <a href="{{ $users->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </a>
+                @endif
+
+                {{-- Liens de pages --}}
+                @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                    @if ($page == $users->currentPage())
+                        <span class="z-10 bg-primary text-white relative inline-flex items-center px-4 py-2 border border-primary text-sm font-medium">
+                            {{ $page }}
+                        </span>
+                    @elseif ($page <= 3 || $page > $users->lastPage() - 2 || abs($page - $users->currentPage()) <= 1)
+                        <a href="{{ $url }}" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                            {{ $page }}
+                        </a>
+                    @elseif ($page == 4 || $page == $users->lastPage() - 2)
+                        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                            ...
+                        </span>
+                    @endif
+                @endforeach
+
+                {{-- Lien Suivant --}}
+                @if ($users->hasMorePages())
+                    <a href="{{ $users->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </a>
+                @else
+                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </span>
+                @endif
+            </nav>
+        </div>
+    </div>
+</div>
+
     </div>
 @endsection
 
