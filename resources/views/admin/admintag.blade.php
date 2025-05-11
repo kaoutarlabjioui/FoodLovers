@@ -51,35 +51,7 @@
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow-sm p-4 mb-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-        <h2 class="text-lg font-bold mb-4 md:mb-0">Filtres</h2>
-        <div class="flex flex-col md:flex-row gap-4">
-            <div>
-                <select class="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option value="">Tous les types</option>
-                    <option value="recipe">Recettes</option>
-                    <option value="product">Produits</option>
-                    <option value="blog">Blog</option>
-                    <option value="competition">Compétitions</option>
-                </select>
-            </div>
-            <div>
-                <select class="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option value="">Tous les statuts</option>
-                    <option value="active">Actif</option>
-                    <option value="inactive">Inactif</option>
-                </select>
-            </div>
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fas fa-search text-gray-400"></i>
-                </span>
-                <input type="text" placeholder="Rechercher..." class="w-full md:w-auto pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
@@ -148,34 +120,8 @@
         </table>
     </div>
 
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-                <p class="text-sm text-gray-700">
-                    Affichage de <span class="font-medium">1</span> à <span class="font-medium">5</span> sur <span class="font-medium">12</span> tags
-                </p>
-            </div>
-            <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <i class="fas fa-chevron-left text-xs"></i>
-                    </a>
-                    <a href="#" aria-current="page" class="z-10 bg-primary text-white relative inline-flex items-center px-4 py-2 border border-primary text-sm font-medium">
-                        1
-                    </a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                        2
-                    </a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                        3
-                    </a>
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <i class="fas fa-chevron-right text-xs"></i>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
+
+
 </div>
 @endsection
 

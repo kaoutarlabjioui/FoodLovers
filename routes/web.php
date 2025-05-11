@@ -47,7 +47,7 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function(){
     Route::delete('/category/destroy',[CategoryController::class, 'destroy'])->name("admincategory.destroy");
     Route::get('/editecategory/{id}',[CategoryController::class,'edit']);
     Route::post('/category/update',[CategoryController::class,'update']);
-
+    
 //tag
     Route::get('/admintag',[TagController::class,'index']);
     Route::post('/tag/store',[TagController::class,'store']);

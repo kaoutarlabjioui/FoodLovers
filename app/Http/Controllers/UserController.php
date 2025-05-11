@@ -57,8 +57,8 @@ public function storeAddress(Request $request){
 
 public function showUserRecette(){
 
-$recettes = auth()->user()->recettes()->latest()
-->paginate(5);
+ $recettes = auth()->user()->recettes()->latest()->paginate(5);
+
   $categories =$this->catService->getAll();
     $tags = $this->tagService->getAll();
     $ingredients = $this->ingredientService->getAll();
@@ -80,6 +80,7 @@ public function showUserCommande(){
 public function showUserCompetition()
 {
     $competitions = auth()->user()->competitions()->withPivot('status')->latest()->paginate(2);
+
     return view('client.clientcompetition', compact('competitions'));
 }
 

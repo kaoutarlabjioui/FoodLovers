@@ -7,7 +7,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function getAll(){
 
-        return User::all();
+        return User::paginate(3);
 
     }
 

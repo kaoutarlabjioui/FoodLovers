@@ -81,10 +81,6 @@
       <p class="text-gray-600">Gérez tous les produits disponibles dans la boutique</p>
     </div>
     <div class="mt-4 md:mt-0 flex space-x-2">
-      <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center">
-        <i class="fas fa-file-export mr-2"></i>
-        Exporter
-      </button>
       <button id="openRecipeModal" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors inline-flex items-center">
         <i class="fas fa-plus mr-2"></i>
         Ajouter un produit
@@ -92,79 +88,6 @@
     </div>
   </div>
 
-  <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-primary/10 text-primary">
-          <i class="fas fa-shopping-cart text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-gray-500 text-sm">Total Produits</p>
-          <h3 class="font-bold text-xl">156</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-green-100 text-green-600">
-          <i class="fas fa-tags text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-gray-500 text-sm">En promotion</p>
-          <h3 class="font-bold text-xl">24</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-          <i class="fas fa-box-open text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-gray-500 text-sm">En stock</p>
-          <h3 class="font-bold text-xl">132</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-red-100 text-red-600">
-          <i class="fas fa-exclamation-circle text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-gray-500 text-sm">Rupture de stock</p>
-          <h3 class="font-bold text-xl">24</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Filters and View Toggle -->
-  <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-      <h2 class="text-lg font-bold mb-4 md:mb-0">Filtres</h2>
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-            <i class="fas fa-search text-gray-400"></i>
-          </span>
-          <input type="text" placeholder="Rechercher..." class="w-full md:w-auto pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-        <div class="flex space-x-2">
-          <button id="view-grid" class="bg-primary text-white p-2 rounded-lg">
-            <i class="fas fa-th-large"></i>
-          </button>
-          <button id="view-list" class="bg-gray-200 text-gray-700 p-2 rounded-lg">
-            <i class="fas fa-list"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Grid View (Default) -->
 
@@ -192,9 +115,7 @@
             <span class="text-sm text-gray-500">Stock: <span class="font-semibold">{{$produit->stock}}</span></span>
           </div>
           <div class="flex space-x-2">
-            <button class="text-blue-600 hover:text-blue-800 p-1">
-              <i class="fas fa-eye"></i>
-            </button>
+         
             <a href="/admin/editproduit/{{$produit->id}}">
             <button class="text-yellow-600 hover:text-yellow-800 p-1 edit-product">
               <i class="fas fa-edit"></i>
@@ -284,21 +205,6 @@
                     <label for="product-description" class="block text-sm font-medium text-gray-700">Description</label>
                     <textarea id="product-description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"></textarea>
                   </div>
-
-<!--
-                  <div>
-                    <label for="product-image" class="block text-sm font-medium text-gray-700">Image</label>
-                    <div class="mt-1 flex items-center">
-                      <span class="inline-block h-12 w-12 rounded-md overflow-hidden bg-gray-100">
-                        <img id="product-image-preview" src="/placeholder.svg?height=48&width=48" alt="Image" class="h-full w-full object-cover">
-                      </span>
-                      <button type="button" id="product-image-button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                        Changer
-                      </button>
-                      <input type="file" id="product-image" name="photo" class="hidden" accept="image/*">
-                    </div>
-                  </div> -->
-
 
                 <div class="form-element">
                   <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image</label>
